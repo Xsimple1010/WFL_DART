@@ -8,7 +8,9 @@
 // ignore_for_file: type=lint
 import 'dart:ffi' as ffi;
 
-/// Bindings for `src/include/wfl_dart.h`.
+import 'package:ffi/ffi.dart';
+
+/// Bindings for `src/wfl_dart.h`.
 ///
 /// Regenerate bindings with `flutter pub run ffigen --config ffigen.yaml`.
 ///
@@ -27,44 +29,7232 @@ class WflDartBindings {
           lookup)
       : _lookup = lookup;
 
-  /// A very short-lived native function.
-  ///
-  /// For very short-lived functions, it is fine to call them on the main isolate.
-  /// They will block the Dart execution while running the native function, so
-  /// only do this for native functions which are guaranteed to be short-lived.
-  int sum(
-    int a,
-    int b,
+  void wflSetCallbacks(
+    controller_events events,
   ) {
-    return _sum(
-      a,
-      b,
+    return _wflSetCallbacks(
+      events,
     );
   }
 
-  late final _sumPtr =
-      _lookup<ffi.NativeFunction<ffi.IntPtr Function(ffi.IntPtr, ffi.IntPtr)>>(
-          'sum');
-  late final _sum = _sumPtr.asFunction<int Function(int, int)>();
+  late final _wflSetCallbacksPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(controller_events)>>(
+          'wflSetCallbacks');
+  late final _wflSetCallbacks =
+      _wflSetCallbacksPtr.asFunction<void Function(controller_events)>();
 
-  /// A longer lived native function, which occupies the thread calling it.
-  ///
-  /// Do not call these kind of native functions in the main isolate. They will
-  /// block Dart execution. This will cause dropped frames in Flutter applications.
-  /// Instead, call these native functions on a separate isolate.
-  int sum_long_running(
-    int a,
-    int b,
+  void wflInit() {
+    return _wflInit();
+  }
+
+  late final _wflInitPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function()>>('wflInit');
+  late final _wflInit = _wflInitPtr.asFunction<void Function()>();
+
+  void wflLoadCore(
+    ffi.Pointer<Utf8> path,
   ) {
-    return _sum_long_running(
-      a,
-      b,
+    return _wflLoadCore(
+      path,
     );
   }
 
-  late final _sum_long_runningPtr =
-      _lookup<ffi.NativeFunction<ffi.IntPtr Function(ffi.IntPtr, ffi.IntPtr)>>(
-          'sum_long_running');
-  late final _sum_long_running =
-      _sum_long_runningPtr.asFunction<int Function(int, int)>();
+  late final _wflLoadCorePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<Utf8>)>>(
+          'wflLoadCore');
+  late final _wflLoadCore =
+      _wflLoadCorePtr.asFunction<void Function(ffi.Pointer<Utf8>)>();
+
+  void wflLoadGame(
+    ffi.Pointer<Utf8> path,
+  ) {
+    return _wflLoadGame(
+      path,
+    );
+  }
+
+  late final _wflLoadGamePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<Utf8>)>>(
+          'wflLoadGame');
+  late final _wflLoadGame =
+      _wflLoadGamePtr.asFunction<void Function(ffi.Pointer<Utf8>)>();
+
+  void wflUnloadGame() {
+    return _wflUnloadGame();
+  }
+
+  late final _wflUnloadGamePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function()>>('wflUnloadGame');
+  late final _wflUnloadGame = _wflUnloadGamePtr.asFunction<void Function()>();
+
+  void wflSetController(
+    int device,
+  ) {
+    return _wflSetController(
+      device,
+    );
+  }
+
+  late final _wflSetControllerPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Int)>>(
+          'wflSetController');
+  late final _wflSetController =
+      _wflSetControllerPtr.asFunction<void Function(int)>();
+
+  void wflDeinit() {
+    return _wflDeinit();
+  }
+
+  late final _wflDeinitPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function()>>('wflDeinit');
+  late final _wflDeinit = _wflDeinitPtr.asFunction<void Function()>();
+
+  late final ffi.Pointer<ffi.Size> _deviceMaxSize =
+      _lookup<ffi.Size>('deviceMaxSize');
+
+  int get deviceMaxSize => _deviceMaxSize.value;
+
+  set deviceMaxSize(int value) => _deviceMaxSize.value = value;
+
+  bool audioInit(
+    int frequency,
+  ) {
+    return _audioInit(
+      frequency,
+    );
+  }
+
+  late final _audioInitPtr =
+      _lookup<ffi.NativeFunction<ffi.Bool Function(ffi.Int)>>('audioInit');
+  late final _audioInit = _audioInitPtr.asFunction<bool Function(int)>();
+
+  void audioDeinit() {
+    return _audioDeinit();
+  }
+
+  late final _audioDeinitPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function()>>('audioDeinit');
+  late final _audioDeinit = _audioDeinitPtr.asFunction<void Function()>();
+
+  int audioWrite(
+    ffi.Pointer<ffi.Int16> buffer,
+    int frames,
+  ) {
+    return _audioWrite(
+      buffer,
+      frames,
+    );
+  }
+
+  late final _audioWritePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Size Function(ffi.Pointer<ffi.Int16>, ffi.Size)>>('audioWrite');
+  late final _audioWrite =
+      _audioWritePtr.asFunction<int Function(ffi.Pointer<ffi.Int16>, int)>();
+
+  /// Sets callbacks. retro_set_environment() is guaranteed to be called
+  /// before retro_init().
+  ///
+  /// The rest of the set_* functions are guaranteed to have been called
+  /// before the first call to retro_run() is made.
+  void retro_set_environment(
+    retro_environment_t arg0,
+  ) {
+    return _retro_set_environment(
+      arg0,
+    );
+  }
+
+  late final _retro_set_environmentPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(retro_environment_t)>>(
+          'retro_set_environment');
+  late final _retro_set_environment = _retro_set_environmentPtr
+      .asFunction<void Function(retro_environment_t)>();
+
+  void retro_set_video_refresh(
+    retro_video_refresh_t arg0,
+  ) {
+    return _retro_set_video_refresh(
+      arg0,
+    );
+  }
+
+  late final _retro_set_video_refreshPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(retro_video_refresh_t)>>(
+          'retro_set_video_refresh');
+  late final _retro_set_video_refresh = _retro_set_video_refreshPtr
+      .asFunction<void Function(retro_video_refresh_t)>();
+
+  void retro_set_audio_sample(
+    retro_audio_sample_t arg0,
+  ) {
+    return _retro_set_audio_sample(
+      arg0,
+    );
+  }
+
+  late final _retro_set_audio_samplePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(retro_audio_sample_t)>>(
+          'retro_set_audio_sample');
+  late final _retro_set_audio_sample = _retro_set_audio_samplePtr
+      .asFunction<void Function(retro_audio_sample_t)>();
+
+  void retro_set_audio_sample_batch(
+    retro_audio_sample_batch_t arg0,
+  ) {
+    return _retro_set_audio_sample_batch(
+      arg0,
+    );
+  }
+
+  late final _retro_set_audio_sample_batchPtr = _lookup<
+          ffi.NativeFunction<ffi.Void Function(retro_audio_sample_batch_t)>>(
+      'retro_set_audio_sample_batch');
+  late final _retro_set_audio_sample_batch = _retro_set_audio_sample_batchPtr
+      .asFunction<void Function(retro_audio_sample_batch_t)>();
+
+  void retro_set_input_poll(
+    retro_input_poll_t arg0,
+  ) {
+    return _retro_set_input_poll(
+      arg0,
+    );
+  }
+
+  late final _retro_set_input_pollPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(retro_input_poll_t)>>(
+          'retro_set_input_poll');
+  late final _retro_set_input_poll =
+      _retro_set_input_pollPtr.asFunction<void Function(retro_input_poll_t)>();
+
+  void retro_set_input_state(
+    retro_input_state_t arg0,
+  ) {
+    return _retro_set_input_state(
+      arg0,
+    );
+  }
+
+  late final _retro_set_input_statePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(retro_input_state_t)>>(
+          'retro_set_input_state');
+  late final _retro_set_input_state = _retro_set_input_statePtr
+      .asFunction<void Function(retro_input_state_t)>();
+
+  /// Library global initialization/deinitialization.
+  void retro_init() {
+    return _retro_init();
+  }
+
+  late final _retro_initPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function()>>('retro_init');
+  late final _retro_init = _retro_initPtr.asFunction<void Function()>();
+
+  void retro_deinit() {
+    return _retro_deinit();
+  }
+
+  late final _retro_deinitPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function()>>('retro_deinit');
+  late final _retro_deinit = _retro_deinitPtr.asFunction<void Function()>();
+
+  /// Must return RETRO_API_VERSION. Used to validate ABI compatibility
+  /// when the API is revised.
+  int retro_api_version() {
+    return _retro_api_version();
+  }
+
+  late final _retro_api_versionPtr =
+      _lookup<ffi.NativeFunction<ffi.UnsignedInt Function()>>(
+          'retro_api_version');
+  late final _retro_api_version =
+      _retro_api_versionPtr.asFunction<int Function()>();
+
+  /// Gets statically known system info. Pointers provided in *info
+  /// must be statically allocated.
+  /// Can be called at any time, even before retro_init().
+  void retro_get_system_info(
+    ffi.Pointer<retro_system_info> info,
+  ) {
+    return _retro_get_system_info(
+      info,
+    );
+  }
+
+  late final _retro_get_system_infoPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Void Function(ffi.Pointer<retro_system_info>)>>(
+      'retro_get_system_info');
+  late final _retro_get_system_info = _retro_get_system_infoPtr
+      .asFunction<void Function(ffi.Pointer<retro_system_info>)>();
+
+  /// Gets information about system audio/video timings and geometry.
+  /// Can be called only after retro_load_game() has successfully completed.
+  /// NOTE: The implementation of this function might not initialize every
+  /// variable if needed.
+  /// E.g. geom.aspect_ratio might not be initialized if core doesn't
+  /// desire a particular aspect ratio.
+  void retro_get_system_av_info(
+    ffi.Pointer<retro_system_av_info> info,
+  ) {
+    return _retro_get_system_av_info(
+      info,
+    );
+  }
+
+  late final _retro_get_system_av_infoPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(
+              ffi.Pointer<retro_system_av_info>)>>('retro_get_system_av_info');
+  late final _retro_get_system_av_info = _retro_get_system_av_infoPtr
+      .asFunction<void Function(ffi.Pointer<retro_system_av_info>)>();
+
+  /// Sets device to be used for player 'port'.
+  /// By default, RETRO_DEVICE_JOYPAD is assumed to be plugged into all
+  /// available ports.
+  /// Setting a particular device type is not a guarantee that libretro cores
+  /// will only poll input based on that particular device type. It is only a
+  /// hint to the libretro core when a core cannot automatically detect the
+  /// appropriate input device type on its own. It is also relevant when a
+  /// core can change its behavior depending on device type.
+  ///
+  /// As part of the core's implementation of retro_set_controller_port_device,
+  /// the core should call RETRO_ENVIRONMENT_SET_INPUT_DESCRIPTORS to notify the
+  /// frontend if the descriptions for any controls have changed as a
+  /// result of changing the device type.
+  void retro_set_controller_port_device(
+    int port,
+    int device,
+  ) {
+    return _retro_set_controller_port_device(
+      port,
+      device,
+    );
+  }
+
+  late final _retro_set_controller_port_devicePtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Void Function(ffi.UnsignedInt, ffi.UnsignedInt)>>(
+      'retro_set_controller_port_device');
+  late final _retro_set_controller_port_device =
+      _retro_set_controller_port_devicePtr
+          .asFunction<void Function(int, int)>();
+
+  /// Resets the current game.
+  void retro_reset() {
+    return _retro_reset();
+  }
+
+  late final _retro_resetPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function()>>('retro_reset');
+  late final _retro_reset = _retro_resetPtr.asFunction<void Function()>();
+
+  /// Runs the game for one video frame.
+  /// During retro_run(), input_poll callback must be called at least once.
+  ///
+  /// If a frame is not rendered for reasons where a game "dropped" a frame,
+  /// this still counts as a frame, and retro_run() should explicitly dupe
+  /// a frame if GET_CAN_DUPE returns true.
+  /// In this case, the video callback can take a NULL argument for data.
+  void retro_run() {
+    return _retro_run();
+  }
+
+  late final _retro_runPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function()>>('retro_run');
+  late final _retro_run = _retro_runPtr.asFunction<void Function()>();
+
+  /// Returns the amount of data the implementation requires to serialize
+  /// internal state (save states).
+  /// Between calls to retro_load_game() and retro_unload_game(), the
+  /// returned size is never allowed to be larger than a previous returned
+  /// value, to ensure that the frontend can allocate a save state buffer once.
+  int retro_serialize_size() {
+    return _retro_serialize_size();
+  }
+
+  late final _retro_serialize_sizePtr =
+      _lookup<ffi.NativeFunction<ffi.Size Function()>>('retro_serialize_size');
+  late final _retro_serialize_size =
+      _retro_serialize_sizePtr.asFunction<int Function()>();
+
+  /// Serializes internal state. If failed, or size is lower than
+  /// retro_serialize_size(), it should return false, true otherwise.
+  bool retro_serialize(
+    ffi.Pointer<ffi.Void> data,
+    int size,
+  ) {
+    return _retro_serialize(
+      data,
+      size,
+    );
+  }
+
+  late final _retro_serializePtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Bool Function(ffi.Pointer<ffi.Void>, ffi.Size)>>(
+      'retro_serialize');
+  late final _retro_serialize = _retro_serializePtr
+      .asFunction<bool Function(ffi.Pointer<ffi.Void>, int)>();
+
+  bool retro_unserialize(
+    ffi.Pointer<ffi.Void> data,
+    int size,
+  ) {
+    return _retro_unserialize(
+      data,
+      size,
+    );
+  }
+
+  late final _retro_unserializePtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Bool Function(ffi.Pointer<ffi.Void>, ffi.Size)>>(
+      'retro_unserialize');
+  late final _retro_unserialize = _retro_unserializePtr
+      .asFunction<bool Function(ffi.Pointer<ffi.Void>, int)>();
+
+  void retro_cheat_reset() {
+    return _retro_cheat_reset();
+  }
+
+  late final _retro_cheat_resetPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function()>>('retro_cheat_reset');
+  late final _retro_cheat_reset =
+      _retro_cheat_resetPtr.asFunction<void Function()>();
+
+  void retro_cheat_set(
+    int index,
+    bool enabled,
+    ffi.Pointer<ffi.Char> code,
+  ) {
+    return _retro_cheat_set(
+      index,
+      enabled,
+      code,
+    );
+  }
+
+  late final _retro_cheat_setPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(ffi.UnsignedInt, ffi.Bool,
+              ffi.Pointer<ffi.Char>)>>('retro_cheat_set');
+  late final _retro_cheat_set = _retro_cheat_setPtr
+      .asFunction<void Function(int, bool, ffi.Pointer<ffi.Char>)>();
+
+  /// Loads a game.
+  /// Return true to indicate successful loading and false to indicate load failure.
+  bool retro_load_game(
+    ffi.Pointer<retro_game_info> game,
+  ) {
+    return _retro_load_game(
+      game,
+    );
+  }
+
+  late final _retro_load_gamePtr = _lookup<
+          ffi.NativeFunction<ffi.Bool Function(ffi.Pointer<retro_game_info>)>>(
+      'retro_load_game');
+  late final _retro_load_game = _retro_load_gamePtr
+      .asFunction<bool Function(ffi.Pointer<retro_game_info>)>();
+
+  /// Loads a "special" kind of game. Should not be used,
+  /// except in extreme cases.
+  bool retro_load_game_special(
+    int game_type,
+    ffi.Pointer<retro_game_info> info,
+    int num_info,
+  ) {
+    return _retro_load_game_special(
+      game_type,
+      info,
+      num_info,
+    );
+  }
+
+  late final _retro_load_game_specialPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Bool Function(ffi.UnsignedInt, ffi.Pointer<retro_game_info>,
+              ffi.Size)>>('retro_load_game_special');
+  late final _retro_load_game_special = _retro_load_game_specialPtr
+      .asFunction<bool Function(int, ffi.Pointer<retro_game_info>, int)>();
+
+  /// Unloads the currently loaded game. Called before retro_deinit(void).
+  void retro_unload_game() {
+    return _retro_unload_game();
+  }
+
+  late final _retro_unload_gamePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function()>>('retro_unload_game');
+  late final _retro_unload_game =
+      _retro_unload_gamePtr.asFunction<void Function()>();
+
+  /// Gets region of game.
+  int retro_get_region() {
+    return _retro_get_region();
+  }
+
+  late final _retro_get_regionPtr =
+      _lookup<ffi.NativeFunction<ffi.UnsignedInt Function()>>(
+          'retro_get_region');
+  late final _retro_get_region =
+      _retro_get_regionPtr.asFunction<int Function()>();
+
+  /// Gets region of memory.
+  ffi.Pointer<ffi.Void> retro_get_memory_data(
+    int id,
+  ) {
+    return _retro_get_memory_data(
+      id,
+    );
+  }
+
+  late final _retro_get_memory_dataPtr = _lookup<
+          ffi.NativeFunction<ffi.Pointer<ffi.Void> Function(ffi.UnsignedInt)>>(
+      'retro_get_memory_data');
+  late final _retro_get_memory_data = _retro_get_memory_dataPtr
+      .asFunction<ffi.Pointer<ffi.Void> Function(int)>();
+
+  int retro_get_memory_size(
+    int id,
+  ) {
+    return _retro_get_memory_size(
+      id,
+    );
+  }
+
+  late final _retro_get_memory_sizePtr =
+      _lookup<ffi.NativeFunction<ffi.Size Function(ffi.UnsignedInt)>>(
+          'retro_get_memory_size');
+  late final _retro_get_memory_size =
+      _retro_get_memory_sizePtr.asFunction<int Function(int)>();
+
+  /// Query the window which currently has keyboard focus.
+  ///
+  /// \returns the window with keyboard focus.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ffi.Pointer<SDL_Window> SDL_GetKeyboardFocus() {
+    return _SDL_GetKeyboardFocus();
+  }
+
+  late final _SDL_GetKeyboardFocusPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<SDL_Window> Function()>>(
+          'SDL_GetKeyboardFocus');
+  late final _SDL_GetKeyboardFocus =
+      _SDL_GetKeyboardFocusPtr.asFunction<ffi.Pointer<SDL_Window> Function()>();
+
+  /// Get a snapshot of the current state of the keyboard.
+  ///
+  /// The pointer returned is a pointer to an internal SDL array. It will be
+  /// valid for the whole lifetime of the application and should not be freed by
+  /// the caller.
+  ///
+  /// A array element with a value of 1 means that the key is pressed and a value
+  /// of 0 means that it is not. Indexes into this array are obtained by using
+  /// SDL_Scancode values.
+  ///
+  /// Use SDL_PumpEvents() to update the state array.
+  ///
+  /// This function gives you the current state after all events have been
+  /// processed, so if a key or button has been pressed and released before you
+  /// process events, then the pressed state will never show up in the
+  /// SDL_GetKeyboardState() calls.
+  ///
+  /// Note: This function doesn't take into account whether shift has been
+  /// pressed or not.
+  ///
+  /// \param numkeys if non-NULL, receives the length of the returned array
+  /// \returns a pointer to an array of key states.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_PumpEvents
+  /// \sa SDL_ResetKeyboard
+  ffi.Pointer<Uint8> SDL_GetKeyboardState(
+    ffi.Pointer<ffi.Int> numkeys,
+  ) {
+    return _SDL_GetKeyboardState(
+      numkeys,
+    );
+  }
+
+  late final _SDL_GetKeyboardStatePtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Pointer<Uint8> Function(ffi.Pointer<ffi.Int>)>>(
+      'SDL_GetKeyboardState');
+  late final _SDL_GetKeyboardState = _SDL_GetKeyboardStatePtr.asFunction<
+      ffi.Pointer<Uint8> Function(ffi.Pointer<ffi.Int>)>();
+
+  /// Clear the state of the keyboard
+  ///
+  /// This function will generate key up events for all pressed keys.
+  ///
+  /// \since This function is available since SDL 2.24.0.
+  ///
+  /// \sa SDL_GetKeyboardState
+  void SDL_ResetKeyboard() {
+    return _SDL_ResetKeyboard();
+  }
+
+  late final _SDL_ResetKeyboardPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function()>>('SDL_ResetKeyboard');
+  late final _SDL_ResetKeyboard =
+      _SDL_ResetKeyboardPtr.asFunction<void Function()>();
+
+  /// Get the current key modifier state for the keyboard.
+  ///
+  /// \returns an OR'd combination of the modifier keys for the keyboard. See
+  /// SDL_Keymod for details.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_GetKeyboardState
+  /// \sa SDL_SetModState
+  int SDL_GetModState() {
+    return _SDL_GetModState();
+  }
+
+  late final _SDL_GetModStatePtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function()>>('SDL_GetModState');
+  late final _SDL_GetModState =
+      _SDL_GetModStatePtr.asFunction<int Function()>();
+
+  /// Set the current key modifier state for the keyboard.
+  ///
+  /// The inverse of SDL_GetModState(), SDL_SetModState() allows you to impose
+  /// modifier key states on your application. Simply pass your desired modifier
+  /// states into `modstate`. This value may be a bitwise, OR'd combination of
+  /// SDL_Keymod values.
+  ///
+  /// This does not change the keyboard state, only the key modifier flags that
+  /// SDL reports.
+  ///
+  /// \param modstate the desired SDL_Keymod for the keyboard
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_GetModState
+  void SDL_SetModState(
+    int modstate,
+  ) {
+    return _SDL_SetModState(
+      modstate,
+    );
+  }
+
+  late final _SDL_SetModStatePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Int32)>>(
+          'SDL_SetModState');
+  late final _SDL_SetModState =
+      _SDL_SetModStatePtr.asFunction<void Function(int)>();
+
+  /// Get the key code corresponding to the given scancode according to the
+  /// current keyboard layout.
+  ///
+  /// See SDL_Keycode for details.
+  ///
+  /// \param scancode the desired SDL_Scancode to query
+  /// \returns the SDL_Keycode that corresponds to the given SDL_Scancode.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_GetKeyName
+  /// \sa SDL_GetScancodeFromKey
+  int SDL_GetKeyFromScancode(
+    int scancode,
+  ) {
+    return _SDL_GetKeyFromScancode(
+      scancode,
+    );
+  }
+
+  late final _SDL_GetKeyFromScancodePtr =
+      _lookup<ffi.NativeFunction<SDL_Keycode Function(ffi.Int32)>>(
+          'SDL_GetKeyFromScancode');
+  late final _SDL_GetKeyFromScancode =
+      _SDL_GetKeyFromScancodePtr.asFunction<int Function(int)>();
+
+  /// Get the scancode corresponding to the given key code according to the
+  /// current keyboard layout.
+  ///
+  /// See SDL_Scancode for details.
+  ///
+  /// \param key the desired SDL_Keycode to query
+  /// \returns the SDL_Scancode that corresponds to the given SDL_Keycode.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_GetKeyFromScancode
+  /// \sa SDL_GetScancodeName
+  int SDL_GetScancodeFromKey(
+    int key,
+  ) {
+    return _SDL_GetScancodeFromKey(
+      key,
+    );
+  }
+
+  late final _SDL_GetScancodeFromKeyPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(SDL_Keycode)>>(
+          'SDL_GetScancodeFromKey');
+  late final _SDL_GetScancodeFromKey =
+      _SDL_GetScancodeFromKeyPtr.asFunction<int Function(int)>();
+
+  /// Get a human-readable name for a scancode.
+  ///
+  /// See SDL_Scancode for details.
+  ///
+  /// **Warning**: The returned name is by design not stable across platforms,
+  /// e.g. the name for `SDL_SCANCODE_LGUI` is "Left GUI" under Linux but "Left
+  /// Windows" under Microsoft Windows, and some scancodes like
+  /// `SDL_SCANCODE_NONUSBACKSLASH` don't have any name at all. There are even
+  /// scancodes that share names, e.g. `SDL_SCANCODE_RETURN` and
+  /// `SDL_SCANCODE_RETURN2` (both called "Return"). This function is therefore
+  /// unsuitable for creating a stable cross-platform two-way mapping between
+  /// strings and scancodes.
+  ///
+  /// \param scancode the desired SDL_Scancode to query
+  /// \returns a pointer to the name for the scancode. If the scancode doesn't
+  /// have a name this function returns an empty string ("").
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_GetScancodeFromKey
+  /// \sa SDL_GetScancodeFromName
+  ffi.Pointer<ffi.Char> SDL_GetScancodeName(
+    int scancode,
+  ) {
+    return _SDL_GetScancodeName(
+      scancode,
+    );
+  }
+
+  late final _SDL_GetScancodeNamePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(ffi.Int32)>>(
+          'SDL_GetScancodeName');
+  late final _SDL_GetScancodeName =
+      _SDL_GetScancodeNamePtr.asFunction<ffi.Pointer<ffi.Char> Function(int)>();
+
+  /// Get a scancode from a human-readable name.
+  ///
+  /// \param name the human-readable scancode name
+  /// \returns the SDL_Scancode, or `SDL_SCANCODE_UNKNOWN` if the name wasn't
+  /// recognized; call SDL_GetError() for more information.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_GetKeyFromName
+  /// \sa SDL_GetScancodeFromKey
+  /// \sa SDL_GetScancodeName
+  int SDL_GetScancodeFromName(
+    ffi.Pointer<ffi.Char> name,
+  ) {
+    return _SDL_GetScancodeFromName(
+      name,
+    );
+  }
+
+  late final _SDL_GetScancodeFromNamePtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Char>)>>(
+          'SDL_GetScancodeFromName');
+  late final _SDL_GetScancodeFromName = _SDL_GetScancodeFromNamePtr.asFunction<
+      int Function(ffi.Pointer<ffi.Char>)>();
+
+  /// Get a human-readable name for a key.
+  ///
+  /// See SDL_Scancode and SDL_Keycode for details.
+  ///
+  /// \param key the desired SDL_Keycode to query
+  /// \returns a pointer to a UTF-8 string that stays valid at least until the
+  /// next call to this function. If you need it around any longer, you
+  /// must copy it. If the key doesn't have a name, this function
+  /// returns an empty string ("").
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_GetKeyFromName
+  /// \sa SDL_GetKeyFromScancode
+  /// \sa SDL_GetScancodeFromKey
+  ffi.Pointer<ffi.Char> SDL_GetKeyName(
+    int key,
+  ) {
+    return _SDL_GetKeyName(
+      key,
+    );
+  }
+
+  late final _SDL_GetKeyNamePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(SDL_Keycode)>>(
+          'SDL_GetKeyName');
+  late final _SDL_GetKeyName =
+      _SDL_GetKeyNamePtr.asFunction<ffi.Pointer<ffi.Char> Function(int)>();
+
+  /// Get a key code from a human-readable name.
+  ///
+  /// \param name the human-readable key name
+  /// \returns key code, or `SDLK_UNKNOWN` if the name wasn't recognized; call
+  /// SDL_GetError() for more information.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_GetKeyFromScancode
+  /// \sa SDL_GetKeyName
+  /// \sa SDL_GetScancodeFromName
+  int SDL_GetKeyFromName(
+    ffi.Pointer<ffi.Char> name,
+  ) {
+    return _SDL_GetKeyFromName(
+      name,
+    );
+  }
+
+  late final _SDL_GetKeyFromNamePtr =
+      _lookup<ffi.NativeFunction<SDL_Keycode Function(ffi.Pointer<ffi.Char>)>>(
+          'SDL_GetKeyFromName');
+  late final _SDL_GetKeyFromName =
+      _SDL_GetKeyFromNamePtr.asFunction<int Function(ffi.Pointer<ffi.Char>)>();
+
+  /// Start accepting Unicode text input events.
+  ///
+  /// This function will start accepting Unicode text input events in the focused
+  /// SDL window, and start emitting SDL_TextInputEvent (SDL_TEXTINPUT) and
+  /// SDL_TextEditingEvent (SDL_TEXTEDITING) events. Please use this function in
+  /// pair with SDL_StopTextInput().
+  ///
+  /// On some platforms using this function activates the screen keyboard.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_SetTextInputRect
+  /// \sa SDL_StopTextInput
+  void SDL_StartTextInput() {
+    return _SDL_StartTextInput();
+  }
+
+  late final _SDL_StartTextInputPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function()>>('SDL_StartTextInput');
+  late final _SDL_StartTextInput =
+      _SDL_StartTextInputPtr.asFunction<void Function()>();
+
+  /// Check whether or not Unicode text input events are enabled.
+  ///
+  /// \returns SDL_TRUE if text input events are enabled else SDL_FALSE.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_StartTextInput
+  int SDL_IsTextInputActive() {
+    return _SDL_IsTextInputActive();
+  }
+
+  late final _SDL_IsTextInputActivePtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function()>>(
+          'SDL_IsTextInputActive');
+  late final _SDL_IsTextInputActive =
+      _SDL_IsTextInputActivePtr.asFunction<int Function()>();
+
+  /// Stop receiving any text input events.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_StartTextInput
+  void SDL_StopTextInput() {
+    return _SDL_StopTextInput();
+  }
+
+  late final _SDL_StopTextInputPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function()>>('SDL_StopTextInput');
+  late final _SDL_StopTextInput =
+      _SDL_StopTextInputPtr.asFunction<void Function()>();
+
+  /// Dismiss the composition window/IME without disabling the subsystem.
+  ///
+  /// \since This function is available since SDL 2.0.22.
+  ///
+  /// \sa SDL_StartTextInput
+  /// \sa SDL_StopTextInput
+  void SDL_ClearComposition() {
+    return _SDL_ClearComposition();
+  }
+
+  late final _SDL_ClearCompositionPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function()>>('SDL_ClearComposition');
+  late final _SDL_ClearComposition =
+      _SDL_ClearCompositionPtr.asFunction<void Function()>();
+
+  /// Returns if an IME Composite or Candidate window is currently shown.
+  ///
+  /// \since This function is available since SDL 2.0.22.
+  int SDL_IsTextInputShown() {
+    return _SDL_IsTextInputShown();
+  }
+
+  late final _SDL_IsTextInputShownPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function()>>('SDL_IsTextInputShown');
+  late final _SDL_IsTextInputShown =
+      _SDL_IsTextInputShownPtr.asFunction<int Function()>();
+
+  /// Set the rectangle used to type Unicode text inputs.
+  ///
+  /// To start text input in a given location, this function is intended to be
+  /// called before SDL_StartTextInput, although some platforms support moving
+  /// the rectangle even while text input (and a composition) is active.
+  ///
+  /// Note: If you want to use the system native IME window, try setting hint
+  /// **SDL_HINT_IME_SHOW_UI** to **1**, otherwise this function won't give you
+  /// any feedback.
+  ///
+  /// \param rect the SDL_Rect structure representing the rectangle to receive
+  /// text (ignored if NULL)
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_StartTextInput
+  void SDL_SetTextInputRect(
+    ffi.Pointer<SDL_Rect> rect,
+  ) {
+    return _SDL_SetTextInputRect(
+      rect,
+    );
+  }
+
+  late final _SDL_SetTextInputRectPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<SDL_Rect>)>>(
+          'SDL_SetTextInputRect');
+  late final _SDL_SetTextInputRect = _SDL_SetTextInputRectPtr.asFunction<
+      void Function(ffi.Pointer<SDL_Rect>)>();
+
+  /// Check whether the platform has screen keyboard support.
+  ///
+  /// \returns SDL_TRUE if the platform has some screen keyboard support or
+  /// SDL_FALSE if not.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_StartTextInput
+  /// \sa SDL_IsScreenKeyboardShown
+  int SDL_HasScreenKeyboardSupport() {
+    return _SDL_HasScreenKeyboardSupport();
+  }
+
+  late final _SDL_HasScreenKeyboardSupportPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function()>>(
+          'SDL_HasScreenKeyboardSupport');
+  late final _SDL_HasScreenKeyboardSupport =
+      _SDL_HasScreenKeyboardSupportPtr.asFunction<int Function()>();
+
+  /// Check whether the screen keyboard is shown for given window.
+  ///
+  /// \param window the window for which screen keyboard should be queried
+  /// \returns SDL_TRUE if screen keyboard is shown or SDL_FALSE if not.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_HasScreenKeyboardSupport
+  int SDL_IsScreenKeyboardShown(
+    ffi.Pointer<SDL_Window> window,
+  ) {
+    return _SDL_IsScreenKeyboardShown(
+      window,
+    );
+  }
+
+  late final _SDL_IsScreenKeyboardShownPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<SDL_Window>)>>(
+          'SDL_IsScreenKeyboardShown');
+  late final _SDL_IsScreenKeyboardShown = _SDL_IsScreenKeyboardShownPtr
+      .asFunction<int Function(ffi.Pointer<SDL_Window>)>();
+
+  /// Locking for multi-threaded access to the joystick API
+  ///
+  /// If you are using the joystick API or handling events from multiple threads
+  /// you should use these locking functions to protect access to the joysticks.
+  ///
+  /// In particular, you are guaranteed that the joystick list won't change, so
+  /// the API functions that take a joystick index will be valid, and joystick
+  /// and game controller events will not be delivered.
+  ///
+  /// As of SDL 2.26.0, you can take the joystick lock around reinitializing the
+  /// joystick subsystem, to prevent other threads from seeing joysticks in an
+  /// uninitialized state. However, all open joysticks will be closed and SDL
+  /// functions called with them will fail.
+  ///
+  /// \since This function is available since SDL 2.0.7.
+  void SDL_LockJoysticks() {
+    return _SDL_LockJoysticks();
+  }
+
+  late final _SDL_LockJoysticksPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function()>>('SDL_LockJoysticks');
+  late final _SDL_LockJoysticks =
+      _SDL_LockJoysticksPtr.asFunction<void Function()>();
+
+  /// Unlocking for multi-threaded access to the joystick API
+  ///
+  /// If you are using the joystick API or handling events from multiple threads
+  /// you should use these locking functions to protect access to the joysticks.
+  ///
+  /// In particular, you are guaranteed that the joystick list won't change, so
+  /// the API functions that take a joystick index will be valid, and joystick
+  /// and game controller events will not be delivered.
+  ///
+  /// \since This function is available since SDL 2.0.7.
+  void SDL_UnlockJoysticks() {
+    return _SDL_UnlockJoysticks();
+  }
+
+  late final _SDL_UnlockJoysticksPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function()>>('SDL_UnlockJoysticks');
+  late final _SDL_UnlockJoysticks =
+      _SDL_UnlockJoysticksPtr.asFunction<void Function()>();
+
+  /// Count the number of joysticks attached to the system.
+  ///
+  /// \returns the number of attached joysticks on success or a negative error
+  /// code on failure; call SDL_GetError() for more information.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_JoystickName
+  /// \sa SDL_JoystickPath
+  /// \sa SDL_JoystickOpen
+  int SDL_NumJoysticks() {
+    return _SDL_NumJoysticks();
+  }
+
+  late final _SDL_NumJoysticksPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function()>>('SDL_NumJoysticks');
+  late final _SDL_NumJoysticks =
+      _SDL_NumJoysticksPtr.asFunction<int Function()>();
+
+  /// Get the implementation dependent name of a joystick.
+  ///
+  /// This can be called before any joysticks are opened.
+  ///
+  /// \param device_index the index of the joystick to query (the N'th joystick
+  /// on the system)
+  /// \returns the name of the selected joystick. If no name can be found, this
+  /// function returns NULL; call SDL_GetError() for more information.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_JoystickName
+  /// \sa SDL_JoystickOpen
+  ffi.Pointer<ffi.Char> SDL_JoystickNameForIndex(
+    int device_index,
+  ) {
+    return _SDL_JoystickNameForIndex(
+      device_index,
+    );
+  }
+
+  late final _SDL_JoystickNameForIndexPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(ffi.Int)>>(
+          'SDL_JoystickNameForIndex');
+  late final _SDL_JoystickNameForIndex = _SDL_JoystickNameForIndexPtr
+      .asFunction<ffi.Pointer<ffi.Char> Function(int)>();
+
+  /// Get the implementation dependent path of a joystick.
+  ///
+  /// This can be called before any joysticks are opened.
+  ///
+  /// \param device_index the index of the joystick to query (the N'th joystick
+  /// on the system)
+  /// \returns the path of the selected joystick. If no path can be found, this
+  /// function returns NULL; call SDL_GetError() for more information.
+  ///
+  /// \since This function is available since SDL 2.24.0.
+  ///
+  /// \sa SDL_JoystickPath
+  /// \sa SDL_JoystickOpen
+  ffi.Pointer<ffi.Char> SDL_JoystickPathForIndex(
+    int device_index,
+  ) {
+    return _SDL_JoystickPathForIndex(
+      device_index,
+    );
+  }
+
+  late final _SDL_JoystickPathForIndexPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(ffi.Int)>>(
+          'SDL_JoystickPathForIndex');
+  late final _SDL_JoystickPathForIndex = _SDL_JoystickPathForIndexPtr
+      .asFunction<ffi.Pointer<ffi.Char> Function(int)>();
+
+  /// Get the player index of a joystick, or -1 if it's not available This can be
+  /// called before any joysticks are opened.
+  ///
+  /// \since This function is available since SDL 2.0.9.
+  int SDL_JoystickGetDevicePlayerIndex(
+    int device_index,
+  ) {
+    return _SDL_JoystickGetDevicePlayerIndex(
+      device_index,
+    );
+  }
+
+  late final _SDL_JoystickGetDevicePlayerIndexPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(ffi.Int)>>(
+          'SDL_JoystickGetDevicePlayerIndex');
+  late final _SDL_JoystickGetDevicePlayerIndex =
+      _SDL_JoystickGetDevicePlayerIndexPtr.asFunction<int Function(int)>();
+
+  /// Get the implementation-dependent GUID for the joystick at a given device
+  /// index.
+  ///
+  /// This function can be called before any joysticks are opened.
+  ///
+  /// \param device_index the index of the joystick to query (the N'th joystick
+  /// on the system
+  /// \returns the GUID of the selected joystick. If called on an invalid index,
+  /// this function returns a zero GUID
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_JoystickGetGUID
+  /// \sa SDL_JoystickGetGUIDString
+  SDL_JoystickGUID SDL_JoystickGetDeviceGUID(
+    int device_index,
+  ) {
+    return _SDL_JoystickGetDeviceGUID(
+      device_index,
+    );
+  }
+
+  late final _SDL_JoystickGetDeviceGUIDPtr =
+      _lookup<ffi.NativeFunction<SDL_JoystickGUID Function(ffi.Int)>>(
+          'SDL_JoystickGetDeviceGUID');
+  late final _SDL_JoystickGetDeviceGUID = _SDL_JoystickGetDeviceGUIDPtr
+      .asFunction<SDL_JoystickGUID Function(int)>();
+
+  /// Get the USB vendor ID of a joystick, if available.
+  ///
+  /// This can be called before any joysticks are opened. If the vendor ID isn't
+  /// available this function returns 0.
+  ///
+  /// \param device_index the index of the joystick to query (the N'th joystick
+  /// on the system
+  /// \returns the USB vendor ID of the selected joystick. If called on an
+  /// invalid index, this function returns zero
+  ///
+  /// \since This function is available since SDL 2.0.6.
+  int SDL_JoystickGetDeviceVendor(
+    int device_index,
+  ) {
+    return _SDL_JoystickGetDeviceVendor(
+      device_index,
+    );
+  }
+
+  late final _SDL_JoystickGetDeviceVendorPtr =
+      _lookup<ffi.NativeFunction<Uint16 Function(ffi.Int)>>(
+          'SDL_JoystickGetDeviceVendor');
+  late final _SDL_JoystickGetDeviceVendor =
+      _SDL_JoystickGetDeviceVendorPtr.asFunction<int Function(int)>();
+
+  /// Get the USB product ID of a joystick, if available.
+  ///
+  /// This can be called before any joysticks are opened. If the product ID isn't
+  /// available this function returns 0.
+  ///
+  /// \param device_index the index of the joystick to query (the N'th joystick
+  /// on the system
+  /// \returns the USB product ID of the selected joystick. If called on an
+  /// invalid index, this function returns zero
+  ///
+  /// \since This function is available since SDL 2.0.6.
+  int SDL_JoystickGetDeviceProduct(
+    int device_index,
+  ) {
+    return _SDL_JoystickGetDeviceProduct(
+      device_index,
+    );
+  }
+
+  late final _SDL_JoystickGetDeviceProductPtr =
+      _lookup<ffi.NativeFunction<Uint16 Function(ffi.Int)>>(
+          'SDL_JoystickGetDeviceProduct');
+  late final _SDL_JoystickGetDeviceProduct =
+      _SDL_JoystickGetDeviceProductPtr.asFunction<int Function(int)>();
+
+  /// Get the product version of a joystick, if available.
+  ///
+  /// This can be called before any joysticks are opened. If the product version
+  /// isn't available this function returns 0.
+  ///
+  /// \param device_index the index of the joystick to query (the N'th joystick
+  /// on the system
+  /// \returns the product version of the selected joystick. If called on an
+  /// invalid index, this function returns zero
+  ///
+  /// \since This function is available since SDL 2.0.6.
+  int SDL_JoystickGetDeviceProductVersion(
+    int device_index,
+  ) {
+    return _SDL_JoystickGetDeviceProductVersion(
+      device_index,
+    );
+  }
+
+  late final _SDL_JoystickGetDeviceProductVersionPtr =
+      _lookup<ffi.NativeFunction<Uint16 Function(ffi.Int)>>(
+          'SDL_JoystickGetDeviceProductVersion');
+  late final _SDL_JoystickGetDeviceProductVersion =
+      _SDL_JoystickGetDeviceProductVersionPtr.asFunction<int Function(int)>();
+
+  /// Get the type of a joystick, if available.
+  ///
+  /// This can be called before any joysticks are opened.
+  ///
+  /// \param device_index the index of the joystick to query (the N'th joystick
+  /// on the system
+  /// \returns the SDL_JoystickType of the selected joystick. If called on an
+  /// invalid index, this function returns `SDL_JOYSTICK_TYPE_UNKNOWN`
+  ///
+  /// \since This function is available since SDL 2.0.6.
+  int SDL_JoystickGetDeviceType(
+    int device_index,
+  ) {
+    return _SDL_JoystickGetDeviceType(
+      device_index,
+    );
+  }
+
+  late final _SDL_JoystickGetDeviceTypePtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Int)>>(
+          'SDL_JoystickGetDeviceType');
+  late final _SDL_JoystickGetDeviceType =
+      _SDL_JoystickGetDeviceTypePtr.asFunction<int Function(int)>();
+
+  /// Get the instance ID of a joystick.
+  ///
+  /// This can be called before any joysticks are opened.
+  ///
+  /// \param device_index the index of the joystick to query (the N'th joystick
+  /// on the system
+  /// \returns the instance id of the selected joystick. If called on an invalid
+  /// index, this function returns -1.
+  ///
+  /// \since This function is available since SDL 2.0.6.
+  int SDL_JoystickGetDeviceInstanceID(
+    int device_index,
+  ) {
+    return _SDL_JoystickGetDeviceInstanceID(
+      device_index,
+    );
+  }
+
+  late final _SDL_JoystickGetDeviceInstanceIDPtr =
+      _lookup<ffi.NativeFunction<SDL_JoystickID Function(ffi.Int)>>(
+          'SDL_JoystickGetDeviceInstanceID');
+  late final _SDL_JoystickGetDeviceInstanceID =
+      _SDL_JoystickGetDeviceInstanceIDPtr.asFunction<int Function(int)>();
+
+  /// Open a joystick for use.
+  ///
+  /// The `device_index` argument refers to the N'th joystick presently
+  /// recognized by SDL on the system. It is **NOT** the same as the instance ID
+  /// used to identify the joystick in future events. See
+  /// SDL_JoystickInstanceID() for more details about instance IDs.
+  ///
+  /// The joystick subsystem must be initialized before a joystick can be opened
+  /// for use.
+  ///
+  /// \param device_index the index of the joystick to query
+  /// \returns a joystick identifier or NULL if an error occurred; call
+  /// SDL_GetError() for more information.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_JoystickClose
+  /// \sa SDL_JoystickInstanceID
+  ffi.Pointer<SDL_Joystick> SDL_JoystickOpen(
+    int device_index,
+  ) {
+    return _SDL_JoystickOpen(
+      device_index,
+    );
+  }
+
+  late final _SDL_JoystickOpenPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<SDL_Joystick> Function(ffi.Int)>>(
+          'SDL_JoystickOpen');
+  late final _SDL_JoystickOpen = _SDL_JoystickOpenPtr.asFunction<
+      ffi.Pointer<SDL_Joystick> Function(int)>();
+
+  /// Get the SDL_Joystick associated with an instance id.
+  ///
+  /// \param instance_id the instance id to get the SDL_Joystick for
+  /// \returns an SDL_Joystick on success or NULL on failure; call SDL_GetError()
+  /// for more information.
+  ///
+  /// \since This function is available since SDL 2.0.4.
+  ffi.Pointer<SDL_Joystick> SDL_JoystickFromInstanceID(
+    int instance_id,
+  ) {
+    return _SDL_JoystickFromInstanceID(
+      instance_id,
+    );
+  }
+
+  late final _SDL_JoystickFromInstanceIDPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Pointer<SDL_Joystick> Function(SDL_JoystickID)>>(
+      'SDL_JoystickFromInstanceID');
+  late final _SDL_JoystickFromInstanceID = _SDL_JoystickFromInstanceIDPtr
+      .asFunction<ffi.Pointer<SDL_Joystick> Function(int)>();
+
+  /// Get the SDL_Joystick associated with a player index.
+  ///
+  /// \param player_index the player index to get the SDL_Joystick for
+  /// \returns an SDL_Joystick on success or NULL on failure; call SDL_GetError()
+  /// for more information.
+  ///
+  /// \since This function is available since SDL 2.0.12.
+  ffi.Pointer<SDL_Joystick> SDL_JoystickFromPlayerIndex(
+    int player_index,
+  ) {
+    return _SDL_JoystickFromPlayerIndex(
+      player_index,
+    );
+  }
+
+  late final _SDL_JoystickFromPlayerIndexPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<SDL_Joystick> Function(ffi.Int)>>(
+          'SDL_JoystickFromPlayerIndex');
+  late final _SDL_JoystickFromPlayerIndex = _SDL_JoystickFromPlayerIndexPtr
+      .asFunction<ffi.Pointer<SDL_Joystick> Function(int)>();
+
+  /// Attach a new virtual joystick.
+  ///
+  /// \returns the joystick's device index, or -1 if an error occurred.
+  ///
+  /// \since This function is available since SDL 2.0.14.
+  int SDL_JoystickAttachVirtual(
+    int type,
+    int naxes,
+    int nbuttons,
+    int nhats,
+  ) {
+    return _SDL_JoystickAttachVirtual(
+      type,
+      naxes,
+      nbuttons,
+      nhats,
+    );
+  }
+
+  late final _SDL_JoystickAttachVirtualPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int Function(ffi.Int32, ffi.Int, ffi.Int,
+              ffi.Int)>>('SDL_JoystickAttachVirtual');
+  late final _SDL_JoystickAttachVirtual = _SDL_JoystickAttachVirtualPtr
+      .asFunction<int Function(int, int, int, int)>();
+
+  /// Attach a new virtual joystick with extended properties.
+  ///
+  /// \returns the joystick's device index, or -1 if an error occurred.
+  ///
+  /// \since This function is available since SDL 2.24.0.
+  int SDL_JoystickAttachVirtualEx(
+    ffi.Pointer<SDL_VirtualJoystickDesc> desc,
+  ) {
+    return _SDL_JoystickAttachVirtualEx(
+      desc,
+    );
+  }
+
+  late final _SDL_JoystickAttachVirtualExPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int Function(ffi.Pointer<SDL_VirtualJoystickDesc>)>>(
+      'SDL_JoystickAttachVirtualEx');
+  late final _SDL_JoystickAttachVirtualEx = _SDL_JoystickAttachVirtualExPtr
+      .asFunction<int Function(ffi.Pointer<SDL_VirtualJoystickDesc>)>();
+
+  /// Detach a virtual joystick.
+  ///
+  /// \param device_index a value previously returned from
+  /// SDL_JoystickAttachVirtual()
+  /// \returns 0 on success, or -1 if an error occurred.
+  ///
+  /// \since This function is available since SDL 2.0.14.
+  int SDL_JoystickDetachVirtual(
+    int device_index,
+  ) {
+    return _SDL_JoystickDetachVirtual(
+      device_index,
+    );
+  }
+
+  late final _SDL_JoystickDetachVirtualPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(ffi.Int)>>(
+          'SDL_JoystickDetachVirtual');
+  late final _SDL_JoystickDetachVirtual =
+      _SDL_JoystickDetachVirtualPtr.asFunction<int Function(int)>();
+
+  /// Query whether or not the joystick at a given device index is virtual.
+  ///
+  /// \param device_index a joystick device index.
+  /// \returns SDL_TRUE if the joystick is virtual, SDL_FALSE otherwise.
+  ///
+  /// \since This function is available since SDL 2.0.14.
+  int SDL_JoystickIsVirtual(
+    int device_index,
+  ) {
+    return _SDL_JoystickIsVirtual(
+      device_index,
+    );
+  }
+
+  late final _SDL_JoystickIsVirtualPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Int)>>(
+          'SDL_JoystickIsVirtual');
+  late final _SDL_JoystickIsVirtual =
+      _SDL_JoystickIsVirtualPtr.asFunction<int Function(int)>();
+
+  /// Set values on an opened, virtual-joystick's axis.
+  ///
+  /// Please note that values set here will not be applied until the next call to
+  /// SDL_JoystickUpdate, which can either be called directly, or can be called
+  /// indirectly through various other SDL APIs, including, but not limited to
+  /// the following: SDL_PollEvent, SDL_PumpEvents, SDL_WaitEventTimeout,
+  /// SDL_WaitEvent.
+  ///
+  /// Note that when sending trigger axes, you should scale the value to the full
+  /// range of Sint16. For example, a trigger at rest would have the value of
+  /// `SDL_JOYSTICK_AXIS_MIN`.
+  ///
+  /// \param joystick the virtual joystick on which to set state.
+  /// \param axis the specific axis on the virtual joystick to set.
+  /// \param value the new value for the specified axis.
+  /// \returns 0 on success, -1 on error.
+  ///
+  /// \since This function is available since SDL 2.0.14.
+  int SDL_JoystickSetVirtualAxis(
+    ffi.Pointer<SDL_Joystick> joystick,
+    int axis,
+    int value,
+  ) {
+    return _SDL_JoystickSetVirtualAxis(
+      joystick,
+      axis,
+      value,
+    );
+  }
+
+  late final _SDL_JoystickSetVirtualAxisPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int Function(ffi.Pointer<SDL_Joystick>, ffi.Int,
+              Sint16)>>('SDL_JoystickSetVirtualAxis');
+  late final _SDL_JoystickSetVirtualAxis = _SDL_JoystickSetVirtualAxisPtr
+      .asFunction<int Function(ffi.Pointer<SDL_Joystick>, int, int)>();
+
+  /// Set values on an opened, virtual-joystick's button.
+  ///
+  /// Please note that values set here will not be applied until the next call to
+  /// SDL_JoystickUpdate, which can either be called directly, or can be called
+  /// indirectly through various other SDL APIs, including, but not limited to
+  /// the following: SDL_PollEvent, SDL_PumpEvents, SDL_WaitEventTimeout,
+  /// SDL_WaitEvent.
+  ///
+  /// \param joystick the virtual joystick on which to set state.
+  /// \param button the specific button on the virtual joystick to set.
+  /// \param value the new value for the specified button.
+  /// \returns 0 on success, -1 on error.
+  ///
+  /// \since This function is available since SDL 2.0.14.
+  int SDL_JoystickSetVirtualButton(
+    ffi.Pointer<SDL_Joystick> joystick,
+    int button,
+    int value,
+  ) {
+    return _SDL_JoystickSetVirtualButton(
+      joystick,
+      button,
+      value,
+    );
+  }
+
+  late final _SDL_JoystickSetVirtualButtonPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int Function(ffi.Pointer<SDL_Joystick>, ffi.Int,
+              Uint8)>>('SDL_JoystickSetVirtualButton');
+  late final _SDL_JoystickSetVirtualButton = _SDL_JoystickSetVirtualButtonPtr
+      .asFunction<int Function(ffi.Pointer<SDL_Joystick>, int, int)>();
+
+  /// Set values on an opened, virtual-joystick's hat.
+  ///
+  /// Please note that values set here will not be applied until the next call to
+  /// SDL_JoystickUpdate, which can either be called directly, or can be called
+  /// indirectly through various other SDL APIs, including, but not limited to
+  /// the following: SDL_PollEvent, SDL_PumpEvents, SDL_WaitEventTimeout,
+  /// SDL_WaitEvent.
+  ///
+  /// \param joystick the virtual joystick on which to set state.
+  /// \param hat the specific hat on the virtual joystick to set.
+  /// \param value the new value for the specified hat.
+  /// \returns 0 on success, -1 on error.
+  ///
+  /// \since This function is available since SDL 2.0.14.
+  int SDL_JoystickSetVirtualHat(
+    ffi.Pointer<SDL_Joystick> joystick,
+    int hat,
+    int value,
+  ) {
+    return _SDL_JoystickSetVirtualHat(
+      joystick,
+      hat,
+      value,
+    );
+  }
+
+  late final _SDL_JoystickSetVirtualHatPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int Function(ffi.Pointer<SDL_Joystick>, ffi.Int,
+              Uint8)>>('SDL_JoystickSetVirtualHat');
+  late final _SDL_JoystickSetVirtualHat = _SDL_JoystickSetVirtualHatPtr
+      .asFunction<int Function(ffi.Pointer<SDL_Joystick>, int, int)>();
+
+  /// Get the implementation dependent name of a joystick.
+  ///
+  /// \param joystick the SDL_Joystick obtained from SDL_JoystickOpen()
+  /// \returns the name of the selected joystick. If no name can be found, this
+  /// function returns NULL; call SDL_GetError() for more information.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_JoystickNameForIndex
+  /// \sa SDL_JoystickOpen
+  ffi.Pointer<ffi.Char> SDL_JoystickName(
+    ffi.Pointer<SDL_Joystick> joystick,
+  ) {
+    return _SDL_JoystickName(
+      joystick,
+    );
+  }
+
+  late final _SDL_JoystickNamePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<ffi.Char> Function(
+              ffi.Pointer<SDL_Joystick>)>>('SDL_JoystickName');
+  late final _SDL_JoystickName = _SDL_JoystickNamePtr.asFunction<
+      ffi.Pointer<ffi.Char> Function(ffi.Pointer<SDL_Joystick>)>();
+
+  /// Get the implementation dependent path of a joystick.
+  ///
+  /// \param joystick the SDL_Joystick obtained from SDL_JoystickOpen()
+  /// \returns the path of the selected joystick. If no path can be found, this
+  /// function returns NULL; call SDL_GetError() for more information.
+  ///
+  /// \since This function is available since SDL 2.24.0.
+  ///
+  /// \sa SDL_JoystickPathForIndex
+  ffi.Pointer<ffi.Char> SDL_JoystickPath(
+    ffi.Pointer<SDL_Joystick> joystick,
+  ) {
+    return _SDL_JoystickPath(
+      joystick,
+    );
+  }
+
+  late final _SDL_JoystickPathPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<ffi.Char> Function(
+              ffi.Pointer<SDL_Joystick>)>>('SDL_JoystickPath');
+  late final _SDL_JoystickPath = _SDL_JoystickPathPtr.asFunction<
+      ffi.Pointer<ffi.Char> Function(ffi.Pointer<SDL_Joystick>)>();
+
+  /// Get the player index of an opened joystick.
+  ///
+  /// For XInput controllers this returns the XInput user index. Many joysticks
+  /// will not be able to supply this information.
+  ///
+  /// \param joystick the SDL_Joystick obtained from SDL_JoystickOpen()
+  /// \returns the player index, or -1 if it's not available.
+  ///
+  /// \since This function is available since SDL 2.0.9.
+  int SDL_JoystickGetPlayerIndex(
+    ffi.Pointer<SDL_Joystick> joystick,
+  ) {
+    return _SDL_JoystickGetPlayerIndex(
+      joystick,
+    );
+  }
+
+  late final _SDL_JoystickGetPlayerIndexPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(ffi.Pointer<SDL_Joystick>)>>(
+          'SDL_JoystickGetPlayerIndex');
+  late final _SDL_JoystickGetPlayerIndex = _SDL_JoystickGetPlayerIndexPtr
+      .asFunction<int Function(ffi.Pointer<SDL_Joystick>)>();
+
+  /// Set the player index of an opened joystick.
+  ///
+  /// \param joystick the SDL_Joystick obtained from SDL_JoystickOpen()
+  /// \param player_index Player index to assign to this joystick, or -1 to clear
+  /// the player index and turn off player LEDs.
+  ///
+  /// \since This function is available since SDL 2.0.12.
+  void SDL_JoystickSetPlayerIndex(
+    ffi.Pointer<SDL_Joystick> joystick,
+    int player_index,
+  ) {
+    return _SDL_JoystickSetPlayerIndex(
+      joystick,
+      player_index,
+    );
+  }
+
+  late final _SDL_JoystickSetPlayerIndexPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(ffi.Pointer<SDL_Joystick>,
+              ffi.Int)>>('SDL_JoystickSetPlayerIndex');
+  late final _SDL_JoystickSetPlayerIndex = _SDL_JoystickSetPlayerIndexPtr
+      .asFunction<void Function(ffi.Pointer<SDL_Joystick>, int)>();
+
+  /// Get the implementation-dependent GUID for the joystick.
+  ///
+  /// This function requires an open joystick.
+  ///
+  /// \param joystick the SDL_Joystick obtained from SDL_JoystickOpen()
+  /// \returns the GUID of the given joystick. If called on an invalid index,
+  /// this function returns a zero GUID; call SDL_GetError() for more
+  /// information.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_JoystickGetDeviceGUID
+  /// \sa SDL_JoystickGetGUIDString
+  SDL_JoystickGUID SDL_JoystickGetGUID(
+    ffi.Pointer<SDL_Joystick> joystick,
+  ) {
+    return _SDL_JoystickGetGUID(
+      joystick,
+    );
+  }
+
+  late final _SDL_JoystickGetGUIDPtr = _lookup<
+      ffi.NativeFunction<
+          SDL_JoystickGUID Function(
+              ffi.Pointer<SDL_Joystick>)>>('SDL_JoystickGetGUID');
+  late final _SDL_JoystickGetGUID = _SDL_JoystickGetGUIDPtr.asFunction<
+      SDL_JoystickGUID Function(ffi.Pointer<SDL_Joystick>)>();
+
+  /// Get the USB vendor ID of an opened joystick, if available.
+  ///
+  /// If the vendor ID isn't available this function returns 0.
+  ///
+  /// \param joystick the SDL_Joystick obtained from SDL_JoystickOpen()
+  /// \returns the USB vendor ID of the selected joystick, or 0 if unavailable.
+  ///
+  /// \since This function is available since SDL 2.0.6.
+  int SDL_JoystickGetVendor(
+    ffi.Pointer<SDL_Joystick> joystick,
+  ) {
+    return _SDL_JoystickGetVendor(
+      joystick,
+    );
+  }
+
+  late final _SDL_JoystickGetVendorPtr =
+      _lookup<ffi.NativeFunction<Uint16 Function(ffi.Pointer<SDL_Joystick>)>>(
+          'SDL_JoystickGetVendor');
+  late final _SDL_JoystickGetVendor = _SDL_JoystickGetVendorPtr.asFunction<
+      int Function(ffi.Pointer<SDL_Joystick>)>();
+
+  /// Get the USB product ID of an opened joystick, if available.
+  ///
+  /// If the product ID isn't available this function returns 0.
+  ///
+  /// \param joystick the SDL_Joystick obtained from SDL_JoystickOpen()
+  /// \returns the USB product ID of the selected joystick, or 0 if unavailable.
+  ///
+  /// \since This function is available since SDL 2.0.6.
+  int SDL_JoystickGetProduct(
+    ffi.Pointer<SDL_Joystick> joystick,
+  ) {
+    return _SDL_JoystickGetProduct(
+      joystick,
+    );
+  }
+
+  late final _SDL_JoystickGetProductPtr =
+      _lookup<ffi.NativeFunction<Uint16 Function(ffi.Pointer<SDL_Joystick>)>>(
+          'SDL_JoystickGetProduct');
+  late final _SDL_JoystickGetProduct = _SDL_JoystickGetProductPtr.asFunction<
+      int Function(ffi.Pointer<SDL_Joystick>)>();
+
+  /// Get the product version of an opened joystick, if available.
+  ///
+  /// If the product version isn't available this function returns 0.
+  ///
+  /// \param joystick the SDL_Joystick obtained from SDL_JoystickOpen()
+  /// \returns the product version of the selected joystick, or 0 if unavailable.
+  ///
+  /// \since This function is available since SDL 2.0.6.
+  int SDL_JoystickGetProductVersion(
+    ffi.Pointer<SDL_Joystick> joystick,
+  ) {
+    return _SDL_JoystickGetProductVersion(
+      joystick,
+    );
+  }
+
+  late final _SDL_JoystickGetProductVersionPtr =
+      _lookup<ffi.NativeFunction<Uint16 Function(ffi.Pointer<SDL_Joystick>)>>(
+          'SDL_JoystickGetProductVersion');
+  late final _SDL_JoystickGetProductVersion = _SDL_JoystickGetProductVersionPtr
+      .asFunction<int Function(ffi.Pointer<SDL_Joystick>)>();
+
+  /// Get the firmware version of an opened joystick, if available.
+  ///
+  /// If the firmware version isn't available this function returns 0.
+  ///
+  /// \param joystick the SDL_Joystick obtained from SDL_JoystickOpen()
+  /// \returns the firmware version of the selected joystick, or 0 if
+  /// unavailable.
+  ///
+  /// \since This function is available since SDL 2.24.0.
+  int SDL_JoystickGetFirmwareVersion(
+    ffi.Pointer<SDL_Joystick> joystick,
+  ) {
+    return _SDL_JoystickGetFirmwareVersion(
+      joystick,
+    );
+  }
+
+  late final _SDL_JoystickGetFirmwareVersionPtr =
+      _lookup<ffi.NativeFunction<Uint16 Function(ffi.Pointer<SDL_Joystick>)>>(
+          'SDL_JoystickGetFirmwareVersion');
+  late final _SDL_JoystickGetFirmwareVersion =
+      _SDL_JoystickGetFirmwareVersionPtr.asFunction<
+          int Function(ffi.Pointer<SDL_Joystick>)>();
+
+  /// Get the serial number of an opened joystick, if available.
+  ///
+  /// Returns the serial number of the joystick, or NULL if it is not available.
+  ///
+  /// \param joystick the SDL_Joystick obtained from SDL_JoystickOpen()
+  /// \returns the serial number of the selected joystick, or NULL if
+  /// unavailable.
+  ///
+  /// \since This function is available since SDL 2.0.14.
+  ffi.Pointer<ffi.Char> SDL_JoystickGetSerial(
+    ffi.Pointer<SDL_Joystick> joystick,
+  ) {
+    return _SDL_JoystickGetSerial(
+      joystick,
+    );
+  }
+
+  late final _SDL_JoystickGetSerialPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<ffi.Char> Function(
+              ffi.Pointer<SDL_Joystick>)>>('SDL_JoystickGetSerial');
+  late final _SDL_JoystickGetSerial = _SDL_JoystickGetSerialPtr.asFunction<
+      ffi.Pointer<ffi.Char> Function(ffi.Pointer<SDL_Joystick>)>();
+
+  /// Get the type of an opened joystick.
+  ///
+  /// \param joystick the SDL_Joystick obtained from SDL_JoystickOpen()
+  /// \returns the SDL_JoystickType of the selected joystick.
+  ///
+  /// \since This function is available since SDL 2.0.6.
+  int SDL_JoystickGetType(
+    ffi.Pointer<SDL_Joystick> joystick,
+  ) {
+    return _SDL_JoystickGetType(
+      joystick,
+    );
+  }
+
+  late final _SDL_JoystickGetTypePtr = _lookup<
+          ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<SDL_Joystick>)>>(
+      'SDL_JoystickGetType');
+  late final _SDL_JoystickGetType = _SDL_JoystickGetTypePtr.asFunction<
+      int Function(ffi.Pointer<SDL_Joystick>)>();
+
+  /// Get an ASCII string representation for a given SDL_JoystickGUID.
+  ///
+  /// You should supply at least 33 bytes for pszGUID.
+  ///
+  /// \param guid the SDL_JoystickGUID you wish to convert to string
+  /// \param pszGUID buffer in which to write the ASCII string
+  /// \param cbGUID the size of pszGUID
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_JoystickGetDeviceGUID
+  /// \sa SDL_JoystickGetGUID
+  /// \sa SDL_JoystickGetGUIDFromString
+  void SDL_JoystickGetGUIDString(
+    SDL_JoystickGUID guid,
+    ffi.Pointer<ffi.Char> pszGUID,
+    int cbGUID,
+  ) {
+    return _SDL_JoystickGetGUIDString(
+      guid,
+      pszGUID,
+      cbGUID,
+    );
+  }
+
+  late final _SDL_JoystickGetGUIDStringPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(SDL_JoystickGUID, ffi.Pointer<ffi.Char>,
+              ffi.Int)>>('SDL_JoystickGetGUIDString');
+  late final _SDL_JoystickGetGUIDString =
+      _SDL_JoystickGetGUIDStringPtr.asFunction<
+          void Function(SDL_JoystickGUID, ffi.Pointer<ffi.Char>, int)>();
+
+  /// Convert a GUID string into a SDL_JoystickGUID structure.
+  ///
+  /// Performs no error checking. If this function is given a string containing
+  /// an invalid GUID, the function will silently succeed, but the GUID generated
+  /// will not be useful.
+  ///
+  /// \param pchGUID string containing an ASCII representation of a GUID
+  /// \returns a SDL_JoystickGUID structure.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_JoystickGetGUIDString
+  SDL_JoystickGUID SDL_JoystickGetGUIDFromString(
+    ffi.Pointer<ffi.Char> pchGUID,
+  ) {
+    return _SDL_JoystickGetGUIDFromString(
+      pchGUID,
+    );
+  }
+
+  late final _SDL_JoystickGetGUIDFromStringPtr = _lookup<
+          ffi.NativeFunction<SDL_JoystickGUID Function(ffi.Pointer<ffi.Char>)>>(
+      'SDL_JoystickGetGUIDFromString');
+  late final _SDL_JoystickGetGUIDFromString = _SDL_JoystickGetGUIDFromStringPtr
+      .asFunction<SDL_JoystickGUID Function(ffi.Pointer<ffi.Char>)>();
+
+  /// Get the device information encoded in a SDL_JoystickGUID structure
+  ///
+  /// \param guid the SDL_JoystickGUID you wish to get info about
+  /// \param vendor A pointer filled in with the device VID, or 0 if not
+  /// available
+  /// \param product A pointer filled in with the device PID, or 0 if not
+  /// available
+  /// \param version A pointer filled in with the device version, or 0 if not
+  /// available
+  /// \param crc16 A pointer filled in with a CRC used to distinguish different
+  /// products with the same VID/PID, or 0 if not available
+  ///
+  /// \since This function is available since SDL 2.26.0.
+  ///
+  /// \sa SDL_JoystickGetDeviceGUID
+  void SDL_GetJoystickGUIDInfo(
+    SDL_JoystickGUID guid,
+    ffi.Pointer<Uint16> vendor,
+    ffi.Pointer<Uint16> product,
+    ffi.Pointer<Uint16> version,
+    ffi.Pointer<Uint16> crc16,
+  ) {
+    return _SDL_GetJoystickGUIDInfo(
+      guid,
+      vendor,
+      product,
+      version,
+      crc16,
+    );
+  }
+
+  late final _SDL_GetJoystickGUIDInfoPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(
+              SDL_JoystickGUID,
+              ffi.Pointer<Uint16>,
+              ffi.Pointer<Uint16>,
+              ffi.Pointer<Uint16>,
+              ffi.Pointer<Uint16>)>>('SDL_GetJoystickGUIDInfo');
+  late final _SDL_GetJoystickGUIDInfo = _SDL_GetJoystickGUIDInfoPtr.asFunction<
+      void Function(SDL_JoystickGUID, ffi.Pointer<Uint16>, ffi.Pointer<Uint16>,
+          ffi.Pointer<Uint16>, ffi.Pointer<Uint16>)>();
+
+  /// Get the status of a specified joystick.
+  ///
+  /// \param joystick the joystick to query
+  /// \returns SDL_TRUE if the joystick has been opened, SDL_FALSE if it has not;
+  /// call SDL_GetError() for more information.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_JoystickClose
+  /// \sa SDL_JoystickOpen
+  int SDL_JoystickGetAttached(
+    ffi.Pointer<SDL_Joystick> joystick,
+  ) {
+    return _SDL_JoystickGetAttached(
+      joystick,
+    );
+  }
+
+  late final _SDL_JoystickGetAttachedPtr = _lookup<
+          ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<SDL_Joystick>)>>(
+      'SDL_JoystickGetAttached');
+  late final _SDL_JoystickGetAttached = _SDL_JoystickGetAttachedPtr.asFunction<
+      int Function(ffi.Pointer<SDL_Joystick>)>();
+
+  /// Get the instance ID of an opened joystick.
+  ///
+  /// \param joystick an SDL_Joystick structure containing joystick information
+  /// \returns the instance ID of the specified joystick on success or a negative
+  /// error code on failure; call SDL_GetError() for more information.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_JoystickOpen
+  int SDL_JoystickInstanceID(
+    ffi.Pointer<SDL_Joystick> joystick,
+  ) {
+    return _SDL_JoystickInstanceID(
+      joystick,
+    );
+  }
+
+  late final _SDL_JoystickInstanceIDPtr = _lookup<
+          ffi
+          .NativeFunction<SDL_JoystickID Function(ffi.Pointer<SDL_Joystick>)>>(
+      'SDL_JoystickInstanceID');
+  late final _SDL_JoystickInstanceID = _SDL_JoystickInstanceIDPtr.asFunction<
+      int Function(ffi.Pointer<SDL_Joystick>)>();
+
+  /// Get the number of general axis controls on a joystick.
+  ///
+  /// Often, the directional pad on a game controller will either look like 4
+  /// separate buttons or a POV hat, and not axes, but all of this is up to the
+  /// device and platform.
+  ///
+  /// \param joystick an SDL_Joystick structure containing joystick information
+  /// \returns the number of axis controls/number of axes on success or a
+  /// negative error code on failure; call SDL_GetError() for more
+  /// information.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_JoystickGetAxis
+  /// \sa SDL_JoystickOpen
+  int SDL_JoystickNumAxes(
+    ffi.Pointer<SDL_Joystick> joystick,
+  ) {
+    return _SDL_JoystickNumAxes(
+      joystick,
+    );
+  }
+
+  late final _SDL_JoystickNumAxesPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(ffi.Pointer<SDL_Joystick>)>>(
+          'SDL_JoystickNumAxes');
+  late final _SDL_JoystickNumAxes = _SDL_JoystickNumAxesPtr.asFunction<
+      int Function(ffi.Pointer<SDL_Joystick>)>();
+
+  /// Get the number of trackballs on a joystick.
+  ///
+  /// Joystick trackballs have only relative motion events associated with them
+  /// and their state cannot be polled.
+  ///
+  /// Most joysticks do not have trackballs.
+  ///
+  /// \param joystick an SDL_Joystick structure containing joystick information
+  /// \returns the number of trackballs on success or a negative error code on
+  /// failure; call SDL_GetError() for more information.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_JoystickGetBall
+  int SDL_JoystickNumBalls(
+    ffi.Pointer<SDL_Joystick> joystick,
+  ) {
+    return _SDL_JoystickNumBalls(
+      joystick,
+    );
+  }
+
+  late final _SDL_JoystickNumBallsPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(ffi.Pointer<SDL_Joystick>)>>(
+          'SDL_JoystickNumBalls');
+  late final _SDL_JoystickNumBalls = _SDL_JoystickNumBallsPtr.asFunction<
+      int Function(ffi.Pointer<SDL_Joystick>)>();
+
+  /// Get the number of POV hats on a joystick.
+  ///
+  /// \param joystick an SDL_Joystick structure containing joystick information
+  /// \returns the number of POV hats on success or a negative error code on
+  /// failure; call SDL_GetError() for more information.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_JoystickGetHat
+  /// \sa SDL_JoystickOpen
+  int SDL_JoystickNumHats(
+    ffi.Pointer<SDL_Joystick> joystick,
+  ) {
+    return _SDL_JoystickNumHats(
+      joystick,
+    );
+  }
+
+  late final _SDL_JoystickNumHatsPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(ffi.Pointer<SDL_Joystick>)>>(
+          'SDL_JoystickNumHats');
+  late final _SDL_JoystickNumHats = _SDL_JoystickNumHatsPtr.asFunction<
+      int Function(ffi.Pointer<SDL_Joystick>)>();
+
+  /// Get the number of buttons on a joystick.
+  ///
+  /// \param joystick an SDL_Joystick structure containing joystick information
+  /// \returns the number of buttons on success or a negative error code on
+  /// failure; call SDL_GetError() for more information.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_JoystickGetButton
+  /// \sa SDL_JoystickOpen
+  int SDL_JoystickNumButtons(
+    ffi.Pointer<SDL_Joystick> joystick,
+  ) {
+    return _SDL_JoystickNumButtons(
+      joystick,
+    );
+  }
+
+  late final _SDL_JoystickNumButtonsPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(ffi.Pointer<SDL_Joystick>)>>(
+          'SDL_JoystickNumButtons');
+  late final _SDL_JoystickNumButtons = _SDL_JoystickNumButtonsPtr.asFunction<
+      int Function(ffi.Pointer<SDL_Joystick>)>();
+
+  /// Update the current state of the open joysticks.
+  ///
+  /// This is called automatically by the event loop if any joystick events are
+  /// enabled.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_JoystickEventState
+  void SDL_JoystickUpdate() {
+    return _SDL_JoystickUpdate();
+  }
+
+  late final _SDL_JoystickUpdatePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function()>>('SDL_JoystickUpdate');
+  late final _SDL_JoystickUpdate =
+      _SDL_JoystickUpdatePtr.asFunction<void Function()>();
+
+  /// Enable/disable joystick event polling.
+  ///
+  /// If joystick events are disabled, you must call SDL_JoystickUpdate()
+  /// yourself and manually check the state of the joystick when you want
+  /// joystick information.
+  ///
+  /// It is recommended that you leave joystick event handling enabled.
+  ///
+  /// **WARNING**: Calling this function may delete all events currently in SDL's
+  /// event queue.
+  ///
+  /// \param state can be one of `SDL_QUERY`, `SDL_IGNORE`, or `SDL_ENABLE`
+  /// \returns 1 if enabled, 0 if disabled, or a negative error code on failure;
+  /// call SDL_GetError() for more information.
+  ///
+  /// If `state` is `SDL_QUERY` then the current state is returned,
+  /// otherwise the new processing state is returned.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_GameControllerEventState
+  int SDL_JoystickEventState(
+    int state,
+  ) {
+    return _SDL_JoystickEventState(
+      state,
+    );
+  }
+
+  late final _SDL_JoystickEventStatePtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(ffi.Int)>>(
+          'SDL_JoystickEventState');
+  late final _SDL_JoystickEventState =
+      _SDL_JoystickEventStatePtr.asFunction<int Function(int)>();
+
+  /// Get the current state of an axis control on a joystick.
+  ///
+  /// SDL makes no promises about what part of the joystick any given axis refers
+  /// to. Your game should have some sort of configuration UI to let users
+  /// specify what each axis should be bound to. Alternately, SDL's higher-level
+  /// Game Controller API makes a great effort to apply order to this lower-level
+  /// interface, so you know that a specific axis is the "left thumb stick," etc.
+  ///
+  /// The value returned by SDL_JoystickGetAxis() is a signed integer (-32768 to
+  /// 32767) representing the current position of the axis. It may be necessary
+  /// to impose certain tolerances on these values to account for jitter.
+  ///
+  /// \param joystick an SDL_Joystick structure containing joystick information
+  /// \param axis the axis to query; the axis indices start at index 0
+  /// \returns a 16-bit signed integer representing the current position of the
+  /// axis or 0 on failure; call SDL_GetError() for more information.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_JoystickNumAxes
+  int SDL_JoystickGetAxis(
+    ffi.Pointer<SDL_Joystick> joystick,
+    int axis,
+  ) {
+    return _SDL_JoystickGetAxis(
+      joystick,
+      axis,
+    );
+  }
+
+  late final _SDL_JoystickGetAxisPtr = _lookup<
+          ffi
+          .NativeFunction<Sint16 Function(ffi.Pointer<SDL_Joystick>, ffi.Int)>>(
+      'SDL_JoystickGetAxis');
+  late final _SDL_JoystickGetAxis = _SDL_JoystickGetAxisPtr.asFunction<
+      int Function(ffi.Pointer<SDL_Joystick>, int)>();
+
+  /// Get the initial state of an axis control on a joystick.
+  ///
+  /// The state is a value ranging from -32768 to 32767.
+  ///
+  /// The axis indices start at index 0.
+  ///
+  /// \param joystick an SDL_Joystick structure containing joystick information
+  /// \param axis the axis to query; the axis indices start at index 0
+  /// \param state Upon return, the initial value is supplied here.
+  /// \return SDL_TRUE if this axis has any initial value, or SDL_FALSE if not.
+  ///
+  /// \since This function is available since SDL 2.0.6.
+  int SDL_JoystickGetAxisInitialState(
+    ffi.Pointer<SDL_Joystick> joystick,
+    int axis,
+    ffi.Pointer<Sint16> state,
+  ) {
+    return _SDL_JoystickGetAxisInitialState(
+      joystick,
+      axis,
+      state,
+    );
+  }
+
+  late final _SDL_JoystickGetAxisInitialStatePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int32 Function(ffi.Pointer<SDL_Joystick>, ffi.Int,
+              ffi.Pointer<Sint16>)>>('SDL_JoystickGetAxisInitialState');
+  late final _SDL_JoystickGetAxisInitialState =
+      _SDL_JoystickGetAxisInitialStatePtr.asFunction<
+          int Function(ffi.Pointer<SDL_Joystick>, int, ffi.Pointer<Sint16>)>();
+
+  /// Get the current state of a POV hat on a joystick.
+  ///
+  /// The returned value will be one of the following positions:
+  ///
+  /// - `SDL_HAT_CENTERED`
+  /// - `SDL_HAT_UP`
+  /// - `SDL_HAT_RIGHT`
+  /// - `SDL_HAT_DOWN`
+  /// - `SDL_HAT_LEFT`
+  /// - `SDL_HAT_RIGHTUP`
+  /// - `SDL_HAT_RIGHTDOWN`
+  /// - `SDL_HAT_LEFTUP`
+  /// - `SDL_HAT_LEFTDOWN`
+  ///
+  /// \param joystick an SDL_Joystick structure containing joystick information
+  /// \param hat the hat index to get the state from; indices start at index 0
+  /// \returns the current hat position.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_JoystickNumHats
+  int SDL_JoystickGetHat(
+    ffi.Pointer<SDL_Joystick> joystick,
+    int hat,
+  ) {
+    return _SDL_JoystickGetHat(
+      joystick,
+      hat,
+    );
+  }
+
+  late final _SDL_JoystickGetHatPtr = _lookup<
+          ffi
+          .NativeFunction<Uint8 Function(ffi.Pointer<SDL_Joystick>, ffi.Int)>>(
+      'SDL_JoystickGetHat');
+  late final _SDL_JoystickGetHat = _SDL_JoystickGetHatPtr.asFunction<
+      int Function(ffi.Pointer<SDL_Joystick>, int)>();
+
+  /// Get the ball axis change since the last poll.
+  ///
+  /// Trackballs can only return relative motion since the last call to
+  /// SDL_JoystickGetBall(), these motion deltas are placed into `dx` and `dy`.
+  ///
+  /// Most joysticks do not have trackballs.
+  ///
+  /// \param joystick the SDL_Joystick to query
+  /// \param ball the ball index to query; ball indices start at index 0
+  /// \param dx stores the difference in the x axis position since the last poll
+  /// \param dy stores the difference in the y axis position since the last poll
+  /// \returns 0 on success or a negative error code on failure; call
+  /// SDL_GetError() for more information.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_JoystickNumBalls
+  int SDL_JoystickGetBall(
+    ffi.Pointer<SDL_Joystick> joystick,
+    int ball,
+    ffi.Pointer<ffi.Int> dx,
+    ffi.Pointer<ffi.Int> dy,
+  ) {
+    return _SDL_JoystickGetBall(
+      joystick,
+      ball,
+      dx,
+      dy,
+    );
+  }
+
+  late final _SDL_JoystickGetBallPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int Function(
+              ffi.Pointer<SDL_Joystick>,
+              ffi.Int,
+              ffi.Pointer<ffi.Int>,
+              ffi.Pointer<ffi.Int>)>>('SDL_JoystickGetBall');
+  late final _SDL_JoystickGetBall = _SDL_JoystickGetBallPtr.asFunction<
+      int Function(ffi.Pointer<SDL_Joystick>, int, ffi.Pointer<ffi.Int>,
+          ffi.Pointer<ffi.Int>)>();
+
+  /// Get the current state of a button on a joystick.
+  ///
+  /// \param joystick an SDL_Joystick structure containing joystick information
+  /// \param button the button index to get the state from; indices start at
+  /// index 0
+  /// \returns 1 if the specified button is pressed, 0 otherwise.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_JoystickNumButtons
+  int SDL_JoystickGetButton(
+    ffi.Pointer<SDL_Joystick> joystick,
+    int button,
+  ) {
+    return _SDL_JoystickGetButton(
+      joystick,
+      button,
+    );
+  }
+
+  late final _SDL_JoystickGetButtonPtr = _lookup<
+          ffi
+          .NativeFunction<Uint8 Function(ffi.Pointer<SDL_Joystick>, ffi.Int)>>(
+      'SDL_JoystickGetButton');
+  late final _SDL_JoystickGetButton = _SDL_JoystickGetButtonPtr.asFunction<
+      int Function(ffi.Pointer<SDL_Joystick>, int)>();
+
+  /// Start a rumble effect.
+  ///
+  /// Each call to this function cancels any previous rumble effect, and calling
+  /// it with 0 intensity stops any rumbling.
+  ///
+  /// \param joystick The joystick to vibrate
+  /// \param low_frequency_rumble The intensity of the low frequency (left)
+  /// rumble motor, from 0 to 0xFFFF
+  /// \param high_frequency_rumble The intensity of the high frequency (right)
+  /// rumble motor, from 0 to 0xFFFF
+  /// \param duration_ms The duration of the rumble effect, in milliseconds
+  /// \returns 0, or -1 if rumble isn't supported on this joystick
+  ///
+  /// \since This function is available since SDL 2.0.9.
+  ///
+  /// \sa SDL_JoystickHasRumble
+  int SDL_JoystickRumble(
+    ffi.Pointer<SDL_Joystick> joystick,
+    int low_frequency_rumble,
+    int high_frequency_rumble,
+    int duration_ms,
+  ) {
+    return _SDL_JoystickRumble(
+      joystick,
+      low_frequency_rumble,
+      high_frequency_rumble,
+      duration_ms,
+    );
+  }
+
+  late final _SDL_JoystickRumblePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int Function(ffi.Pointer<SDL_Joystick>, Uint16, Uint16,
+              Uint32)>>('SDL_JoystickRumble');
+  late final _SDL_JoystickRumble = _SDL_JoystickRumblePtr.asFunction<
+      int Function(ffi.Pointer<SDL_Joystick>, int, int, int)>();
+
+  /// Start a rumble effect in the joystick's triggers
+  ///
+  /// Each call to this function cancels any previous trigger rumble effect, and
+  /// calling it with 0 intensity stops any rumbling.
+  ///
+  /// Note that this is rumbling of the _triggers_ and not the game controller as
+  /// a whole. This is currently only supported on Xbox One controllers. If you
+  /// want the (more common) whole-controller rumble, use SDL_JoystickRumble()
+  /// instead.
+  ///
+  /// \param joystick The joystick to vibrate
+  /// \param left_rumble The intensity of the left trigger rumble motor, from 0
+  /// to 0xFFFF
+  /// \param right_rumble The intensity of the right trigger rumble motor, from 0
+  /// to 0xFFFF
+  /// \param duration_ms The duration of the rumble effect, in milliseconds
+  /// \returns 0, or -1 if trigger rumble isn't supported on this joystick
+  ///
+  /// \since This function is available since SDL 2.0.14.
+  ///
+  /// \sa SDL_JoystickHasRumbleTriggers
+  int SDL_JoystickRumbleTriggers(
+    ffi.Pointer<SDL_Joystick> joystick,
+    int left_rumble,
+    int right_rumble,
+    int duration_ms,
+  ) {
+    return _SDL_JoystickRumbleTriggers(
+      joystick,
+      left_rumble,
+      right_rumble,
+      duration_ms,
+    );
+  }
+
+  late final _SDL_JoystickRumbleTriggersPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int Function(ffi.Pointer<SDL_Joystick>, Uint16, Uint16,
+              Uint32)>>('SDL_JoystickRumbleTriggers');
+  late final _SDL_JoystickRumbleTriggers = _SDL_JoystickRumbleTriggersPtr
+      .asFunction<int Function(ffi.Pointer<SDL_Joystick>, int, int, int)>();
+
+  /// Query whether a joystick has an LED.
+  ///
+  /// An example of a joystick LED is the light on the back of a PlayStation 4's
+  /// DualShock 4 controller.
+  ///
+  /// \param joystick The joystick to query
+  /// \return SDL_TRUE if the joystick has a modifiable LED, SDL_FALSE otherwise.
+  ///
+  /// \since This function is available since SDL 2.0.14.
+  int SDL_JoystickHasLED(
+    ffi.Pointer<SDL_Joystick> joystick,
+  ) {
+    return _SDL_JoystickHasLED(
+      joystick,
+    );
+  }
+
+  late final _SDL_JoystickHasLEDPtr = _lookup<
+          ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<SDL_Joystick>)>>(
+      'SDL_JoystickHasLED');
+  late final _SDL_JoystickHasLED = _SDL_JoystickHasLEDPtr.asFunction<
+      int Function(ffi.Pointer<SDL_Joystick>)>();
+
+  /// Query whether a joystick has rumble support.
+  ///
+  /// \param joystick The joystick to query
+  /// \return SDL_TRUE if the joystick has rumble, SDL_FALSE otherwise.
+  ///
+  /// \since This function is available since SDL 2.0.18.
+  ///
+  /// \sa SDL_JoystickRumble
+  int SDL_JoystickHasRumble(
+    ffi.Pointer<SDL_Joystick> joystick,
+  ) {
+    return _SDL_JoystickHasRumble(
+      joystick,
+    );
+  }
+
+  late final _SDL_JoystickHasRumblePtr = _lookup<
+          ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<SDL_Joystick>)>>(
+      'SDL_JoystickHasRumble');
+  late final _SDL_JoystickHasRumble = _SDL_JoystickHasRumblePtr.asFunction<
+      int Function(ffi.Pointer<SDL_Joystick>)>();
+
+  /// Query whether a joystick has rumble support on triggers.
+  ///
+  /// \param joystick The joystick to query
+  /// \return SDL_TRUE if the joystick has trigger rumble, SDL_FALSE otherwise.
+  ///
+  /// \since This function is available since SDL 2.0.18.
+  ///
+  /// \sa SDL_JoystickRumbleTriggers
+  int SDL_JoystickHasRumbleTriggers(
+    ffi.Pointer<SDL_Joystick> joystick,
+  ) {
+    return _SDL_JoystickHasRumbleTriggers(
+      joystick,
+    );
+  }
+
+  late final _SDL_JoystickHasRumbleTriggersPtr = _lookup<
+          ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<SDL_Joystick>)>>(
+      'SDL_JoystickHasRumbleTriggers');
+  late final _SDL_JoystickHasRumbleTriggers = _SDL_JoystickHasRumbleTriggersPtr
+      .asFunction<int Function(ffi.Pointer<SDL_Joystick>)>();
+
+  /// Update a joystick's LED color.
+  ///
+  /// An example of a joystick LED is the light on the back of a PlayStation 4's
+  /// DualShock 4 controller.
+  ///
+  /// \param joystick The joystick to update
+  /// \param red The intensity of the red LED
+  /// \param green The intensity of the green LED
+  /// \param blue The intensity of the blue LED
+  /// \returns 0 on success, -1 if this joystick does not have a modifiable LED
+  ///
+  /// \since This function is available since SDL 2.0.14.
+  int SDL_JoystickSetLED(
+    ffi.Pointer<SDL_Joystick> joystick,
+    int red,
+    int green,
+    int blue,
+  ) {
+    return _SDL_JoystickSetLED(
+      joystick,
+      red,
+      green,
+      blue,
+    );
+  }
+
+  late final _SDL_JoystickSetLEDPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int Function(ffi.Pointer<SDL_Joystick>, Uint8, Uint8,
+              Uint8)>>('SDL_JoystickSetLED');
+  late final _SDL_JoystickSetLED = _SDL_JoystickSetLEDPtr.asFunction<
+      int Function(ffi.Pointer<SDL_Joystick>, int, int, int)>();
+
+  /// Send a joystick specific effect packet
+  ///
+  /// \param joystick The joystick to affect
+  /// \param data The data to send to the joystick
+  /// \param size The size of the data to send to the joystick
+  /// \returns 0, or -1 if this joystick or driver doesn't support effect packets
+  ///
+  /// \since This function is available since SDL 2.0.16.
+  int SDL_JoystickSendEffect(
+    ffi.Pointer<SDL_Joystick> joystick,
+    ffi.Pointer<ffi.Void> data,
+    int size,
+  ) {
+    return _SDL_JoystickSendEffect(
+      joystick,
+      data,
+      size,
+    );
+  }
+
+  late final _SDL_JoystickSendEffectPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int Function(ffi.Pointer<SDL_Joystick>, ffi.Pointer<ffi.Void>,
+              ffi.Int)>>('SDL_JoystickSendEffect');
+  late final _SDL_JoystickSendEffect = _SDL_JoystickSendEffectPtr.asFunction<
+      int Function(ffi.Pointer<SDL_Joystick>, ffi.Pointer<ffi.Void>, int)>();
+
+  /// Close a joystick previously opened with SDL_JoystickOpen().
+  ///
+  /// \param joystick The joystick device to close
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_JoystickOpen
+  void SDL_JoystickClose(
+    ffi.Pointer<SDL_Joystick> joystick,
+  ) {
+    return _SDL_JoystickClose(
+      joystick,
+    );
+  }
+
+  late final _SDL_JoystickClosePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<SDL_Joystick>)>>(
+          'SDL_JoystickClose');
+  late final _SDL_JoystickClose = _SDL_JoystickClosePtr.asFunction<
+      void Function(ffi.Pointer<SDL_Joystick>)>();
+
+  /// Get the battery level of a joystick as SDL_JoystickPowerLevel.
+  ///
+  /// \param joystick the SDL_Joystick to query
+  /// \returns the current battery level as SDL_JoystickPowerLevel on success or
+  /// `SDL_JOYSTICK_POWER_UNKNOWN` if it is unknown
+  ///
+  /// \since This function is available since SDL 2.0.4.
+  int SDL_JoystickCurrentPowerLevel(
+    ffi.Pointer<SDL_Joystick> joystick,
+  ) {
+    return _SDL_JoystickCurrentPowerLevel(
+      joystick,
+    );
+  }
+
+  late final _SDL_JoystickCurrentPowerLevelPtr = _lookup<
+          ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<SDL_Joystick>)>>(
+      'SDL_JoystickCurrentPowerLevel');
+  late final _SDL_JoystickCurrentPowerLevel = _SDL_JoystickCurrentPowerLevelPtr
+      .asFunction<int Function(ffi.Pointer<SDL_Joystick>)>();
+
+  /// Load a set of Game Controller mappings from a seekable SDL data stream.
+  ///
+  /// You can call this function several times, if needed, to load different
+  /// database files.
+  ///
+  /// If a new mapping is loaded for an already known controller GUID, the later
+  /// version will overwrite the one currently loaded.
+  ///
+  /// Mappings not belonging to the current platform or with no platform field
+  /// specified will be ignored (i.e. mappings for Linux will be ignored in
+  /// Windows, etc).
+  ///
+  /// This function will load the text database entirely in memory before
+  /// processing it, so take this into consideration if you are in a memory
+  /// constrained environment.
+  ///
+  /// \param rw the data stream for the mappings to be added
+  /// \param freerw non-zero to close the stream after being read
+  /// \returns the number of mappings added or -1 on error; call SDL_GetError()
+  /// for more information.
+  ///
+  /// \since This function is available since SDL 2.0.2.
+  ///
+  /// \sa SDL_GameControllerAddMapping
+  /// \sa SDL_GameControllerAddMappingsFromFile
+  /// \sa SDL_GameControllerMappingForGUID
+  int SDL_GameControllerAddMappingsFromRW(
+    ffi.Pointer<SDL_RWops> rw,
+    int freerw,
+  ) {
+    return _SDL_GameControllerAddMappingsFromRW(
+      rw,
+      freerw,
+    );
+  }
+
+  late final _SDL_GameControllerAddMappingsFromRWPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<SDL_RWops>, ffi.Int)>>(
+      'SDL_GameControllerAddMappingsFromRW');
+  late final _SDL_GameControllerAddMappingsFromRW =
+      _SDL_GameControllerAddMappingsFromRWPtr.asFunction<
+          int Function(ffi.Pointer<SDL_RWops>, int)>();
+
+  /// Add support for controllers that SDL is unaware of or to cause an existing
+  /// controller to have a different binding.
+  ///
+  /// The mapping string has the format "GUID,name,mapping", where GUID is the
+  /// string value from SDL_JoystickGetGUIDString(), name is the human readable
+  /// string for the device and mappings are controller mappings to joystick
+  /// ones. Under Windows there is a reserved GUID of "xinput" that covers all
+  /// XInput devices. The mapping format for joystick is: {| |bX |a joystick
+  /// button, index X |- |hX.Y |hat X with value Y |- |aX |axis X of the joystick
+  /// |} Buttons can be used as a controller axes and vice versa.
+  ///
+  /// This string shows an example of a valid mapping for a controller:
+  ///
+  /// ```c
+  /// "341a3608000000000000504944564944,Afterglow PS3 Controller,a:b1,b:b2,y:b3,x:b0,start:b9,guide:b12,back:b8,dpup:h0.1,dpleft:h0.8,dpdown:h0.4,dpright:h0.2,leftshoulder:b4,rightshoulder:b5,leftstick:b10,rightstick:b11,leftx:a0,lefty:a1,rightx:a2,righty:a3,lefttrigger:b6,righttrigger:b7"
+  /// ```
+  ///
+  /// \param mappingString the mapping string
+  /// \returns 1 if a new mapping is added, 0 if an existing mapping is updated,
+  /// -1 on error; call SDL_GetError() for more information.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_GameControllerMapping
+  /// \sa SDL_GameControllerMappingForGUID
+  int SDL_GameControllerAddMapping(
+    ffi.Pointer<ffi.Char> mappingString,
+  ) {
+    return _SDL_GameControllerAddMapping(
+      mappingString,
+    );
+  }
+
+  late final _SDL_GameControllerAddMappingPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(ffi.Pointer<ffi.Char>)>>(
+          'SDL_GameControllerAddMapping');
+  late final _SDL_GameControllerAddMapping = _SDL_GameControllerAddMappingPtr
+      .asFunction<int Function(ffi.Pointer<ffi.Char>)>();
+
+  /// Get the number of mappings installed.
+  ///
+  /// \returns the number of mappings.
+  ///
+  /// \since This function is available since SDL 2.0.6.
+  int SDL_GameControllerNumMappings() {
+    return _SDL_GameControllerNumMappings();
+  }
+
+  late final _SDL_GameControllerNumMappingsPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function()>>(
+          'SDL_GameControllerNumMappings');
+  late final _SDL_GameControllerNumMappings =
+      _SDL_GameControllerNumMappingsPtr.asFunction<int Function()>();
+
+  /// Get the mapping at a particular index.
+  ///
+  /// \returns the mapping string. Must be freed with SDL_free(). Returns NULL if
+  /// the index is out of range.
+  ///
+  /// \since This function is available since SDL 2.0.6.
+  ffi.Pointer<ffi.Char> SDL_GameControllerMappingForIndex(
+    int mapping_index,
+  ) {
+    return _SDL_GameControllerMappingForIndex(
+      mapping_index,
+    );
+  }
+
+  late final _SDL_GameControllerMappingForIndexPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(ffi.Int)>>(
+          'SDL_GameControllerMappingForIndex');
+  late final _SDL_GameControllerMappingForIndex =
+      _SDL_GameControllerMappingForIndexPtr.asFunction<
+          ffi.Pointer<ffi.Char> Function(int)>();
+
+  /// Get the game controller mapping string for a given GUID.
+  ///
+  /// The returned string must be freed with SDL_free().
+  ///
+  /// \param guid a structure containing the GUID for which a mapping is desired
+  /// \returns a mapping string or NULL on error; call SDL_GetError() for more
+  /// information.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_JoystickGetDeviceGUID
+  /// \sa SDL_JoystickGetGUID
+  ffi.Pointer<ffi.Char> SDL_GameControllerMappingForGUID(
+    SDL_JoystickGUID guid,
+  ) {
+    return _SDL_GameControllerMappingForGUID(
+      guid,
+    );
+  }
+
+  late final _SDL_GameControllerMappingForGUIDPtr = _lookup<
+          ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(SDL_JoystickGUID)>>(
+      'SDL_GameControllerMappingForGUID');
+  late final _SDL_GameControllerMappingForGUID =
+      _SDL_GameControllerMappingForGUIDPtr.asFunction<
+          ffi.Pointer<ffi.Char> Function(SDL_JoystickGUID)>();
+
+  /// Get the current mapping of a Game Controller.
+  ///
+  /// The returned string must be freed with SDL_free().
+  ///
+  /// Details about mappings are discussed with SDL_GameControllerAddMapping().
+  ///
+  /// \param gamecontroller the game controller you want to get the current
+  /// mapping for
+  /// \returns a string that has the controller's mapping or NULL if no mapping
+  /// is available; call SDL_GetError() for more information.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_GameControllerAddMapping
+  /// \sa SDL_GameControllerMappingForGUID
+  ffi.Pointer<ffi.Char> SDL_GameControllerMapping(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+  ) {
+    return _SDL_GameControllerMapping(
+      gamecontroller,
+    );
+  }
+
+  late final _SDL_GameControllerMappingPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<ffi.Char> Function(
+              ffi.Pointer<SDL_GameController>)>>('SDL_GameControllerMapping');
+  late final _SDL_GameControllerMapping =
+      _SDL_GameControllerMappingPtr.asFunction<
+          ffi.Pointer<ffi.Char> Function(ffi.Pointer<SDL_GameController>)>();
+
+  /// Check if the given joystick is supported by the game controller interface.
+  ///
+  /// `joystick_index` is the same as the `device_index` passed to
+  /// SDL_JoystickOpen().
+  ///
+  /// \param joystick_index the device_index of a device, up to
+  /// SDL_NumJoysticks()
+  /// \returns SDL_TRUE if the given joystick is supported by the game controller
+  /// interface, SDL_FALSE if it isn't or it's an invalid index.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_GameControllerNameForIndex
+  /// \sa SDL_GameControllerOpen
+  int SDL_IsGameController(
+    int joystick_index,
+  ) {
+    return _SDL_IsGameController(
+      joystick_index,
+    );
+  }
+
+  late final _SDL_IsGameControllerPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Int)>>(
+          'SDL_IsGameController');
+  late final _SDL_IsGameController =
+      _SDL_IsGameControllerPtr.asFunction<int Function(int)>();
+
+  /// Get the implementation dependent name for the game controller.
+  ///
+  /// This function can be called before any controllers are opened.
+  ///
+  /// `joystick_index` is the same as the `device_index` passed to
+  /// SDL_JoystickOpen().
+  ///
+  /// \param joystick_index the device_index of a device, from zero to
+  /// SDL_NumJoysticks()-1
+  /// \returns the implementation-dependent name for the game controller, or NULL
+  /// if there is no name or the index is invalid.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_GameControllerName
+  /// \sa SDL_GameControllerOpen
+  /// \sa SDL_IsGameController
+  ffi.Pointer<ffi.Char> SDL_GameControllerNameForIndex(
+    int joystick_index,
+  ) {
+    return _SDL_GameControllerNameForIndex(
+      joystick_index,
+    );
+  }
+
+  late final _SDL_GameControllerNameForIndexPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(ffi.Int)>>(
+          'SDL_GameControllerNameForIndex');
+  late final _SDL_GameControllerNameForIndex =
+      _SDL_GameControllerNameForIndexPtr.asFunction<
+          ffi.Pointer<ffi.Char> Function(int)>();
+
+  /// Get the implementation dependent path for the game controller.
+  ///
+  /// This function can be called before any controllers are opened.
+  ///
+  /// `joystick_index` is the same as the `device_index` passed to
+  /// SDL_JoystickOpen().
+  ///
+  /// \param joystick_index the device_index of a device, from zero to
+  /// SDL_NumJoysticks()-1
+  /// \returns the implementation-dependent path for the game controller, or NULL
+  /// if there is no path or the index is invalid.
+  ///
+  /// \since This function is available since SDL 2.24.0.
+  ///
+  /// \sa SDL_GameControllerPath
+  ffi.Pointer<ffi.Char> SDL_GameControllerPathForIndex(
+    int joystick_index,
+  ) {
+    return _SDL_GameControllerPathForIndex(
+      joystick_index,
+    );
+  }
+
+  late final _SDL_GameControllerPathForIndexPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(ffi.Int)>>(
+          'SDL_GameControllerPathForIndex');
+  late final _SDL_GameControllerPathForIndex =
+      _SDL_GameControllerPathForIndexPtr.asFunction<
+          ffi.Pointer<ffi.Char> Function(int)>();
+
+  /// Get the type of a game controller.
+  ///
+  /// This can be called before any controllers are opened.
+  ///
+  /// \param joystick_index the device_index of a device, from zero to
+  /// SDL_NumJoysticks()-1
+  /// \returns the controller type.
+  ///
+  /// \since This function is available since SDL 2.0.12.
+  int SDL_GameControllerTypeForIndex(
+    int joystick_index,
+  ) {
+    return _SDL_GameControllerTypeForIndex(
+      joystick_index,
+    );
+  }
+
+  late final _SDL_GameControllerTypeForIndexPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Int)>>(
+          'SDL_GameControllerTypeForIndex');
+  late final _SDL_GameControllerTypeForIndex =
+      _SDL_GameControllerTypeForIndexPtr.asFunction<int Function(int)>();
+
+  /// Get the mapping of a game controller.
+  ///
+  /// This can be called before any controllers are opened.
+  ///
+  /// \param joystick_index the device_index of a device, from zero to
+  /// SDL_NumJoysticks()-1
+  /// \returns the mapping string. Must be freed with SDL_free(). Returns NULL if
+  /// no mapping is available.
+  ///
+  /// \since This function is available since SDL 2.0.9.
+  ffi.Pointer<ffi.Char> SDL_GameControllerMappingForDeviceIndex(
+    int joystick_index,
+  ) {
+    return _SDL_GameControllerMappingForDeviceIndex(
+      joystick_index,
+    );
+  }
+
+  late final _SDL_GameControllerMappingForDeviceIndexPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(ffi.Int)>>(
+          'SDL_GameControllerMappingForDeviceIndex');
+  late final _SDL_GameControllerMappingForDeviceIndex =
+      _SDL_GameControllerMappingForDeviceIndexPtr.asFunction<
+          ffi.Pointer<ffi.Char> Function(int)>();
+
+  /// Open a game controller for use.
+  ///
+  /// `joystick_index` is the same as the `device_index` passed to
+  /// SDL_JoystickOpen().
+  ///
+  /// The index passed as an argument refers to the N'th game controller on the
+  /// system. This index is not the value which will identify this controller in
+  /// future controller events. The joystick's instance id (SDL_JoystickID) will
+  /// be used there instead.
+  ///
+  /// \param joystick_index the device_index of a device, up to
+  /// SDL_NumJoysticks()
+  /// \returns a gamecontroller identifier or NULL if an error occurred; call
+  /// SDL_GetError() for more information.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_GameControllerClose
+  /// \sa SDL_GameControllerNameForIndex
+  /// \sa SDL_IsGameController
+  ffi.Pointer<SDL_GameController> SDL_GameControllerOpen(
+    int joystick_index,
+  ) {
+    return _SDL_GameControllerOpen(
+      joystick_index,
+    );
+  }
+
+  late final _SDL_GameControllerOpenPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Pointer<SDL_GameController> Function(ffi.Int)>>(
+      'SDL_GameControllerOpen');
+  late final _SDL_GameControllerOpen = _SDL_GameControllerOpenPtr.asFunction<
+      ffi.Pointer<SDL_GameController> Function(int)>();
+
+  /// Get the SDL_GameController associated with an instance id.
+  ///
+  /// \param joyid the instance id to get the SDL_GameController for
+  /// \returns an SDL_GameController on success or NULL on failure; call
+  /// SDL_GetError() for more information.
+  ///
+  /// \since This function is available since SDL 2.0.4.
+  ffi.Pointer<SDL_GameController> SDL_GameControllerFromInstanceID(
+    int joyid,
+  ) {
+    return _SDL_GameControllerFromInstanceID(
+      joyid,
+    );
+  }
+
+  late final _SDL_GameControllerFromInstanceIDPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<SDL_GameController> Function(
+              SDL_JoystickID)>>('SDL_GameControllerFromInstanceID');
+  late final _SDL_GameControllerFromInstanceID =
+      _SDL_GameControllerFromInstanceIDPtr.asFunction<
+          ffi.Pointer<SDL_GameController> Function(int)>();
+
+  /// Get the SDL_GameController associated with a player index.
+  ///
+  /// Please note that the player index is _not_ the device index, nor is it the
+  /// instance id!
+  ///
+  /// \param player_index the player index, which is not the device index or the
+  /// instance id!
+  /// \returns the SDL_GameController associated with a player index.
+  ///
+  /// \since This function is available since SDL 2.0.12.
+  ///
+  /// \sa SDL_GameControllerGetPlayerIndex
+  /// \sa SDL_GameControllerSetPlayerIndex
+  ffi.Pointer<SDL_GameController> SDL_GameControllerFromPlayerIndex(
+    int player_index,
+  ) {
+    return _SDL_GameControllerFromPlayerIndex(
+      player_index,
+    );
+  }
+
+  late final _SDL_GameControllerFromPlayerIndexPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Pointer<SDL_GameController> Function(ffi.Int)>>(
+      'SDL_GameControllerFromPlayerIndex');
+  late final _SDL_GameControllerFromPlayerIndex =
+      _SDL_GameControllerFromPlayerIndexPtr.asFunction<
+          ffi.Pointer<SDL_GameController> Function(int)>();
+
+  /// Get the implementation-dependent name for an opened game controller.
+  ///
+  /// This is the same name as returned by SDL_GameControllerNameForIndex(), but
+  /// it takes a controller identifier instead of the (unstable) device index.
+  ///
+  /// \param gamecontroller a game controller identifier previously returned by
+  /// SDL_GameControllerOpen()
+  /// \returns the implementation dependent name for the game controller, or NULL
+  /// if there is no name or the identifier passed is invalid.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_GameControllerNameForIndex
+  /// \sa SDL_GameControllerOpen
+  ffi.Pointer<ffi.Char> SDL_GameControllerName(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+  ) {
+    return _SDL_GameControllerName(
+      gamecontroller,
+    );
+  }
+
+  late final _SDL_GameControllerNamePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<ffi.Char> Function(
+              ffi.Pointer<SDL_GameController>)>>('SDL_GameControllerName');
+  late final _SDL_GameControllerName = _SDL_GameControllerNamePtr.asFunction<
+      ffi.Pointer<ffi.Char> Function(ffi.Pointer<SDL_GameController>)>();
+
+  /// Get the implementation-dependent path for an opened game controller.
+  ///
+  /// This is the same path as returned by SDL_GameControllerNameForIndex(), but
+  /// it takes a controller identifier instead of the (unstable) device index.
+  ///
+  /// \param gamecontroller a game controller identifier previously returned by
+  /// SDL_GameControllerOpen()
+  /// \returns the implementation dependent path for the game controller, or NULL
+  /// if there is no path or the identifier passed is invalid.
+  ///
+  /// \since This function is available since SDL 2.24.0.
+  ///
+  /// \sa SDL_GameControllerPathForIndex
+  ffi.Pointer<ffi.Char> SDL_GameControllerPath(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+  ) {
+    return _SDL_GameControllerPath(
+      gamecontroller,
+    );
+  }
+
+  late final _SDL_GameControllerPathPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<ffi.Char> Function(
+              ffi.Pointer<SDL_GameController>)>>('SDL_GameControllerPath');
+  late final _SDL_GameControllerPath = _SDL_GameControllerPathPtr.asFunction<
+      ffi.Pointer<ffi.Char> Function(ffi.Pointer<SDL_GameController>)>();
+
+  /// Get the type of this currently opened controller
+  ///
+  /// This is the same name as returned by SDL_GameControllerTypeForIndex(), but
+  /// it takes a controller identifier instead of the (unstable) device index.
+  ///
+  /// \param gamecontroller the game controller object to query.
+  /// \returns the controller type.
+  ///
+  /// \since This function is available since SDL 2.0.12.
+  int SDL_GameControllerGetType(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+  ) {
+    return _SDL_GameControllerGetType(
+      gamecontroller,
+    );
+  }
+
+  late final _SDL_GameControllerGetTypePtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Int32 Function(ffi.Pointer<SDL_GameController>)>>(
+      'SDL_GameControllerGetType');
+  late final _SDL_GameControllerGetType = _SDL_GameControllerGetTypePtr
+      .asFunction<int Function(ffi.Pointer<SDL_GameController>)>();
+
+  /// Get the player index of an opened game controller.
+  ///
+  /// For XInput controllers this returns the XInput user index.
+  ///
+  /// \param gamecontroller the game controller object to query.
+  /// \returns the player index for controller, or -1 if it's not available.
+  ///
+  /// \since This function is available since SDL 2.0.9.
+  int SDL_GameControllerGetPlayerIndex(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+  ) {
+    return _SDL_GameControllerGetPlayerIndex(
+      gamecontroller,
+    );
+  }
+
+  late final _SDL_GameControllerGetPlayerIndexPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<SDL_GameController>)>>(
+      'SDL_GameControllerGetPlayerIndex');
+  late final _SDL_GameControllerGetPlayerIndex =
+      _SDL_GameControllerGetPlayerIndexPtr.asFunction<
+          int Function(ffi.Pointer<SDL_GameController>)>();
+
+  /// Set the player index of an opened game controller.
+  ///
+  /// \param gamecontroller the game controller object to adjust.
+  /// \param player_index Player index to assign to this controller, or -1 to
+  /// clear the player index and turn off player LEDs.
+  ///
+  /// \since This function is available since SDL 2.0.12.
+  void SDL_GameControllerSetPlayerIndex(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+    int player_index,
+  ) {
+    return _SDL_GameControllerSetPlayerIndex(
+      gamecontroller,
+      player_index,
+    );
+  }
+
+  late final _SDL_GameControllerSetPlayerIndexPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(ffi.Pointer<SDL_GameController>,
+              ffi.Int)>>('SDL_GameControllerSetPlayerIndex');
+  late final _SDL_GameControllerSetPlayerIndex =
+      _SDL_GameControllerSetPlayerIndexPtr.asFunction<
+          void Function(ffi.Pointer<SDL_GameController>, int)>();
+
+  /// Get the USB vendor ID of an opened controller, if available.
+  ///
+  /// If the vendor ID isn't available this function returns 0.
+  ///
+  /// \param gamecontroller the game controller object to query.
+  /// \return the USB vendor ID, or zero if unavailable.
+  ///
+  /// \since This function is available since SDL 2.0.6.
+  int SDL_GameControllerGetVendor(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+  ) {
+    return _SDL_GameControllerGetVendor(
+      gamecontroller,
+    );
+  }
+
+  late final _SDL_GameControllerGetVendorPtr = _lookup<
+          ffi.NativeFunction<Uint16 Function(ffi.Pointer<SDL_GameController>)>>(
+      'SDL_GameControllerGetVendor');
+  late final _SDL_GameControllerGetVendor = _SDL_GameControllerGetVendorPtr
+      .asFunction<int Function(ffi.Pointer<SDL_GameController>)>();
+
+  /// Get the USB product ID of an opened controller, if available.
+  ///
+  /// If the product ID isn't available this function returns 0.
+  ///
+  /// \param gamecontroller the game controller object to query.
+  /// \return the USB product ID, or zero if unavailable.
+  ///
+  /// \since This function is available since SDL 2.0.6.
+  int SDL_GameControllerGetProduct(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+  ) {
+    return _SDL_GameControllerGetProduct(
+      gamecontroller,
+    );
+  }
+
+  late final _SDL_GameControllerGetProductPtr = _lookup<
+          ffi.NativeFunction<Uint16 Function(ffi.Pointer<SDL_GameController>)>>(
+      'SDL_GameControllerGetProduct');
+  late final _SDL_GameControllerGetProduct = _SDL_GameControllerGetProductPtr
+      .asFunction<int Function(ffi.Pointer<SDL_GameController>)>();
+
+  /// Get the product version of an opened controller, if available.
+  ///
+  /// If the product version isn't available this function returns 0.
+  ///
+  /// \param gamecontroller the game controller object to query.
+  /// \return the USB product version, or zero if unavailable.
+  ///
+  /// \since This function is available since SDL 2.0.6.
+  int SDL_GameControllerGetProductVersion(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+  ) {
+    return _SDL_GameControllerGetProductVersion(
+      gamecontroller,
+    );
+  }
+
+  late final _SDL_GameControllerGetProductVersionPtr = _lookup<
+          ffi.NativeFunction<Uint16 Function(ffi.Pointer<SDL_GameController>)>>(
+      'SDL_GameControllerGetProductVersion');
+  late final _SDL_GameControllerGetProductVersion =
+      _SDL_GameControllerGetProductVersionPtr.asFunction<
+          int Function(ffi.Pointer<SDL_GameController>)>();
+
+  /// Get the firmware version of an opened controller, if available.
+  ///
+  /// If the firmware version isn't available this function returns 0.
+  ///
+  /// \param gamecontroller the game controller object to query.
+  /// \return the controller firmware version, or zero if unavailable.
+  ///
+  /// \since This function is available since SDL 2.24.0.
+  int SDL_GameControllerGetFirmwareVersion(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+  ) {
+    return _SDL_GameControllerGetFirmwareVersion(
+      gamecontroller,
+    );
+  }
+
+  late final _SDL_GameControllerGetFirmwareVersionPtr = _lookup<
+          ffi.NativeFunction<Uint16 Function(ffi.Pointer<SDL_GameController>)>>(
+      'SDL_GameControllerGetFirmwareVersion');
+  late final _SDL_GameControllerGetFirmwareVersion =
+      _SDL_GameControllerGetFirmwareVersionPtr.asFunction<
+          int Function(ffi.Pointer<SDL_GameController>)>();
+
+  /// Get the serial number of an opened controller, if available.
+  ///
+  /// Returns the serial number of the controller, or NULL if it is not
+  /// available.
+  ///
+  /// \param gamecontroller the game controller object to query.
+  /// \return the serial number, or NULL if unavailable.
+  ///
+  /// \since This function is available since SDL 2.0.14.
+  ffi.Pointer<ffi.Char> SDL_GameControllerGetSerial(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+  ) {
+    return _SDL_GameControllerGetSerial(
+      gamecontroller,
+    );
+  }
+
+  late final _SDL_GameControllerGetSerialPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<ffi.Char> Function(
+              ffi.Pointer<SDL_GameController>)>>('SDL_GameControllerGetSerial');
+  late final _SDL_GameControllerGetSerial =
+      _SDL_GameControllerGetSerialPtr.asFunction<
+          ffi.Pointer<ffi.Char> Function(ffi.Pointer<SDL_GameController>)>();
+
+  /// Check if a controller has been opened and is currently connected.
+  ///
+  /// \param gamecontroller a game controller identifier previously returned by
+  /// SDL_GameControllerOpen()
+  /// \returns SDL_TRUE if the controller has been opened and is currently
+  /// connected, or SDL_FALSE if not.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_GameControllerClose
+  /// \sa SDL_GameControllerOpen
+  int SDL_GameControllerGetAttached(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+  ) {
+    return _SDL_GameControllerGetAttached(
+      gamecontroller,
+    );
+  }
+
+  late final _SDL_GameControllerGetAttachedPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Int32 Function(ffi.Pointer<SDL_GameController>)>>(
+      'SDL_GameControllerGetAttached');
+  late final _SDL_GameControllerGetAttached = _SDL_GameControllerGetAttachedPtr
+      .asFunction<int Function(ffi.Pointer<SDL_GameController>)>();
+
+  /// Get the Joystick ID from a Game Controller.
+  ///
+  /// This function will give you a SDL_Joystick object, which allows you to use
+  /// the SDL_Joystick functions with a SDL_GameController object. This would be
+  /// useful for getting a joystick's position at any given time, even if it
+  /// hasn't moved (moving it would produce an event, which would have the axis'
+  /// value).
+  ///
+  /// The pointer returned is owned by the SDL_GameController. You should not
+  /// call SDL_JoystickClose() on it, for example, since doing so will likely
+  /// cause SDL to crash.
+  ///
+  /// \param gamecontroller the game controller object that you want to get a
+  /// joystick from
+  /// \returns a SDL_Joystick object; call SDL_GetError() for more information.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ffi.Pointer<SDL_Joystick> SDL_GameControllerGetJoystick(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+  ) {
+    return _SDL_GameControllerGetJoystick(
+      gamecontroller,
+    );
+  }
+
+  late final _SDL_GameControllerGetJoystickPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<SDL_Joystick> Function(
+                  ffi.Pointer<SDL_GameController>)>>(
+      'SDL_GameControllerGetJoystick');
+  late final _SDL_GameControllerGetJoystick =
+      _SDL_GameControllerGetJoystickPtr.asFunction<
+          ffi.Pointer<SDL_Joystick> Function(
+              ffi.Pointer<SDL_GameController>)>();
+
+  /// Query or change current state of Game Controller events.
+  ///
+  /// If controller events are disabled, you must call SDL_GameControllerUpdate()
+  /// yourself and check the state of the controller when you want controller
+  /// information.
+  ///
+  /// Any number can be passed to SDL_GameControllerEventState(), but only -1, 0,
+  /// and 1 will have any effect. Other numbers will just be returned.
+  ///
+  /// \param state can be one of `SDL_QUERY`, `SDL_IGNORE`, or `SDL_ENABLE`
+  /// \returns the same value passed to the function, with exception to -1
+  /// (SDL_QUERY), which will return the current state.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_JoystickEventState
+  int SDL_GameControllerEventState(
+    int state,
+  ) {
+    return _SDL_GameControllerEventState(
+      state,
+    );
+  }
+
+  late final _SDL_GameControllerEventStatePtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(ffi.Int)>>(
+          'SDL_GameControllerEventState');
+  late final _SDL_GameControllerEventState =
+      _SDL_GameControllerEventStatePtr.asFunction<int Function(int)>();
+
+  /// Manually pump game controller updates if not using the loop.
+  ///
+  /// This function is called automatically by the event loop if events are
+  /// enabled. Under such circumstances, it will not be necessary to call this
+  /// function.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  void SDL_GameControllerUpdate() {
+    return _SDL_GameControllerUpdate();
+  }
+
+  late final _SDL_GameControllerUpdatePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function()>>(
+          'SDL_GameControllerUpdate');
+  late final _SDL_GameControllerUpdate =
+      _SDL_GameControllerUpdatePtr.asFunction<void Function()>();
+
+  /// Convert a string into SDL_GameControllerAxis enum.
+  ///
+  /// This function is called internally to translate SDL_GameController mapping
+  /// strings for the underlying joystick device into the consistent
+  /// SDL_GameController mapping. You do not normally need to call this function
+  /// unless you are parsing SDL_GameController mappings in your own code.
+  ///
+  /// Note specially that "righttrigger" and "lefttrigger" map to
+  /// `SDL_CONTROLLER_AXIS_TRIGGERRIGHT` and `SDL_CONTROLLER_AXIS_TRIGGERLEFT`,
+  /// respectively.
+  ///
+  /// \param str string representing a SDL_GameController axis
+  /// \returns the SDL_GameControllerAxis enum corresponding to the input string,
+  /// or `SDL_CONTROLLER_AXIS_INVALID` if no match was found.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_GameControllerGetStringForAxis
+  int SDL_GameControllerGetAxisFromString(
+    ffi.Pointer<ffi.Char> str,
+  ) {
+    return _SDL_GameControllerGetAxisFromString(
+      str,
+    );
+  }
+
+  late final _SDL_GameControllerGetAxisFromStringPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Char>)>>(
+          'SDL_GameControllerGetAxisFromString');
+  late final _SDL_GameControllerGetAxisFromString =
+      _SDL_GameControllerGetAxisFromStringPtr.asFunction<
+          int Function(ffi.Pointer<ffi.Char>)>();
+
+  /// Convert from an SDL_GameControllerAxis enum to a string.
+  ///
+  /// The caller should not SDL_free() the returned string.
+  ///
+  /// \param axis an enum value for a given SDL_GameControllerAxis
+  /// \returns a string for the given axis, or NULL if an invalid axis is
+  /// specified. The string returned is of the format used by
+  /// SDL_GameController mapping strings.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_GameControllerGetAxisFromString
+  ffi.Pointer<ffi.Char> SDL_GameControllerGetStringForAxis(
+    int axis,
+  ) {
+    return _SDL_GameControllerGetStringForAxis(
+      axis,
+    );
+  }
+
+  late final _SDL_GameControllerGetStringForAxisPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(ffi.Int32)>>(
+          'SDL_GameControllerGetStringForAxis');
+  late final _SDL_GameControllerGetStringForAxis =
+      _SDL_GameControllerGetStringForAxisPtr.asFunction<
+          ffi.Pointer<ffi.Char> Function(int)>();
+
+  /// Get the SDL joystick layer binding for a controller axis mapping.
+  ///
+  /// \param gamecontroller a game controller
+  /// \param axis an axis enum value (one of the SDL_GameControllerAxis values)
+  /// \returns a SDL_GameControllerButtonBind describing the bind. On failure
+  /// (like the given Controller axis doesn't exist on the device), its
+  /// `.bindType` will be `SDL_CONTROLLER_BINDTYPE_NONE`.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_GameControllerGetBindForButton
+  SDL_GameControllerButtonBind SDL_GameControllerGetBindForAxis(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+    int axis,
+  ) {
+    return _SDL_GameControllerGetBindForAxis(
+      gamecontroller,
+      axis,
+    );
+  }
+
+  late final _SDL_GameControllerGetBindForAxisPtr = _lookup<
+      ffi.NativeFunction<
+          SDL_GameControllerButtonBind Function(ffi.Pointer<SDL_GameController>,
+              ffi.Int32)>>('SDL_GameControllerGetBindForAxis');
+  late final _SDL_GameControllerGetBindForAxis =
+      _SDL_GameControllerGetBindForAxisPtr.asFunction<
+          SDL_GameControllerButtonBind Function(
+              ffi.Pointer<SDL_GameController>, int)>();
+
+  /// Query whether a game controller has a given axis.
+  ///
+  /// This merely reports whether the controller's mapping defined this axis, as
+  /// that is all the information SDL has about the physical device.
+  ///
+  /// \param gamecontroller a game controller
+  /// \param axis an axis enum value (an SDL_GameControllerAxis value)
+  /// \returns SDL_TRUE if the controller has this axis, SDL_FALSE otherwise.
+  ///
+  /// \since This function is available since SDL 2.0.14.
+  int SDL_GameControllerHasAxis(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+    int axis,
+  ) {
+    return _SDL_GameControllerHasAxis(
+      gamecontroller,
+      axis,
+    );
+  }
+
+  late final _SDL_GameControllerHasAxisPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int32 Function(ffi.Pointer<SDL_GameController>,
+              ffi.Int32)>>('SDL_GameControllerHasAxis');
+  late final _SDL_GameControllerHasAxis = _SDL_GameControllerHasAxisPtr
+      .asFunction<int Function(ffi.Pointer<SDL_GameController>, int)>();
+
+  /// Get the current state of an axis control on a game controller.
+  ///
+  /// The axis indices start at index 0.
+  ///
+  /// The state is a value ranging from -32768 to 32767. Triggers, however, range
+  /// from 0 to 32767 (they never return a negative value).
+  ///
+  /// \param gamecontroller a game controller
+  /// \param axis an axis index (one of the SDL_GameControllerAxis values)
+  /// \returns axis state (including 0) on success or 0 (also) on failure; call
+  /// SDL_GetError() for more information.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_GameControllerGetButton
+  int SDL_GameControllerGetAxis(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+    int axis,
+  ) {
+    return _SDL_GameControllerGetAxis(
+      gamecontroller,
+      axis,
+    );
+  }
+
+  late final _SDL_GameControllerGetAxisPtr = _lookup<
+      ffi.NativeFunction<
+          Sint16 Function(ffi.Pointer<SDL_GameController>,
+              ffi.Int32)>>('SDL_GameControllerGetAxis');
+  late final _SDL_GameControllerGetAxis = _SDL_GameControllerGetAxisPtr
+      .asFunction<int Function(ffi.Pointer<SDL_GameController>, int)>();
+
+  /// Convert a string into an SDL_GameControllerButton enum.
+  ///
+  /// This function is called internally to translate SDL_GameController mapping
+  /// strings for the underlying joystick device into the consistent
+  /// SDL_GameController mapping. You do not normally need to call this function
+  /// unless you are parsing SDL_GameController mappings in your own code.
+  ///
+  /// \param str string representing a SDL_GameController axis
+  /// \returns the SDL_GameControllerButton enum corresponding to the input
+  /// string, or `SDL_CONTROLLER_AXIS_INVALID` if no match was found.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  int SDL_GameControllerGetButtonFromString(
+    ffi.Pointer<ffi.Char> str,
+  ) {
+    return _SDL_GameControllerGetButtonFromString(
+      str,
+    );
+  }
+
+  late final _SDL_GameControllerGetButtonFromStringPtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Char>)>>(
+          'SDL_GameControllerGetButtonFromString');
+  late final _SDL_GameControllerGetButtonFromString =
+      _SDL_GameControllerGetButtonFromStringPtr.asFunction<
+          int Function(ffi.Pointer<ffi.Char>)>();
+
+  /// Convert from an SDL_GameControllerButton enum to a string.
+  ///
+  /// The caller should not SDL_free() the returned string.
+  ///
+  /// \param button an enum value for a given SDL_GameControllerButton
+  /// \returns a string for the given button, or NULL if an invalid button is
+  /// specified. The string returned is of the format used by
+  /// SDL_GameController mapping strings.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_GameControllerGetButtonFromString
+  ffi.Pointer<ffi.Char> SDL_GameControllerGetStringForButton(
+    int button,
+  ) {
+    return _SDL_GameControllerGetStringForButton(
+      button,
+    );
+  }
+
+  late final _SDL_GameControllerGetStringForButtonPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(ffi.Int32)>>(
+          'SDL_GameControllerGetStringForButton');
+  late final _SDL_GameControllerGetStringForButton =
+      _SDL_GameControllerGetStringForButtonPtr.asFunction<
+          ffi.Pointer<ffi.Char> Function(int)>();
+
+  /// Get the SDL joystick layer binding for a controller button mapping.
+  ///
+  /// \param gamecontroller a game controller
+  /// \param button an button enum value (an SDL_GameControllerButton value)
+  /// \returns a SDL_GameControllerButtonBind describing the bind. On failure
+  /// (like the given Controller button doesn't exist on the device),
+  /// its `.bindType` will be `SDL_CONTROLLER_BINDTYPE_NONE`.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_GameControllerGetBindForAxis
+  SDL_GameControllerButtonBind SDL_GameControllerGetBindForButton(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+    int button,
+  ) {
+    return _SDL_GameControllerGetBindForButton(
+      gamecontroller,
+      button,
+    );
+  }
+
+  late final _SDL_GameControllerGetBindForButtonPtr = _lookup<
+      ffi.NativeFunction<
+          SDL_GameControllerButtonBind Function(ffi.Pointer<SDL_GameController>,
+              ffi.Int32)>>('SDL_GameControllerGetBindForButton');
+  late final _SDL_GameControllerGetBindForButton =
+      _SDL_GameControllerGetBindForButtonPtr.asFunction<
+          SDL_GameControllerButtonBind Function(
+              ffi.Pointer<SDL_GameController>, int)>();
+
+  /// Query whether a game controller has a given button.
+  ///
+  /// This merely reports whether the controller's mapping defined this button,
+  /// as that is all the information SDL has about the physical device.
+  ///
+  /// \param gamecontroller a game controller
+  /// \param button a button enum value (an SDL_GameControllerButton value)
+  /// \returns SDL_TRUE if the controller has this button, SDL_FALSE otherwise.
+  ///
+  /// \since This function is available since SDL 2.0.14.
+  int SDL_GameControllerHasButton(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+    int button,
+  ) {
+    return _SDL_GameControllerHasButton(
+      gamecontroller,
+      button,
+    );
+  }
+
+  late final _SDL_GameControllerHasButtonPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int32 Function(ffi.Pointer<SDL_GameController>,
+              ffi.Int32)>>('SDL_GameControllerHasButton');
+  late final _SDL_GameControllerHasButton = _SDL_GameControllerHasButtonPtr
+      .asFunction<int Function(ffi.Pointer<SDL_GameController>, int)>();
+
+  /// Get the current state of a button on a game controller.
+  ///
+  /// \param gamecontroller a game controller
+  /// \param button a button index (one of the SDL_GameControllerButton values)
+  /// \returns 1 for pressed state or 0 for not pressed state or error; call
+  /// SDL_GetError() for more information.
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_GameControllerGetAxis
+  int SDL_GameControllerGetButton(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+    int button,
+  ) {
+    return _SDL_GameControllerGetButton(
+      gamecontroller,
+      button,
+    );
+  }
+
+  late final _SDL_GameControllerGetButtonPtr = _lookup<
+      ffi.NativeFunction<
+          Uint8 Function(ffi.Pointer<SDL_GameController>,
+              ffi.Int32)>>('SDL_GameControllerGetButton');
+  late final _SDL_GameControllerGetButton = _SDL_GameControllerGetButtonPtr
+      .asFunction<int Function(ffi.Pointer<SDL_GameController>, int)>();
+
+  /// Get the number of touchpads on a game controller.
+  ///
+  /// \since This function is available since SDL 2.0.14.
+  int SDL_GameControllerGetNumTouchpads(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+  ) {
+    return _SDL_GameControllerGetNumTouchpads(
+      gamecontroller,
+    );
+  }
+
+  late final _SDL_GameControllerGetNumTouchpadsPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Int Function(ffi.Pointer<SDL_GameController>)>>(
+      'SDL_GameControllerGetNumTouchpads');
+  late final _SDL_GameControllerGetNumTouchpads =
+      _SDL_GameControllerGetNumTouchpadsPtr.asFunction<
+          int Function(ffi.Pointer<SDL_GameController>)>();
+
+  /// Get the number of supported simultaneous fingers on a touchpad on a game
+  /// controller.
+  ///
+  /// \since This function is available since SDL 2.0.14.
+  int SDL_GameControllerGetNumTouchpadFingers(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+    int touchpad,
+  ) {
+    return _SDL_GameControllerGetNumTouchpadFingers(
+      gamecontroller,
+      touchpad,
+    );
+  }
+
+  late final _SDL_GameControllerGetNumTouchpadFingersPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int Function(ffi.Pointer<SDL_GameController>,
+              ffi.Int)>>('SDL_GameControllerGetNumTouchpadFingers');
+  late final _SDL_GameControllerGetNumTouchpadFingers =
+      _SDL_GameControllerGetNumTouchpadFingersPtr.asFunction<
+          int Function(ffi.Pointer<SDL_GameController>, int)>();
+
+  /// Get the current state of a finger on a touchpad on a game controller.
+  ///
+  /// \since This function is available since SDL 2.0.14.
+  int SDL_GameControllerGetTouchpadFinger(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+    int touchpad,
+    int finger,
+    ffi.Pointer<Uint8> state,
+    ffi.Pointer<ffi.Float> x,
+    ffi.Pointer<ffi.Float> y,
+    ffi.Pointer<ffi.Float> pressure,
+  ) {
+    return _SDL_GameControllerGetTouchpadFinger(
+      gamecontroller,
+      touchpad,
+      finger,
+      state,
+      x,
+      y,
+      pressure,
+    );
+  }
+
+  late final _SDL_GameControllerGetTouchpadFingerPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int Function(
+              ffi.Pointer<SDL_GameController>,
+              ffi.Int,
+              ffi.Int,
+              ffi.Pointer<Uint8>,
+              ffi.Pointer<ffi.Float>,
+              ffi.Pointer<ffi.Float>,
+              ffi.Pointer<ffi.Float>)>>('SDL_GameControllerGetTouchpadFinger');
+  late final _SDL_GameControllerGetTouchpadFinger =
+      _SDL_GameControllerGetTouchpadFingerPtr.asFunction<
+          int Function(
+              ffi.Pointer<SDL_GameController>,
+              int,
+              int,
+              ffi.Pointer<Uint8>,
+              ffi.Pointer<ffi.Float>,
+              ffi.Pointer<ffi.Float>,
+              ffi.Pointer<ffi.Float>)>();
+
+  /// Return whether a game controller has a particular sensor.
+  ///
+  /// \param gamecontroller The controller to query
+  /// \param type The type of sensor to query
+  /// \returns SDL_TRUE if the sensor exists, SDL_FALSE otherwise.
+  ///
+  /// \since This function is available since SDL 2.0.14.
+  int SDL_GameControllerHasSensor(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+    int type,
+  ) {
+    return _SDL_GameControllerHasSensor(
+      gamecontroller,
+      type,
+    );
+  }
+
+  late final _SDL_GameControllerHasSensorPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int32 Function(ffi.Pointer<SDL_GameController>,
+              ffi.Int32)>>('SDL_GameControllerHasSensor');
+  late final _SDL_GameControllerHasSensor = _SDL_GameControllerHasSensorPtr
+      .asFunction<int Function(ffi.Pointer<SDL_GameController>, int)>();
+
+  /// Set whether data reporting for a game controller sensor is enabled.
+  ///
+  /// \param gamecontroller The controller to update
+  /// \param type The type of sensor to enable/disable
+  /// \param enabled Whether data reporting should be enabled
+  /// \returns 0 or -1 if an error occurred.
+  ///
+  /// \since This function is available since SDL 2.0.14.
+  int SDL_GameControllerSetSensorEnabled(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+    int type,
+    int enabled,
+  ) {
+    return _SDL_GameControllerSetSensorEnabled(
+      gamecontroller,
+      type,
+      enabled,
+    );
+  }
+
+  late final _SDL_GameControllerSetSensorEnabledPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int Function(ffi.Pointer<SDL_GameController>, ffi.Int32,
+              ffi.Int32)>>('SDL_GameControllerSetSensorEnabled');
+  late final _SDL_GameControllerSetSensorEnabled =
+      _SDL_GameControllerSetSensorEnabledPtr.asFunction<
+          int Function(ffi.Pointer<SDL_GameController>, int, int)>();
+
+  /// Query whether sensor data reporting is enabled for a game controller.
+  ///
+  /// \param gamecontroller The controller to query
+  /// \param type The type of sensor to query
+  /// \returns SDL_TRUE if the sensor is enabled, SDL_FALSE otherwise.
+  ///
+  /// \since This function is available since SDL 2.0.14.
+  int SDL_GameControllerIsSensorEnabled(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+    int type,
+  ) {
+    return _SDL_GameControllerIsSensorEnabled(
+      gamecontroller,
+      type,
+    );
+  }
+
+  late final _SDL_GameControllerIsSensorEnabledPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int32 Function(ffi.Pointer<SDL_GameController>,
+              ffi.Int32)>>('SDL_GameControllerIsSensorEnabled');
+  late final _SDL_GameControllerIsSensorEnabled =
+      _SDL_GameControllerIsSensorEnabledPtr.asFunction<
+          int Function(ffi.Pointer<SDL_GameController>, int)>();
+
+  /// Get the data rate (number of events per second) of a game controller
+  /// sensor.
+  ///
+  /// \param gamecontroller The controller to query
+  /// \param type The type of sensor to query
+  /// \return the data rate, or 0.0f if the data rate is not available.
+  ///
+  /// \since This function is available since SDL 2.0.16.
+  double SDL_GameControllerGetSensorDataRate(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+    int type,
+  ) {
+    return _SDL_GameControllerGetSensorDataRate(
+      gamecontroller,
+      type,
+    );
+  }
+
+  late final _SDL_GameControllerGetSensorDataRatePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Float Function(ffi.Pointer<SDL_GameController>,
+              ffi.Int32)>>('SDL_GameControllerGetSensorDataRate');
+  late final _SDL_GameControllerGetSensorDataRate =
+      _SDL_GameControllerGetSensorDataRatePtr.asFunction<
+          double Function(ffi.Pointer<SDL_GameController>, int)>();
+
+  /// Get the current state of a game controller sensor.
+  ///
+  /// The number of values and interpretation of the data is sensor dependent.
+  /// See SDL_sensor.h for the details for each type of sensor.
+  ///
+  /// \param gamecontroller The controller to query
+  /// \param type The type of sensor to query
+  /// \param data A pointer filled with the current sensor state
+  /// \param num_values The number of values to write to data
+  /// \return 0 or -1 if an error occurred.
+  ///
+  /// \since This function is available since SDL 2.0.14.
+  int SDL_GameControllerGetSensorData(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+    int type,
+    ffi.Pointer<ffi.Float> data,
+    int num_values,
+  ) {
+    return _SDL_GameControllerGetSensorData(
+      gamecontroller,
+      type,
+      data,
+      num_values,
+    );
+  }
+
+  late final _SDL_GameControllerGetSensorDataPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int Function(
+              ffi.Pointer<SDL_GameController>,
+              ffi.Int32,
+              ffi.Pointer<ffi.Float>,
+              ffi.Int)>>('SDL_GameControllerGetSensorData');
+  late final _SDL_GameControllerGetSensorData =
+      _SDL_GameControllerGetSensorDataPtr.asFunction<
+          int Function(ffi.Pointer<SDL_GameController>, int,
+              ffi.Pointer<ffi.Float>, int)>();
+
+  /// Get the current state of a game controller sensor with the timestamp of the
+  /// last update.
+  ///
+  /// The number of values and interpretation of the data is sensor dependent.
+  /// See SDL_sensor.h for the details for each type of sensor.
+  ///
+  /// \param gamecontroller The controller to query
+  /// \param type The type of sensor to query
+  /// \param timestamp A pointer filled with the timestamp in microseconds of the
+  /// current sensor reading if available, or 0 if not
+  /// \param data A pointer filled with the current sensor state
+  /// \param num_values The number of values to write to data
+  /// \return 0 or -1 if an error occurred.
+  ///
+  /// \since This function is available since SDL 2.26.0.
+  int SDL_GameControllerGetSensorDataWithTimestamp(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+    int type,
+    ffi.Pointer<Uint64> timestamp,
+    ffi.Pointer<ffi.Float> data,
+    int num_values,
+  ) {
+    return _SDL_GameControllerGetSensorDataWithTimestamp(
+      gamecontroller,
+      type,
+      timestamp,
+      data,
+      num_values,
+    );
+  }
+
+  late final _SDL_GameControllerGetSensorDataWithTimestampPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int Function(
+              ffi.Pointer<SDL_GameController>,
+              ffi.Int32,
+              ffi.Pointer<Uint64>,
+              ffi.Pointer<ffi.Float>,
+              ffi.Int)>>('SDL_GameControllerGetSensorDataWithTimestamp');
+  late final _SDL_GameControllerGetSensorDataWithTimestamp =
+      _SDL_GameControllerGetSensorDataWithTimestampPtr.asFunction<
+          int Function(ffi.Pointer<SDL_GameController>, int,
+              ffi.Pointer<Uint64>, ffi.Pointer<ffi.Float>, int)>();
+
+  /// Start a rumble effect on a game controller.
+  ///
+  /// Each call to this function cancels any previous rumble effect, and calling
+  /// it with 0 intensity stops any rumbling.
+  ///
+  /// \param gamecontroller The controller to vibrate
+  /// \param low_frequency_rumble The intensity of the low frequency (left)
+  /// rumble motor, from 0 to 0xFFFF
+  /// \param high_frequency_rumble The intensity of the high frequency (right)
+  /// rumble motor, from 0 to 0xFFFF
+  /// \param duration_ms The duration of the rumble effect, in milliseconds
+  /// \returns 0, or -1 if rumble isn't supported on this controller
+  ///
+  /// \since This function is available since SDL 2.0.9.
+  ///
+  /// \sa SDL_GameControllerHasRumble
+  int SDL_GameControllerRumble(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+    int low_frequency_rumble,
+    int high_frequency_rumble,
+    int duration_ms,
+  ) {
+    return _SDL_GameControllerRumble(
+      gamecontroller,
+      low_frequency_rumble,
+      high_frequency_rumble,
+      duration_ms,
+    );
+  }
+
+  late final _SDL_GameControllerRumblePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int Function(ffi.Pointer<SDL_GameController>, Uint16, Uint16,
+              Uint32)>>('SDL_GameControllerRumble');
+  late final _SDL_GameControllerRumble =
+      _SDL_GameControllerRumblePtr.asFunction<
+          int Function(ffi.Pointer<SDL_GameController>, int, int, int)>();
+
+  /// Start a rumble effect in the game controller's triggers.
+  ///
+  /// Each call to this function cancels any previous trigger rumble effect, and
+  /// calling it with 0 intensity stops any rumbling.
+  ///
+  /// Note that this is rumbling of the _triggers_ and not the game controller as
+  /// a whole. This is currently only supported on Xbox One controllers. If you
+  /// want the (more common) whole-controller rumble, use
+  /// SDL_GameControllerRumble() instead.
+  ///
+  /// \param gamecontroller The controller to vibrate
+  /// \param left_rumble The intensity of the left trigger rumble motor, from 0
+  /// to 0xFFFF
+  /// \param right_rumble The intensity of the right trigger rumble motor, from 0
+  /// to 0xFFFF
+  /// \param duration_ms The duration of the rumble effect, in milliseconds
+  /// \returns 0, or -1 if trigger rumble isn't supported on this controller
+  ///
+  /// \since This function is available since SDL 2.0.14.
+  ///
+  /// \sa SDL_GameControllerHasRumbleTriggers
+  int SDL_GameControllerRumbleTriggers(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+    int left_rumble,
+    int right_rumble,
+    int duration_ms,
+  ) {
+    return _SDL_GameControllerRumbleTriggers(
+      gamecontroller,
+      left_rumble,
+      right_rumble,
+      duration_ms,
+    );
+  }
+
+  late final _SDL_GameControllerRumbleTriggersPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int Function(ffi.Pointer<SDL_GameController>, Uint16, Uint16,
+              Uint32)>>('SDL_GameControllerRumbleTriggers');
+  late final _SDL_GameControllerRumbleTriggers =
+      _SDL_GameControllerRumbleTriggersPtr.asFunction<
+          int Function(ffi.Pointer<SDL_GameController>, int, int, int)>();
+
+  /// Query whether a game controller has an LED.
+  ///
+  /// \param gamecontroller The controller to query
+  /// \returns SDL_TRUE, or SDL_FALSE if this controller does not have a
+  /// modifiable LED
+  ///
+  /// \since This function is available since SDL 2.0.14.
+  int SDL_GameControllerHasLED(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+  ) {
+    return _SDL_GameControllerHasLED(
+      gamecontroller,
+    );
+  }
+
+  late final _SDL_GameControllerHasLEDPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Int32 Function(ffi.Pointer<SDL_GameController>)>>(
+      'SDL_GameControllerHasLED');
+  late final _SDL_GameControllerHasLED = _SDL_GameControllerHasLEDPtr
+      .asFunction<int Function(ffi.Pointer<SDL_GameController>)>();
+
+  /// Query whether a game controller has rumble support.
+  ///
+  /// \param gamecontroller The controller to query
+  /// \returns SDL_TRUE, or SDL_FALSE if this controller does not have rumble
+  /// support
+  ///
+  /// \since This function is available since SDL 2.0.18.
+  ///
+  /// \sa SDL_GameControllerRumble
+  int SDL_GameControllerHasRumble(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+  ) {
+    return _SDL_GameControllerHasRumble(
+      gamecontroller,
+    );
+  }
+
+  late final _SDL_GameControllerHasRumblePtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Int32 Function(ffi.Pointer<SDL_GameController>)>>(
+      'SDL_GameControllerHasRumble');
+  late final _SDL_GameControllerHasRumble = _SDL_GameControllerHasRumblePtr
+      .asFunction<int Function(ffi.Pointer<SDL_GameController>)>();
+
+  /// Query whether a game controller has rumble support on triggers.
+  ///
+  /// \param gamecontroller The controller to query
+  /// \returns SDL_TRUE, or SDL_FALSE if this controller does not have trigger
+  /// rumble support
+  ///
+  /// \since This function is available since SDL 2.0.18.
+  ///
+  /// \sa SDL_GameControllerRumbleTriggers
+  int SDL_GameControllerHasRumbleTriggers(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+  ) {
+    return _SDL_GameControllerHasRumbleTriggers(
+      gamecontroller,
+    );
+  }
+
+  late final _SDL_GameControllerHasRumbleTriggersPtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Int32 Function(ffi.Pointer<SDL_GameController>)>>(
+      'SDL_GameControllerHasRumbleTriggers');
+  late final _SDL_GameControllerHasRumbleTriggers =
+      _SDL_GameControllerHasRumbleTriggersPtr.asFunction<
+          int Function(ffi.Pointer<SDL_GameController>)>();
+
+  /// Update a game controller's LED color.
+  ///
+  /// \param gamecontroller The controller to update
+  /// \param red The intensity of the red LED
+  /// \param green The intensity of the green LED
+  /// \param blue The intensity of the blue LED
+  /// \returns 0, or -1 if this controller does not have a modifiable LED
+  ///
+  /// \since This function is available since SDL 2.0.14.
+  int SDL_GameControllerSetLED(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+    int red,
+    int green,
+    int blue,
+  ) {
+    return _SDL_GameControllerSetLED(
+      gamecontroller,
+      red,
+      green,
+      blue,
+    );
+  }
+
+  late final _SDL_GameControllerSetLEDPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int Function(ffi.Pointer<SDL_GameController>, Uint8, Uint8,
+              Uint8)>>('SDL_GameControllerSetLED');
+  late final _SDL_GameControllerSetLED =
+      _SDL_GameControllerSetLEDPtr.asFunction<
+          int Function(ffi.Pointer<SDL_GameController>, int, int, int)>();
+
+  /// Send a controller specific effect packet
+  ///
+  /// \param gamecontroller The controller to affect
+  /// \param data The data to send to the controller
+  /// \param size The size of the data to send to the controller
+  /// \returns 0, or -1 if this controller or driver doesn't support effect
+  /// packets
+  ///
+  /// \since This function is available since SDL 2.0.16.
+  int SDL_GameControllerSendEffect(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+    ffi.Pointer<ffi.Void> data,
+    int size,
+  ) {
+    return _SDL_GameControllerSendEffect(
+      gamecontroller,
+      data,
+      size,
+    );
+  }
+
+  late final _SDL_GameControllerSendEffectPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int Function(ffi.Pointer<SDL_GameController>,
+              ffi.Pointer<ffi.Void>, ffi.Int)>>('SDL_GameControllerSendEffect');
+  late final _SDL_GameControllerSendEffect =
+      _SDL_GameControllerSendEffectPtr.asFunction<
+          int Function(
+              ffi.Pointer<SDL_GameController>, ffi.Pointer<ffi.Void>, int)>();
+
+  /// Close a game controller previously opened with SDL_GameControllerOpen().
+  ///
+  /// \param gamecontroller a game controller identifier previously returned by
+  /// SDL_GameControllerOpen()
+  ///
+  /// \since This function is available since SDL 2.0.0.
+  ///
+  /// \sa SDL_GameControllerOpen
+  void SDL_GameControllerClose(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+  ) {
+    return _SDL_GameControllerClose(
+      gamecontroller,
+    );
+  }
+
+  late final _SDL_GameControllerClosePtr = _lookup<
+          ffi
+          .NativeFunction<ffi.Void Function(ffi.Pointer<SDL_GameController>)>>(
+      'SDL_GameControllerClose');
+  late final _SDL_GameControllerClose = _SDL_GameControllerClosePtr.asFunction<
+      void Function(ffi.Pointer<SDL_GameController>)>();
+
+  /// Return the sfSymbolsName for a given button on a game controller on Apple
+  /// platforms.
+  ///
+  /// \param gamecontroller the controller to query
+  /// \param button a button on the game controller
+  /// \returns the sfSymbolsName or NULL if the name can't be found
+  ///
+  /// \since This function is available since SDL 2.0.18.
+  ///
+  /// \sa SDL_GameControllerGetAppleSFSymbolsNameForAxis
+  ffi.Pointer<ffi.Char> SDL_GameControllerGetAppleSFSymbolsNameForButton(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+    int button,
+  ) {
+    return _SDL_GameControllerGetAppleSFSymbolsNameForButton(
+      gamecontroller,
+      button,
+    );
+  }
+
+  late final _SDL_GameControllerGetAppleSFSymbolsNameForButtonPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<ffi.Char> Function(ffi.Pointer<SDL_GameController>,
+              ffi.Int32)>>('SDL_GameControllerGetAppleSFSymbolsNameForButton');
+  late final _SDL_GameControllerGetAppleSFSymbolsNameForButton =
+      _SDL_GameControllerGetAppleSFSymbolsNameForButtonPtr.asFunction<
+          ffi.Pointer<ffi.Char> Function(
+              ffi.Pointer<SDL_GameController>, int)>();
+
+  /// Return the sfSymbolsName for a given axis on a game controller on Apple
+  /// platforms.
+  ///
+  /// \param gamecontroller the controller to query
+  /// \param axis an axis on the game controller
+  /// \returns the sfSymbolsName or NULL if the name can't be found
+  ///
+  /// \since This function is available since SDL 2.0.18.
+  ///
+  /// \sa SDL_GameControllerGetAppleSFSymbolsNameForButton
+  ffi.Pointer<ffi.Char> SDL_GameControllerGetAppleSFSymbolsNameForAxis(
+    ffi.Pointer<SDL_GameController> gamecontroller,
+    int axis,
+  ) {
+    return _SDL_GameControllerGetAppleSFSymbolsNameForAxis(
+      gamecontroller,
+      axis,
+    );
+  }
+
+  late final _SDL_GameControllerGetAppleSFSymbolsNameForAxisPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<ffi.Char> Function(ffi.Pointer<SDL_GameController>,
+              ffi.Int32)>>('SDL_GameControllerGetAppleSFSymbolsNameForAxis');
+  late final _SDL_GameControllerGetAppleSFSymbolsNameForAxis =
+      _SDL_GameControllerGetAppleSFSymbolsNameForAxisPtr.asFunction<
+          ffi.Pointer<ffi.Char> Function(
+              ffi.Pointer<SDL_GameController>, int)>();
 }
+
+/// keyboard end other inputs
+final class Keyboard_keymap extends ffi.Struct {
+  @ffi.UnsignedInt()
+  external int native;
+
+  @ffi.UnsignedInt()
+  external int retro;
+}
+
+final class joystick_keymap extends ffi.Struct {
+  @ffi.Int32()
+  external int native;
+
+  @ffi.UnsignedInt()
+  external int retro;
+}
+
+/// The list of buttons available from a controller
+abstract class SDL_GameControllerButton {
+  static const int SDL_CONTROLLER_BUTTON_INVALID = -1;
+  static const int SDL_CONTROLLER_BUTTON_A = 0;
+  static const int SDL_CONTROLLER_BUTTON_B = 1;
+  static const int SDL_CONTROLLER_BUTTON_X = 2;
+  static const int SDL_CONTROLLER_BUTTON_Y = 3;
+  static const int SDL_CONTROLLER_BUTTON_BACK = 4;
+  static const int SDL_CONTROLLER_BUTTON_GUIDE = 5;
+  static const int SDL_CONTROLLER_BUTTON_START = 6;
+  static const int SDL_CONTROLLER_BUTTON_LEFTSTICK = 7;
+  static const int SDL_CONTROLLER_BUTTON_RIGHTSTICK = 8;
+  static const int SDL_CONTROLLER_BUTTON_LEFTSHOULDER = 9;
+  static const int SDL_CONTROLLER_BUTTON_RIGHTSHOULDER = 10;
+  static const int SDL_CONTROLLER_BUTTON_DPAD_UP = 11;
+  static const int SDL_CONTROLLER_BUTTON_DPAD_DOWN = 12;
+  static const int SDL_CONTROLLER_BUTTON_DPAD_LEFT = 13;
+  static const int SDL_CONTROLLER_BUTTON_DPAD_RIGHT = 14;
+
+  /// Xbox Series X share button, PS5 microphone button, Nintendo Switch Pro capture button, Amazon Luna microphone button
+  static const int SDL_CONTROLLER_BUTTON_MISC1 = 15;
+
+  /// Xbox Elite paddle P1 (upper left, facing the back)
+  static const int SDL_CONTROLLER_BUTTON_PADDLE1 = 16;
+
+  /// Xbox Elite paddle P3 (upper right, facing the back)
+  static const int SDL_CONTROLLER_BUTTON_PADDLE2 = 17;
+
+  /// Xbox Elite paddle P2 (lower left, facing the back)
+  static const int SDL_CONTROLLER_BUTTON_PADDLE3 = 18;
+
+  /// Xbox Elite paddle P4 (lower right, facing the back)
+  static const int SDL_CONTROLLER_BUTTON_PADDLE4 = 19;
+
+  /// PS4/PS5 touchpad button
+  static const int SDL_CONTROLLER_BUTTON_TOUCHPAD = 20;
+  static const int SDL_CONTROLLER_BUTTON_MAX = 21;
+}
+
+final class controller_events extends ffi.Struct {
+  external ffi.Pointer<on_device_disconnect_t> onDisconnect;
+
+  external ffi.Pointer<on_device_connect_t> onConnect;
+}
+
+typedef on_device_disconnect_t
+    = ffi.NativeFunction<ffi.Void Function(SDL_JoystickID id, ffi.Int port)>;
+
+/// This is a unique ID for a joystick for the time it is connected to the system,
+/// and is never reused for the lifetime of the application. If the joystick is
+/// disconnected and reconnected, it will get a new ID.
+///
+/// The ID value starts at 0 and increments from there. The value -1 is an invalid ID.
+typedef SDL_JoystickID = Sint32;
+typedef Sint32 = ffi.Int32;
+typedef on_device_connect_t = ffi.NativeFunction<
+    ffi.Void Function(ffi.Pointer<SDL_GameController> gmController)>;
+typedef SDL_GameController = _SDL_GameController;
+
+/// The gamecontroller structure used to identify an SDL game controller
+final class _SDL_GameController extends ffi.Opaque {}
+
+final class controller_native_info extends ffi.Struct {
+  @ffi.UnsignedInt()
+  external int type;
+
+  external ffi.Pointer<SDL_GameController> controllerToken;
+}
+
+final class Joystick extends ffi.Struct {
+  @SDL_JoystickID()
+  external int id;
+
+  @ffi.Int()
+  external int index;
+
+  external ffi.Pointer<ffi.Char> name;
+}
+
+final class controller_device extends ffi.Struct {
+  @SDL_JoystickID()
+  external int id;
+
+  @ffi.Int()
+  external int index;
+
+  @ffi.Int()
+  external int port;
+
+  @ffi.UnsignedInt()
+  external int type;
+
+  external controller_native_info nativeInfo;
+
+  @ffi.Array.multi([16])
+  external ffi.Array<Keyboard_keymap> keyboardKeyBinds;
+
+  @ffi.Array.multi([16])
+  external ffi.Array<joystick_keymap> joystickKeyBinds;
+}
+
+final class g_video_t extends ffi.Struct {
+  @GLuint()
+  external int texeture_id;
+
+  @GLuint()
+  external int fbo_id;
+
+  @GLuint()
+  external int rbo_id;
+
+  @ffi.Int()
+  external int glmajor;
+
+  @ffi.Int()
+  external int glminor;
+
+  @GLuint()
+  external int pitch;
+
+  @GLint()
+  external int texture_w;
+
+  @GLint()
+  external int texture_h;
+
+  @GLuint()
+  external int clip_w;
+
+  @GLuint()
+  external int clip_h;
+
+  @GLuint()
+  external int pixelfmt;
+
+  @GLuint()
+  external int pixeltype;
+
+  @GLuint()
+  external int bpp;
+
+  external retro_hw_render_callback hw;
+}
+
+typedef GLuint = ffi.UnsignedInt;
+typedef GLint = ffi.Int;
+
+final class retro_hw_render_callback extends ffi.Struct {
+  /// Which API to use. Set by libretro core.
+  @ffi.Int32()
+  external int context_type;
+
+  /// Called when a context has been created or when it has been reset.
+  /// An OpenGL context is only valid after context_reset() has been called.
+  ///
+  /// When context_reset is called, OpenGL resources in the libretro
+  /// implementation are guaranteed to be invalid.
+  ///
+  /// It is possible that context_reset is called multiple times during an
+  /// application lifecycle.
+  /// If context_reset is called without any notification (context_destroy),
+  /// the OpenGL context was lost and resources should just be recreated
+  /// without any attempt to "free" old resources.
+  external retro_hw_context_reset_t context_reset;
+
+  /// Set by frontend.
+  /// TODO: This is rather obsolete. The frontend should not
+  /// be providing preallocated framebuffers.
+  external retro_hw_get_current_framebuffer_t get_current_framebuffer;
+
+  /// Set by frontend.
+  /// Can return all relevant functions, including glClear on Windows.
+  external retro_hw_get_proc_address_t get_proc_address;
+
+  /// Set if render buffers should have depth component attached.
+  /// TODO: Obsolete.
+  @ffi.Bool()
+  external bool depth;
+
+  /// Set if stencil buffers should be attached.
+  /// TODO: Obsolete.
+  @ffi.Bool()
+  external bool stencil;
+
+  /// Use conventional bottom-left origin convention. If false,
+  /// standard libretro top-left origin semantics are used.
+  /// TODO: Move to GL specific interface.
+  @ffi.Bool()
+  external bool bottom_left_origin;
+
+  /// Major version number for core GL context or GLES 3.1+.
+  @ffi.UnsignedInt()
+  external int version_major;
+
+  /// Minor version number for core GL context or GLES 3.1+.
+  @ffi.UnsignedInt()
+  external int version_minor;
+
+  /// If this is true, the frontend will go very far to avoid
+  /// resetting context in scenarios like toggling fullscreen, etc.
+  /// TODO: Obsolete? Maybe frontend should just always assume this ...
+  @ffi.Bool()
+  external bool cache_context;
+
+  /// A callback to be called before the context is destroyed in a
+  /// controlled way by the frontend.
+  external retro_hw_context_reset_t context_destroy;
+
+  /// Creates a debug context.
+  @ffi.Bool()
+  external bool debug_context;
+}
+
+abstract class retro_hw_context_type {
+  static const int RETRO_HW_CONTEXT_NONE = 0;
+
+  /// OpenGL 2.x. Driver can choose to use latest compatibility context.
+  static const int RETRO_HW_CONTEXT_OPENGL = 1;
+
+  /// OpenGL ES 2.0.
+  static const int RETRO_HW_CONTEXT_OPENGLES2 = 2;
+
+  /// Modern desktop core GL context. Use version_major/
+  /// version_minor fields to set GL version.
+  static const int RETRO_HW_CONTEXT_OPENGL_CORE = 3;
+
+  /// OpenGL ES 3.0
+  static const int RETRO_HW_CONTEXT_OPENGLES3 = 4;
+
+  /// OpenGL ES 3.1+. Set version_major/version_minor. For GLES2 and GLES3,
+  /// use the corresponding enums directly.
+  static const int RETRO_HW_CONTEXT_OPENGLES_VERSION = 5;
+
+  /// Vulkan, see RETRO_ENVIRONMENT_GET_HW_RENDER_INTERFACE.
+  static const int RETRO_HW_CONTEXT_VULKAN = 6;
+
+  /// Direct3D, set version_major to select the type of interface
+  /// returned by RETRO_ENVIRONMENT_GET_HW_RENDER_INTERFACE
+  static const int RETRO_HW_CONTEXT_DIRECT3D = 7;
+  static const int RETRO_HW_CONTEXT_DUMMY = 2147483647;
+}
+
+/// Invalidates the current HW context.
+/// Any GL state is lost, and must not be deinitialized explicitly.
+/// If explicit deinitialization is desired by the libretro core,
+/// it should implement context_destroy callback.
+/// If called, all GPU resources must be reinitialized.
+/// Usually called when frontend reinits video driver.
+/// Also called first time video driver is initialized,
+/// allowing libretro core to initialize resources.
+typedef retro_hw_context_reset_t
+    = ffi.Pointer<ffi.NativeFunction<ffi.Void Function()>>;
+
+/// Gets current framebuffer which is to be rendered to.
+/// Could change every frame potentially.
+typedef retro_hw_get_current_framebuffer_t
+    = ffi.Pointer<ffi.NativeFunction<ffi.UintPtr Function()>>;
+
+/// Get a symbol from HW context.
+typedef retro_hw_get_proc_address_t = ffi.Pointer<
+    ffi
+    .NativeFunction<retro_proc_address_t Function(ffi.Pointer<ffi.Char> sym)>>;
+typedef retro_proc_address_t
+    = ffi.Pointer<ffi.NativeFunction<ffi.Void Function()>>;
+
+final class g_shader_t extends ffi.Struct {
+  @GLuint()
+  external int vao;
+
+  @GLuint()
+  external int vbo;
+
+  @GLuint()
+  external int program;
+
+  @GLint()
+  external int i_pos;
+
+  @GLint()
+  external int i_coord;
+
+  @GLint()
+  external int u_tex;
+
+  @GLint()
+  external int u_mvp;
+}
+
+/// Id values for LANGUAGE
+abstract class retro_language {
+  static const int RETRO_LANGUAGE_ENGLISH = 0;
+  static const int RETRO_LANGUAGE_JAPANESE = 1;
+  static const int RETRO_LANGUAGE_FRENCH = 2;
+  static const int RETRO_LANGUAGE_SPANISH = 3;
+  static const int RETRO_LANGUAGE_GERMAN = 4;
+  static const int RETRO_LANGUAGE_ITALIAN = 5;
+  static const int RETRO_LANGUAGE_DUTCH = 6;
+  static const int RETRO_LANGUAGE_PORTUGUESE_BRAZIL = 7;
+  static const int RETRO_LANGUAGE_PORTUGUESE_PORTUGAL = 8;
+  static const int RETRO_LANGUAGE_RUSSIAN = 9;
+  static const int RETRO_LANGUAGE_KOREAN = 10;
+  static const int RETRO_LANGUAGE_CHINESE_TRADITIONAL = 11;
+  static const int RETRO_LANGUAGE_CHINESE_SIMPLIFIED = 12;
+  static const int RETRO_LANGUAGE_ESPERANTO = 13;
+  static const int RETRO_LANGUAGE_POLISH = 14;
+  static const int RETRO_LANGUAGE_VIETNAMESE = 15;
+  static const int RETRO_LANGUAGE_ARABIC = 16;
+  static const int RETRO_LANGUAGE_GREEK = 17;
+  static const int RETRO_LANGUAGE_TURKISH = 18;
+  static const int RETRO_LANGUAGE_LAST = 19;
+
+  /// Ensure sizeof(enum) == sizeof(int)
+  static const int RETRO_LANGUAGE_DUMMY = 2147483647;
+}
+
+/// Keysyms used for ID in input state callback when polling RETRO_KEYBOARD.
+abstract class retro_key {
+  static const int RETROK_UNKNOWN = 0;
+  static const int RETROK_FIRST = 0;
+  static const int RETROK_BACKSPACE = 8;
+  static const int RETROK_TAB = 9;
+  static const int RETROK_CLEAR = 12;
+  static const int RETROK_RETURN = 13;
+  static const int RETROK_PAUSE = 19;
+  static const int RETROK_ESCAPE = 27;
+  static const int RETROK_SPACE = 32;
+  static const int RETROK_EXCLAIM = 33;
+  static const int RETROK_QUOTEDBL = 34;
+  static const int RETROK_HASH = 35;
+  static const int RETROK_DOLLAR = 36;
+  static const int RETROK_AMPERSAND = 38;
+  static const int RETROK_QUOTE = 39;
+  static const int RETROK_LEFTPAREN = 40;
+  static const int RETROK_RIGHTPAREN = 41;
+  static const int RETROK_ASTERISK = 42;
+  static const int RETROK_PLUS = 43;
+  static const int RETROK_COMMA = 44;
+  static const int RETROK_MINUS = 45;
+  static const int RETROK_PERIOD = 46;
+  static const int RETROK_SLASH = 47;
+  static const int RETROK_0 = 48;
+  static const int RETROK_1 = 49;
+  static const int RETROK_2 = 50;
+  static const int RETROK_3 = 51;
+  static const int RETROK_4 = 52;
+  static const int RETROK_5 = 53;
+  static const int RETROK_6 = 54;
+  static const int RETROK_7 = 55;
+  static const int RETROK_8 = 56;
+  static const int RETROK_9 = 57;
+  static const int RETROK_COLON = 58;
+  static const int RETROK_SEMICOLON = 59;
+  static const int RETROK_LESS = 60;
+  static const int RETROK_EQUALS = 61;
+  static const int RETROK_GREATER = 62;
+  static const int RETROK_QUESTION = 63;
+  static const int RETROK_AT = 64;
+  static const int RETROK_LEFTBRACKET = 91;
+  static const int RETROK_BACKSLASH = 92;
+  static const int RETROK_RIGHTBRACKET = 93;
+  static const int RETROK_CARET = 94;
+  static const int RETROK_UNDERSCORE = 95;
+  static const int RETROK_BACKQUOTE = 96;
+  static const int RETROK_a = 97;
+  static const int RETROK_b = 98;
+  static const int RETROK_c = 99;
+  static const int RETROK_d = 100;
+  static const int RETROK_e = 101;
+  static const int RETROK_f = 102;
+  static const int RETROK_g = 103;
+  static const int RETROK_h = 104;
+  static const int RETROK_i = 105;
+  static const int RETROK_j = 106;
+  static const int RETROK_k = 107;
+  static const int RETROK_l = 108;
+  static const int RETROK_m = 109;
+  static const int RETROK_n = 110;
+  static const int RETROK_o = 111;
+  static const int RETROK_p = 112;
+  static const int RETROK_q = 113;
+  static const int RETROK_r = 114;
+  static const int RETROK_s = 115;
+  static const int RETROK_t = 116;
+  static const int RETROK_u = 117;
+  static const int RETROK_v = 118;
+  static const int RETROK_w = 119;
+  static const int RETROK_x = 120;
+  static const int RETROK_y = 121;
+  static const int RETROK_z = 122;
+  static const int RETROK_LEFTBRACE = 123;
+  static const int RETROK_BAR = 124;
+  static const int RETROK_RIGHTBRACE = 125;
+  static const int RETROK_TILDE = 126;
+  static const int RETROK_DELETE = 127;
+  static const int RETROK_KP0 = 256;
+  static const int RETROK_KP1 = 257;
+  static const int RETROK_KP2 = 258;
+  static const int RETROK_KP3 = 259;
+  static const int RETROK_KP4 = 260;
+  static const int RETROK_KP5 = 261;
+  static const int RETROK_KP6 = 262;
+  static const int RETROK_KP7 = 263;
+  static const int RETROK_KP8 = 264;
+  static const int RETROK_KP9 = 265;
+  static const int RETROK_KP_PERIOD = 266;
+  static const int RETROK_KP_DIVIDE = 267;
+  static const int RETROK_KP_MULTIPLY = 268;
+  static const int RETROK_KP_MINUS = 269;
+  static const int RETROK_KP_PLUS = 270;
+  static const int RETROK_KP_ENTER = 271;
+  static const int RETROK_KP_EQUALS = 272;
+  static const int RETROK_UP = 273;
+  static const int RETROK_DOWN = 274;
+  static const int RETROK_RIGHT = 275;
+  static const int RETROK_LEFT = 276;
+  static const int RETROK_INSERT = 277;
+  static const int RETROK_HOME = 278;
+  static const int RETROK_END = 279;
+  static const int RETROK_PAGEUP = 280;
+  static const int RETROK_PAGEDOWN = 281;
+  static const int RETROK_F1 = 282;
+  static const int RETROK_F2 = 283;
+  static const int RETROK_F3 = 284;
+  static const int RETROK_F4 = 285;
+  static const int RETROK_F5 = 286;
+  static const int RETROK_F6 = 287;
+  static const int RETROK_F7 = 288;
+  static const int RETROK_F8 = 289;
+  static const int RETROK_F9 = 290;
+  static const int RETROK_F10 = 291;
+  static const int RETROK_F11 = 292;
+  static const int RETROK_F12 = 293;
+  static const int RETROK_F13 = 294;
+  static const int RETROK_F14 = 295;
+  static const int RETROK_F15 = 296;
+  static const int RETROK_NUMLOCK = 300;
+  static const int RETROK_CAPSLOCK = 301;
+  static const int RETROK_SCROLLOCK = 302;
+  static const int RETROK_RSHIFT = 303;
+  static const int RETROK_LSHIFT = 304;
+  static const int RETROK_RCTRL = 305;
+  static const int RETROK_LCTRL = 306;
+  static const int RETROK_RALT = 307;
+  static const int RETROK_LALT = 308;
+  static const int RETROK_RMETA = 309;
+  static const int RETROK_LMETA = 310;
+  static const int RETROK_LSUPER = 311;
+  static const int RETROK_RSUPER = 312;
+  static const int RETROK_MODE = 313;
+  static const int RETROK_COMPOSE = 314;
+  static const int RETROK_HELP = 315;
+  static const int RETROK_PRINT = 316;
+  static const int RETROK_SYSREQ = 317;
+  static const int RETROK_BREAK = 318;
+  static const int RETROK_MENU = 319;
+  static const int RETROK_POWER = 320;
+  static const int RETROK_EURO = 321;
+  static const int RETROK_UNDO = 322;
+  static const int RETROK_OEM_102 = 323;
+  static const int RETROK_LAST = 324;
+
+  /// Ensure sizeof(enum) == sizeof(int)
+  static const int RETROK_DUMMY = 2147483647;
+}
+
+abstract class retro_mod {
+  static const int RETROKMOD_NONE = 0;
+  static const int RETROKMOD_SHIFT = 1;
+  static const int RETROKMOD_CTRL = 2;
+  static const int RETROKMOD_ALT = 4;
+  static const int RETROKMOD_META = 8;
+  static const int RETROKMOD_NUMLOCK = 16;
+  static const int RETROKMOD_CAPSLOCK = 32;
+  static const int RETROKMOD_SCROLLOCK = 64;
+
+  /// Ensure sizeof(enum) == sizeof(int)
+  static const int RETROKMOD_DUMMY = 2147483647;
+}
+
+/// Opaque file handle
+/// Introduced in VFS API v1
+final class retro_vfs_file_handle extends ffi.Opaque {}
+
+/// Opaque directory handle
+/// Introduced in VFS API v3
+final class retro_vfs_dir_handle extends ffi.Opaque {}
+
+final class retro_vfs_interface extends ffi.Struct {
+  /// VFS API v1
+  external retro_vfs_get_path_t get_path;
+
+  external retro_vfs_open_t open;
+
+  external retro_vfs_close_t close;
+
+  external retro_vfs_size_t size;
+
+  external retro_vfs_tell_t tell;
+
+  external retro_vfs_seek_t seek;
+
+  external retro_vfs_read_t read;
+
+  external retro_vfs_write_t write;
+
+  external retro_vfs_flush_t flush;
+
+  external retro_vfs_remove_t remove;
+
+  external retro_vfs_rename_t rename;
+
+  /// VFS API v2
+  external retro_vfs_truncate_t truncate;
+
+  /// VFS API v3
+  external retro_vfs_stat_t stat;
+
+  external retro_vfs_mkdir_t mkdir;
+
+  external retro_vfs_opendir_t opendir;
+
+  external retro_vfs_readdir_t readdir;
+
+  external retro_vfs_dirent_get_name_t dirent_get_name;
+
+  external retro_vfs_dirent_is_dir_t dirent_is_dir;
+
+  external retro_vfs_closedir_t closedir;
+}
+
+/// Get path from opaque handle. Returns the exact same path passed to file_open when getting the handle
+/// Introduced in VFS API v1
+typedef retro_vfs_get_path_t = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Pointer<ffi.Char> Function(
+            ffi.Pointer<retro_vfs_file_handle> stream)>>;
+
+/// Open a file for reading or writing. If path points to a directory, this will
+/// fail. Returns the opaque file handle, or NULL for error.
+/// Introduced in VFS API v1
+typedef retro_vfs_open_t = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Pointer<retro_vfs_file_handle> Function(ffi.Pointer<ffi.Char> path,
+            ffi.UnsignedInt mode, ffi.UnsignedInt hints)>>;
+
+/// Close the file and release its resources. Must be called if open_file returns non-NULL. Returns 0 on success, -1 on failure.
+/// Whether the call succeeds ot not, the handle passed as parameter becomes invalid and should no longer be used.
+/// Introduced in VFS API v1
+typedef retro_vfs_close_t = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Int Function(ffi.Pointer<retro_vfs_file_handle> stream)>>;
+
+/// Return the size of the file in bytes, or -1 for error.
+/// Introduced in VFS API v1
+typedef retro_vfs_size_t = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Int64 Function(ffi.Pointer<retro_vfs_file_handle> stream)>>;
+
+/// Get the current read / write position for the file. Returns -1 for error.
+/// Introduced in VFS API v1
+typedef retro_vfs_tell_t = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Int64 Function(ffi.Pointer<retro_vfs_file_handle> stream)>>;
+
+/// Set the current read/write position for the file. Returns the new position, -1 for error.
+/// Introduced in VFS API v1
+typedef retro_vfs_seek_t = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Int64 Function(ffi.Pointer<retro_vfs_file_handle> stream,
+            ffi.Int64 offset, ffi.Int seek_position)>>;
+
+/// Read data from a file. Returns the number of bytes read, or -1 for error.
+/// Introduced in VFS API v1
+typedef retro_vfs_read_t = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Int64 Function(ffi.Pointer<retro_vfs_file_handle> stream,
+            ffi.Pointer<ffi.Void> s, ffi.Uint64 len)>>;
+
+/// Write data to a file. Returns the number of bytes written, or -1 for error.
+/// Introduced in VFS API v1
+typedef retro_vfs_write_t = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Int64 Function(ffi.Pointer<retro_vfs_file_handle> stream,
+            ffi.Pointer<ffi.Void> s, ffi.Uint64 len)>>;
+
+/// Flush pending writes to file, if using buffered IO. Returns 0 on sucess, or -1 on failure.
+/// Introduced in VFS API v1
+typedef retro_vfs_flush_t = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Int Function(ffi.Pointer<retro_vfs_file_handle> stream)>>;
+
+/// Delete the specified file. Returns 0 on success, -1 on failure
+/// Introduced in VFS API v1
+typedef retro_vfs_remove_t = ffi
+    .Pointer<ffi.NativeFunction<ffi.Int Function(ffi.Pointer<ffi.Char> path)>>;
+
+/// Rename the specified file. Returns 0 on success, -1 on failure
+/// Introduced in VFS API v1
+typedef retro_vfs_rename_t = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Int Function(
+            ffi.Pointer<ffi.Char> old_path, ffi.Pointer<ffi.Char> new_path)>>;
+
+/// Truncate file to specified size. Returns 0 on success or -1 on error
+/// Introduced in VFS API v2
+typedef retro_vfs_truncate_t = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Int64 Function(
+            ffi.Pointer<retro_vfs_file_handle> stream, ffi.Int64 length)>>;
+
+/// Stat the specified file. Retruns a bitmask of RETRO_VFS_STAT_* flags, none are set if path was not valid.
+/// Additionally stores file size in given variable, unless NULL is given.
+/// Introduced in VFS API v3
+typedef retro_vfs_stat_t = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Int Function(
+            ffi.Pointer<ffi.Char> path, ffi.Pointer<ffi.Int32> size)>>;
+
+/// Create the specified directory. Returns 0 on success, -1 on unknown failure, -2 if already exists.
+/// Introduced in VFS API v3
+typedef retro_vfs_mkdir_t = ffi
+    .Pointer<ffi.NativeFunction<ffi.Int Function(ffi.Pointer<ffi.Char> dir)>>;
+
+/// Open the specified directory for listing. Returns the opaque dir handle, or NULL for error.
+/// Support for the include_hidden argument may vary depending on the platform.
+/// Introduced in VFS API v3
+typedef retro_vfs_opendir_t = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Pointer<retro_vfs_dir_handle> Function(
+            ffi.Pointer<ffi.Char> dir, ffi.Bool include_hidden)>>;
+
+/// Read the directory entry at the current position, and move the read pointer to the next position.
+/// Returns true on success, false if already on the last entry.
+/// Introduced in VFS API v3
+typedef retro_vfs_readdir_t = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Bool Function(ffi.Pointer<retro_vfs_dir_handle> dirstream)>>;
+
+/// Get the name of the last entry read. Returns a string on success, or NULL for error.
+/// The returned string pointer is valid until the next call to readdir or closedir.
+/// Introduced in VFS API v3
+typedef retro_vfs_dirent_get_name_t = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Pointer<ffi.Char> Function(
+            ffi.Pointer<retro_vfs_dir_handle> dirstream)>>;
+
+/// Check if the last entry read was a directory. Returns true if it was, false otherwise (or on error).
+/// Introduced in VFS API v3
+typedef retro_vfs_dirent_is_dir_t = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Bool Function(ffi.Pointer<retro_vfs_dir_handle> dirstream)>>;
+
+/// Close the directory and release its resources. Must be called if opendir returns non-NULL. Returns 0 on success, -1 on failure.
+/// Whether the call succeeds ot not, the handle passed as parameter becomes invalid and should no longer be used.
+/// Introduced in VFS API v3
+typedef retro_vfs_closedir_t = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Int Function(ffi.Pointer<retro_vfs_dir_handle> dirstream)>>;
+
+final class retro_vfs_interface_info extends ffi.Struct {
+  /// Set by core: should this be higher than the version the front end supports,
+  /// front end will return false in the RETRO_ENVIRONMENT_GET_VFS_INTERFACE call
+  /// Introduced in VFS API v1
+  @ffi.Uint32()
+  external int required_interface_version;
+
+  /// Frontend writes interface pointer here. The frontend also sets the actual
+  /// version, must be at least required_interface_version.
+  /// Introduced in VFS API v1
+  external ffi.Pointer<retro_vfs_interface> iface;
+}
+
+abstract class retro_hw_render_interface_type {
+  static const int RETRO_HW_RENDER_INTERFACE_VULKAN = 0;
+  static const int RETRO_HW_RENDER_INTERFACE_D3D9 = 1;
+  static const int RETRO_HW_RENDER_INTERFACE_D3D10 = 2;
+  static const int RETRO_HW_RENDER_INTERFACE_D3D11 = 3;
+  static const int RETRO_HW_RENDER_INTERFACE_D3D12 = 4;
+  static const int RETRO_HW_RENDER_INTERFACE_GSKIT_PS2 = 5;
+  static const int RETRO_HW_RENDER_INTERFACE_DUMMY = 2147483647;
+}
+
+/// Base struct. All retro_hw_render_interface_* types
+/// contain at least these fields.
+final class retro_hw_render_interface extends ffi.Struct {
+  @ffi.Int32()
+  external int interface_type;
+
+  @ffi.UnsignedInt()
+  external int interface_version;
+}
+
+final class retro_led_interface extends ffi.Struct {
+  external retro_set_led_state_t set_led_state;
+}
+
+typedef retro_set_led_state_t = ffi
+    .Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Int led, ffi.Int state)>>;
+
+final class retro_midi_interface extends ffi.Struct {
+  external retro_midi_input_enabled_t input_enabled;
+
+  external retro_midi_output_enabled_t output_enabled;
+
+  external retro_midi_read_t read;
+
+  external retro_midi_write_t write;
+
+  external retro_midi_flush_t flush;
+}
+
+/// Retrieves the current state of the MIDI input.
+/// Returns true if it's enabled, false otherwise.
+typedef retro_midi_input_enabled_t
+    = ffi.Pointer<ffi.NativeFunction<ffi.Bool Function()>>;
+
+/// Retrieves the current state of the MIDI output.
+/// Returns true if it's enabled, false otherwise
+typedef retro_midi_output_enabled_t
+    = ffi.Pointer<ffi.NativeFunction<ffi.Bool Function()>>;
+
+/// Reads next byte from the input stream.
+/// Returns true if byte is read, false otherwise.
+typedef retro_midi_read_t = ffi.Pointer<
+    ffi.NativeFunction<ffi.Bool Function(ffi.Pointer<ffi.Uint8> byte)>>;
+
+/// Writes byte to the output stream.
+/// 'delta_time' is in microseconds and represent time elapsed since previous write.
+/// Returns true if byte is written, false otherwise.
+typedef retro_midi_write_t = ffi.Pointer<
+    ffi
+    .NativeFunction<ffi.Bool Function(ffi.Uint8 byte, ffi.Uint32 delta_time)>>;
+
+/// Flushes previously written data.
+/// Returns true if successful, false otherwise.
+typedef retro_midi_flush_t
+    = ffi.Pointer<ffi.NativeFunction<ffi.Bool Function()>>;
+
+abstract class retro_hw_render_context_negotiation_interface_type {
+  static const int RETRO_HW_RENDER_CONTEXT_NEGOTIATION_INTERFACE_VULKAN = 0;
+  static const int RETRO_HW_RENDER_CONTEXT_NEGOTIATION_INTERFACE_DUMMY =
+      2147483647;
+}
+
+/// Base struct. All retro_hw_render_context_negotiation_interface_* types
+/// contain at least these fields.
+final class retro_hw_render_context_negotiation_interface extends ffi.Struct {
+  @ffi.Int32()
+  external int interface_type;
+
+  @ffi.UnsignedInt()
+  external int interface_version;
+}
+
+final class retro_memory_descriptor extends ffi.Struct {
+  @ffi.Uint64()
+  external int flags;
+
+  /// Pointer to the start of the relevant ROM or RAM chip.
+  /// It's strongly recommended to use 'offset' if possible, rather than
+  /// doing math on the pointer.
+  ///
+  /// If the same byte is mapped my multiple descriptors, their descriptors
+  /// must have the same pointer.
+  /// If 'start' does not point to the first byte in the pointer, put the
+  /// difference in 'offset' instead.
+  ///
+  /// May be NULL if there's nothing usable here (e.g. hardware registers and
+  /// open bus). No flags should be set if the pointer is NULL.
+  /// It's recommended to minimize the number of descriptors if possible,
+  /// but not mandatory.
+  external ffi.Pointer<ffi.Void> ptr;
+
+  @ffi.Size()
+  external int offset;
+
+  /// This is the location in the emulated address space
+  /// where the mapping starts.
+  @ffi.Size()
+  external int start;
+
+  /// Which bits must be same as in 'start' for this mapping to apply.
+  /// The first memory descriptor to claim a certain byte is the one
+  /// that applies.
+  /// A bit which is set in 'start' must also be set in this.
+  /// Can be zero, in which case each byte is assumed mapped exactly once.
+  /// In this case, 'len' must be a power of two.
+  @ffi.Size()
+  external int select;
+
+  /// If this is nonzero, the set bits are assumed not connected to the
+  /// memory chip's address pins.
+  @ffi.Size()
+  external int disconnect;
+
+  /// This one tells the size of the current memory area.
+  /// If, after start+disconnect are applied, the address is higher than
+  /// this, the highest bit of the address is cleared.
+  ///
+  /// If the address is still too high, the next highest bit is cleared.
+  /// Can be zero, in which case it's assumed to be infinite (as limited
+  /// by 'select' and 'disconnect').
+  @ffi.Size()
+  external int len;
+
+  /// The address space name must consist of only a-zA-Z0-9_-,
+  /// should be as short as feasible (maximum length is 8 plus the NUL),
+  /// and may not be any other address space plus one or more 0-9A-F
+  /// at the end.
+  /// However, multiple memory descriptors for the same address space is
+  /// allowed, and the address space name can be empty. NULL is treated
+  /// as empty.
+  ///
+  /// Address space names are case sensitive, but avoid lowercase if possible.
+  /// The same pointer may exist in multiple address spaces.
+  ///
+  /// Examples:
+  /// blank+blank - valid (multiple things may be mapped in the same namespace)
+  /// 'Sp'+'Sp' - valid (multiple things may be mapped in the same namespace)
+  /// 'A'+'B' - valid (neither is a prefix of each other)
+  /// 'S'+blank - valid ('S' is not in 0-9A-F)
+  /// 'a'+blank - valid ('a' is not in 0-9A-F)
+  /// 'a'+'A' - valid (neither is a prefix of each other)
+  /// 'AR'+blank - valid ('R' is not in 0-9A-F)
+  /// 'ARB'+blank - valid (the B can't be part of the address either, because
+  /// there is no namespace 'AR')
+  /// blank+'B' - not valid, because it's ambigous which address space B1234
+  /// would refer to.
+  /// The length can't be used for that purpose; the frontend may want
+  /// to append arbitrary data to an address, without a separator.
+  external ffi.Pointer<ffi.Char> addrspace;
+}
+
+/// The frontend may use the largest value of 'start'+'select' in a
+/// certain namespace to infer the size of the address space.
+///
+/// If the address space is larger than that, a mapping with .ptr=NULL
+/// should be at the end of the array, with .select set to all ones for
+/// as long as the address space is big.
+///
+/// Sample descriptors (minus .ptr, and RETRO_MEMFLAG_ on the flags):
+/// SNES WRAM:
+/// .start=0x7E0000, .len=0x20000
+/// (Note that this must be mapped before the ROM in most cases; some of the
+/// ROM mappers
+/// try to claim $7E0000, or at least $7E8000.)
+/// SNES SPC700 RAM:
+/// .addrspace="S", .len=0x10000
+/// SNES WRAM mirrors:
+/// .flags=MIRROR, .start=0x000000, .select=0xC0E000, .len=0x2000
+/// .flags=MIRROR, .start=0x800000, .select=0xC0E000, .len=0x2000
+/// SNES WRAM mirrors, alternate equivalent descriptor:
+/// .flags=MIRROR, .select=0x40E000, .disconnect=~0x1FFF
+/// (Various similar constructions can be created by combining parts of
+/// the above two.)
+/// SNES LoROM (512KB, mirrored a couple of times):
+/// .flags=CONST, .start=0x008000, .select=0x408000, .disconnect=0x8000, .len=512*1024
+/// .flags=CONST, .start=0x400000, .select=0x400000, .disconnect=0x8000, .len=512*1024
+/// SNES HiROM (4MB):
+/// .flags=CONST,                 .start=0x400000, .select=0x400000, .len=4*1024*1024
+/// .flags=CONST, .offset=0x8000, .start=0x008000, .select=0x408000, .len=4*1024*1024
+/// SNES ExHiROM (8MB):
+/// .flags=CONST, .offset=0,                  .start=0xC00000, .select=0xC00000, .len=4*1024*1024
+/// .flags=CONST, .offset=4*1024*1024,        .start=0x400000, .select=0xC00000, .len=4*1024*1024
+/// .flags=CONST, .offset=0x8000,             .start=0x808000, .select=0xC08000, .len=4*1024*1024
+/// .flags=CONST, .offset=4*1024*1024+0x8000, .start=0x008000, .select=0xC08000, .len=4*1024*1024
+/// Clarify the size of the address space:
+/// .ptr=NULL, .select=0xFFFFFF
+/// .len can be implied by .select in many of them, but was included for clarity.
+final class retro_memory_map extends ffi.Struct {
+  external ffi.Pointer<retro_memory_descriptor> descriptors;
+
+  @ffi.UnsignedInt()
+  external int num_descriptors;
+}
+
+final class retro_controller_description extends ffi.Struct {
+  /// Human-readable description of the controller. Even if using a generic
+  /// input device type, this can be set to the particular device type the
+  /// core uses.
+  external ffi.Pointer<ffi.Char> desc;
+
+  /// Device type passed to retro_set_controller_port_device(). If the device
+  /// type is a sub-class of a generic input device type, use the
+  /// RETRO_DEVICE_SUBCLASS macro to create an ID.
+  ///
+  /// E.g. RETRO_DEVICE_SUBCLASS(RETRO_DEVICE_JOYPAD, 1).
+  @ffi.UnsignedInt()
+  external int id;
+}
+
+final class retro_controller_info extends ffi.Struct {
+  external ffi.Pointer<retro_controller_description> types;
+
+  @ffi.UnsignedInt()
+  external int num_types;
+}
+
+final class retro_subsystem_memory_info extends ffi.Struct {
+  /// The extension associated with a memory type, e.g. "psram".
+  external ffi.Pointer<ffi.Char> extension1;
+
+  /// The memory type for retro_get_memory(). This should be at
+  /// least 0x100 to avoid conflict with standardized
+  /// libretro memory types.
+  @ffi.UnsignedInt()
+  external int type;
+}
+
+final class retro_subsystem_rom_info extends ffi.Struct {
+  /// Describes what the content is (SGB BIOS, GB ROM, etc).
+  external ffi.Pointer<ffi.Char> desc;
+
+  /// Same definition as retro_get_system_info().
+  external ffi.Pointer<ffi.Char> valid_extensions;
+
+  /// Same definition as retro_get_system_info().
+  @ffi.Bool()
+  external bool need_fullpath;
+
+  /// Same definition as retro_get_system_info().
+  @ffi.Bool()
+  external bool block_extract;
+
+  /// This is set if the content is required to load a game.
+  /// If this is set to false, a zeroed-out retro_game_info can be passed.
+  @ffi.Bool()
+  external bool required1;
+
+  /// Content can have multiple associated persistent
+  /// memory types (retro_get_memory()).
+  external ffi.Pointer<retro_subsystem_memory_info> memory;
+
+  @ffi.UnsignedInt()
+  external int num_memory;
+}
+
+final class retro_subsystem_info extends ffi.Struct {
+  /// Human-readable string of the subsystem type, e.g. "Super GameBoy"
+  external ffi.Pointer<ffi.Char> desc;
+
+  /// A computer friendly short string identifier for the subsystem type.
+  /// This name must be [a-z].
+  /// E.g. if desc is "Super GameBoy", this can be "sgb".
+  /// This identifier can be used for command-line interfaces, etc.
+  external ffi.Pointer<ffi.Char> ident;
+
+  /// Infos for each content file. The first entry is assumed to be the
+  /// "most significant" content for frontend purposes.
+  /// E.g. with Super GameBoy, the first content should be the GameBoy ROM,
+  /// as it is the most "significant" content to a user.
+  /// If a frontend creates new file paths based on the content used
+  /// (e.g. savestates), it should use the path for the first ROM to do so.
+  external ffi.Pointer<retro_subsystem_rom_info> roms;
+
+  /// Number of content files associated with a subsystem.
+  @ffi.UnsignedInt()
+  external int num_roms;
+
+  /// The type passed to retro_load_game_special().
+  @ffi.UnsignedInt()
+  external int id;
+}
+
+final class retro_get_proc_address_interface extends ffi.Struct {
+  external retro_get_proc_address_t get_proc_address;
+}
+
+/// libretro API extension functions:
+/// (None here so far).
+///
+/// Get a symbol from a libretro core.
+/// Cores should only return symbols which are actual
+/// extensions to the libretro API.
+///
+/// Frontends should not use this to obtain symbols to standard
+/// libretro entry points (static linking or dlsym).
+///
+/// The symbol name must be equal to the function name,
+/// e.g. if void retro_foo(void); exists, the symbol must be called "retro_foo".
+/// The returned function pointer must be cast to the corresponding type.
+typedef retro_get_proc_address_t = ffi.Pointer<
+    ffi
+    .NativeFunction<retro_proc_address_t Function(ffi.Pointer<ffi.Char> sym)>>;
+
+abstract class retro_log_level {
+  static const int RETRO_LOG_DEBUG = 0;
+  static const int RETRO_LOG_INFO = 1;
+  static const int RETRO_LOG_WARN = 2;
+  static const int RETRO_LOG_ERROR = 3;
+  static const int RETRO_LOG_DUMMY = 2147483647;
+}
+
+final class retro_log_callback extends ffi.Struct {
+  external retro_log_printf_t log;
+}
+
+/// Logging function. Takes log level argument as well.
+typedef retro_log_printf_t = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Void Function(ffi.Int32 level, ffi.Pointer<ffi.Char> fmt)>>;
+
+final class retro_perf_counter extends ffi.Struct {
+  external ffi.Pointer<ffi.Char> ident;
+
+  @retro_perf_tick_t()
+  external int start;
+
+  @retro_perf_tick_t()
+  external int total;
+
+  @retro_perf_tick_t()
+  external int call_cnt;
+
+  @ffi.Bool()
+  external bool registered;
+}
+
+typedef retro_perf_tick_t = ffi.Uint64;
+
+/// For convenience it can be useful to wrap register, start and stop in macros.
+/// E.g.:
+/// #ifdef LOG_PERFORMANCE
+/// #define RETRO_PERFORMANCE_INIT(perf_cb, name) static struct retro_perf_counter name = {#name}; if (!name.registered) perf_cb.perf_register(&(name))
+/// #define RETRO_PERFORMANCE_START(perf_cb, name) perf_cb.perf_start(&(name))
+/// #define RETRO_PERFORMANCE_STOP(perf_cb, name) perf_cb.perf_stop(&(name))
+/// #else
+/// ... Blank macros ...
+/// #endif
+///
+/// These can then be used mid-functions around code snippets.
+///
+/// extern struct retro_perf_callback perf_cb;  * Somewhere in the core.
+///
+/// void do_some_heavy_work(void)
+/// {
+/// RETRO_PERFORMANCE_INIT(cb, work_1;
+/// RETRO_PERFORMANCE_START(cb, work_1);
+/// heavy_work_1();
+/// RETRO_PERFORMANCE_STOP(cb, work_1);
+///
+/// RETRO_PERFORMANCE_INIT(cb, work_2);
+/// RETRO_PERFORMANCE_START(cb, work_2);
+/// heavy_work_2();
+/// RETRO_PERFORMANCE_STOP(cb, work_2);
+/// }
+///
+/// void retro_deinit(void)
+/// {
+/// perf_cb.perf_log();  * Log all perf counters here for example.
+/// }
+final class retro_perf_callback extends ffi.Struct {
+  external retro_perf_get_time_usec_t get_time_usec;
+
+  external retro_get_cpu_features_t get_cpu_features;
+
+  external retro_perf_get_counter_t get_perf_counter;
+
+  external retro_perf_register_t perf_register;
+
+  external retro_perf_start_t perf_start;
+
+  external retro_perf_stop_t perf_stop;
+
+  external retro_perf_log_t perf_log;
+}
+
+/// Returns current time in microseconds.
+/// Tries to use the most accurate timer available.
+typedef retro_perf_get_time_usec_t
+    = ffi.Pointer<ffi.NativeFunction<retro_time_t Function()>>;
+typedef retro_time_t = ffi.Int64;
+
+/// Returns a bit-mask of detected CPU features (RETRO_SIMD_*).
+typedef retro_get_cpu_features_t
+    = ffi.Pointer<ffi.NativeFunction<ffi.Uint64 Function()>>;
+
+/// A simple counter. Usually nanoseconds, but can also be CPU cycles.
+/// Can be used directly if desired (when creating a more sophisticated
+/// performance counter system).
+typedef retro_perf_get_counter_t
+    = ffi.Pointer<ffi.NativeFunction<retro_perf_tick_t Function()>>;
+
+/// Register a performance counter.
+/// ident field must be set with a discrete value and other values in
+/// retro_perf_counter must be 0.
+/// Registering can be called multiple times. To avoid calling to
+/// frontend redundantly, you can check registered field first.
+typedef retro_perf_register_t = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Void Function(ffi.Pointer<retro_perf_counter> counter)>>;
+
+/// Starts a registered counter.
+typedef retro_perf_start_t = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Void Function(ffi.Pointer<retro_perf_counter> counter)>>;
+
+/// Stops a registered counter.
+typedef retro_perf_stop_t = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Void Function(ffi.Pointer<retro_perf_counter> counter)>>;
+
+/// Asks frontend to log and/or display the state of performance counters.
+/// Performance counters can always be poked into manually as well.
+typedef retro_perf_log_t = ffi.Pointer<ffi.NativeFunction<ffi.Void Function()>>;
+
+/// FIXME: Document the sensor API and work out behavior.
+/// It will be marked as experimental until then.
+abstract class retro_sensor_action {
+  static const int RETRO_SENSOR_ACCELEROMETER_ENABLE = 0;
+  static const int RETRO_SENSOR_ACCELEROMETER_DISABLE = 1;
+  static const int RETRO_SENSOR_GYROSCOPE_ENABLE = 2;
+  static const int RETRO_SENSOR_GYROSCOPE_DISABLE = 3;
+  static const int RETRO_SENSOR_ILLUMINANCE_ENABLE = 4;
+  static const int RETRO_SENSOR_ILLUMINANCE_DISABLE = 5;
+  static const int RETRO_SENSOR_DUMMY = 2147483647;
+}
+
+final class retro_sensor_interface extends ffi.Struct {
+  external retro_set_sensor_state_t set_sensor_state;
+
+  external retro_sensor_get_input_t get_sensor_input;
+}
+
+typedef retro_set_sensor_state_t = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Bool Function(
+            ffi.UnsignedInt port, ffi.Int32 action, ffi.UnsignedInt rate)>>;
+typedef retro_sensor_get_input_t = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Float Function(ffi.UnsignedInt port, ffi.UnsignedInt id)>>;
+
+abstract class retro_camera_buffer {
+  static const int RETRO_CAMERA_BUFFER_OPENGL_TEXTURE = 0;
+  static const int RETRO_CAMERA_BUFFER_RAW_FRAMEBUFFER = 1;
+  static const int RETRO_CAMERA_BUFFER_DUMMY = 2147483647;
+}
+
+final class retro_camera_callback extends ffi.Struct {
+  /// Set by libretro core.
+  /// Example bitmask: caps = (1 << RETRO_CAMERA_BUFFER_OPENGL_TEXTURE) | (1 << RETRO_CAMERA_BUFFER_RAW_FRAMEBUFFER).
+  @ffi.Uint64()
+  external int caps;
+
+  /// Desired resolution for camera. Is only used as a hint.
+  @ffi.UnsignedInt()
+  external int width;
+
+  @ffi.UnsignedInt()
+  external int height;
+
+  /// Set by frontend.
+  external retro_camera_start_t start;
+
+  external retro_camera_stop_t stop;
+
+  /// Set by libretro core if raw framebuffer callbacks will be used.
+  external retro_camera_frame_raw_framebuffer_t frame_raw_framebuffer;
+
+  /// Set by libretro core if OpenGL texture callbacks will be used.
+  external retro_camera_frame_opengl_texture_t frame_opengl_texture;
+
+  /// Set by libretro core. Called after camera driver is initialized and
+  /// ready to be started.
+  /// Can be NULL, in which this callback is not called.
+  external retro_camera_lifetime_status_t initialized;
+
+  /// Set by libretro core. Called right before camera driver is
+  /// deinitialized.
+  /// Can be NULL, in which this callback is not called.
+  external retro_camera_lifetime_status_t deinitialized;
+}
+
+/// Starts the camera driver. Can only be called in retro_run().
+typedef retro_camera_start_t
+    = ffi.Pointer<ffi.NativeFunction<ffi.Bool Function()>>;
+
+/// Stops the camera driver. Can only be called in retro_run().
+typedef retro_camera_stop_t
+    = ffi.Pointer<ffi.NativeFunction<ffi.Void Function()>>;
+
+/// A callback for raw framebuffer data. buffer points to an XRGB8888 buffer.
+/// Width, height and pitch are similar to retro_video_refresh_t.
+/// First pixel is top-left origin.
+typedef retro_camera_frame_raw_framebuffer_t = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Void Function(ffi.Pointer<ffi.Uint32> buffer, ffi.UnsignedInt width,
+            ffi.UnsignedInt height, ffi.Size pitch)>>;
+
+/// A callback for when OpenGL textures are used.
+///
+/// texture_id is a texture owned by camera driver.
+/// Its state or content should be considered immutable, except for things like
+/// texture filtering and clamping.
+///
+/// texture_target is the texture target for the GL texture.
+/// These can include e.g. GL_TEXTURE_2D, GL_TEXTURE_RECTANGLE, and possibly
+/// more depending on extensions.
+///
+/// affine points to a packed 3x3 column-major matrix used to apply an affine
+/// transform to texture coordinates. (affine_matrix * vec3(coord_x, coord_y, 1.0))
+/// After transform, normalized texture coord (0, 0) should be bottom-left
+/// and (1, 1) should be top-right (or (width, height) for RECTANGLE).
+///
+/// GL-specific typedefs are avoided here to avoid relying on gl.h in
+/// the API definition.
+typedef retro_camera_frame_opengl_texture_t = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Void Function(ffi.UnsignedInt texture_id,
+            ffi.UnsignedInt texture_target, ffi.Pointer<ffi.Float> affine)>>;
+
+/// Callback which signals when the camera driver is initialized
+/// and/or deinitialized.
+/// retro_camera_start_t can be called in initialized callback.
+typedef retro_camera_lifetime_status_t
+    = ffi.Pointer<ffi.NativeFunction<ffi.Void Function()>>;
+
+final class retro_location_callback extends ffi.Struct {
+  external retro_location_start_t start;
+
+  external retro_location_stop_t stop;
+
+  external retro_location_get_position_t get_position;
+
+  external retro_location_set_interval_t set_interval;
+
+  external retro_location_lifetime_status_t initialized;
+
+  external retro_location_lifetime_status_t deinitialized;
+}
+
+/// Start location services. The device will start listening for changes to the
+/// current location at regular intervals (which are defined with
+/// retro_location_set_interval_t).
+typedef retro_location_start_t
+    = ffi.Pointer<ffi.NativeFunction<ffi.Bool Function()>>;
+
+/// Stop location services. The device will stop listening for changes
+/// to the current location.
+typedef retro_location_stop_t
+    = ffi.Pointer<ffi.NativeFunction<ffi.Void Function()>>;
+
+/// Get the position of the current location. Will set parameters to
+/// 0 if no new  location update has happened since the last time.
+typedef retro_location_get_position_t = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Bool Function(
+            ffi.Pointer<ffi.Double> lat,
+            ffi.Pointer<ffi.Double> lon,
+            ffi.Pointer<ffi.Double> horiz_accuracy,
+            ffi.Pointer<ffi.Double> vert_accuracy)>>;
+
+/// Sets the interval of time and/or distance at which to update/poll
+/// location-based data.
+///
+/// To ensure compatibility with all location-based implementations,
+/// values for both interval_ms and interval_distance should be provided.
+///
+/// interval_ms is the interval expressed in milliseconds.
+/// interval_distance is the distance interval expressed in meters.
+typedef retro_location_set_interval_t = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Void Function(
+            ffi.UnsignedInt interval_ms, ffi.UnsignedInt interval_distance)>>;
+
+/// Callback which signals when the location driver is initialized
+/// and/or deinitialized.
+/// retro_location_start_t can be called in initialized callback.
+typedef retro_location_lifetime_status_t
+    = ffi.Pointer<ffi.NativeFunction<ffi.Void Function()>>;
+
+abstract class retro_rumble_effect {
+  static const int RETRO_RUMBLE_STRONG = 0;
+  static const int RETRO_RUMBLE_WEAK = 1;
+  static const int RETRO_RUMBLE_DUMMY = 2147483647;
+}
+
+final class retro_rumble_interface extends ffi.Struct {
+  external retro_set_rumble_state_t set_rumble_state;
+}
+
+/// Sets rumble state for joypad plugged in port 'port'.
+/// Rumble effects are controlled independently,
+/// and setting e.g. strong rumble does not override weak rumble.
+/// Strength has a range of [0, 0xffff].
+///
+/// Returns true if rumble state request was honored.
+/// Calling this before first retro_run() is likely to return false.
+typedef retro_set_rumble_state_t = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Bool Function(
+            ffi.UnsignedInt port, ffi.Int32 effect, ffi.Uint16 strength)>>;
+
+final class retro_audio_callback extends ffi.Struct {
+  external retro_audio_callback_t callback;
+
+  external retro_audio_set_state_callback_t set_state;
+}
+
+/// Notifies libretro that audio data should be written.
+typedef retro_audio_callback_t
+    = ffi.Pointer<ffi.NativeFunction<ffi.Void Function()>>;
+
+/// True: Audio driver in frontend is active, and callback is
+/// expected to be called regularily.
+/// False: Audio driver in frontend is paused or inactive.
+/// Audio callback will not be called until set_state has been
+/// called with true.
+/// Initial state is false (inactive).
+typedef retro_audio_set_state_callback_t
+    = ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Bool enabled)>>;
+
+final class retro_frame_time_callback extends ffi.Struct {
+  external retro_frame_time_callback_t callback;
+
+  /// Represents the time of one frame. It is computed as
+  /// 1000000 / fps, but the implementation will resolve the
+  /// rounding to ensure that framestepping, etc is exact.
+  @retro_usec_t()
+  external int reference;
+}
+
+typedef retro_frame_time_callback_t
+    = ffi.Pointer<ffi.NativeFunction<ffi.Void Function(retro_usec_t usec)>>;
+
+/// Notifies a libretro core of time spent since last invocation
+/// of retro_run() in microseconds.
+///
+/// It will be called right before retro_run() every frame.
+/// The frontend can tamper with timing to support cases like
+/// fast-forward, slow-motion and framestepping.
+///
+/// In those scenarios the reference frame time value will be used.
+typedef retro_usec_t = ffi.Int64;
+
+final class retro_keyboard_callback extends ffi.Struct {
+  external retro_keyboard_event_t callback;
+}
+
+/// Callback type passed in RETRO_ENVIRONMENT_SET_KEYBOARD_CALLBACK.
+/// Called by the frontend in response to keyboard events.
+/// down is set if the key is being pressed, or false if it is being released.
+/// keycode is the RETROK value of the char.
+/// character is the text character of the pressed key. (UTF-32).
+/// key_modifiers is a set of RETROKMOD values or'ed together.
+///
+/// The pressed/keycode state can be indepedent of the character.
+/// It is also possible that multiple characters are generated from a
+/// single keypress.
+/// Keycode events should be treated separately from character events.
+/// However, when possible, the frontend should try to synchronize these.
+/// If only a character is posted, keycode should be RETROK_UNKNOWN.
+///
+/// Similarily if only a keycode event is generated with no corresponding
+/// character, character should be 0.
+typedef retro_keyboard_event_t = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Void Function(ffi.Bool down, ffi.UnsignedInt keycode,
+            ffi.Uint32 character, ffi.Uint16 key_modifiers)>>;
+
+final class retro_game_info extends ffi.Struct {
+  /// Path to game, UTF-8 encoded.
+  /// Sometimes used as a reference for building other paths.
+  /// May be NULL if game was loaded from stdin or similar,
+  /// but in this case some cores will be unable to load `data`.
+  /// So, it is preferable to fabricate something here instead
+  /// of passing NULL, which will help more cores to succeed.
+  /// retro_system_info::need_fullpath requires
+  /// that this path is valid.
+  external ffi.Pointer<ffi.Char> path;
+
+  /// Memory buffer of loaded game. Will be NULL
+  /// if need_fullpath was set.
+  external ffi.Pointer<ffi.Void> data;
+
+  /// Size of memory buffer.
+  @ffi.Size()
+  external int size;
+
+  /// String of implementation specific meta-data.
+  external ffi.Pointer<ffi.Char> meta;
+}
+
+final class retro_disk_control_callback extends ffi.Struct {
+  external retro_set_eject_state_t set_eject_state;
+
+  external retro_get_eject_state_t get_eject_state;
+
+  external retro_get_image_index_t get_image_index;
+
+  external retro_set_image_index_t set_image_index;
+
+  external retro_get_num_images_t get_num_images;
+
+  external retro_replace_image_index_t replace_image_index;
+
+  external retro_add_image_index_t add_image_index;
+}
+
+/// If ejected is true, "ejects" the virtual disk tray.
+/// When ejected, the disk image index can be set.
+typedef retro_set_eject_state_t
+    = ffi.Pointer<ffi.NativeFunction<ffi.Bool Function(ffi.Bool ejected)>>;
+
+/// Gets current eject state. The initial state is 'not ejected'.
+typedef retro_get_eject_state_t
+    = ffi.Pointer<ffi.NativeFunction<ffi.Bool Function()>>;
+
+/// Gets current disk index. First disk is index 0.
+/// If return value is >= get_num_images(), no disk is currently inserted.
+typedef retro_get_image_index_t
+    = ffi.Pointer<ffi.NativeFunction<ffi.UnsignedInt Function()>>;
+
+/// Sets image index. Can only be called when disk is ejected.
+/// The implementation supports setting "no disk" by using an
+/// index >= get_num_images().
+typedef retro_set_image_index_t
+    = ffi.Pointer<ffi.NativeFunction<ffi.Bool Function(ffi.UnsignedInt index)>>;
+
+/// Gets total number of images which are available to use.
+typedef retro_get_num_images_t
+    = ffi.Pointer<ffi.NativeFunction<ffi.UnsignedInt Function()>>;
+
+/// Replaces the disk image associated with index.
+/// Arguments to pass in info have same requirements as retro_load_game().
+/// Virtual disk tray must be ejected when calling this.
+///
+/// Replacing a disk image with info = NULL will remove the disk image
+/// from the internal list.
+/// As a result, calls to get_image_index() can change.
+///
+/// E.g. replace_image_index(1, NULL), and previous get_image_index()
+/// returned 4 before.
+/// Index 1 will be removed, and the new index is 3.
+typedef retro_replace_image_index_t = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Bool Function(
+            ffi.UnsignedInt index, ffi.Pointer<retro_game_info> info)>>;
+
+/// Adds a new valid index (get_num_images()) to the internal disk list.
+/// This will increment subsequent return values from get_num_images() by 1.
+/// This image index cannot be used until a disk image has been set
+/// with replace_image_index.
+typedef retro_add_image_index_t
+    = ffi.Pointer<ffi.NativeFunction<ffi.Bool Function()>>;
+
+final class retro_disk_control_ext_callback extends ffi.Struct {
+  external retro_set_eject_state_t set_eject_state;
+
+  external retro_get_eject_state_t get_eject_state;
+
+  external retro_get_image_index_t get_image_index;
+
+  external retro_set_image_index_t set_image_index;
+
+  external retro_get_num_images_t get_num_images;
+
+  external retro_replace_image_index_t replace_image_index;
+
+  external retro_add_image_index_t add_image_index;
+
+  /// Optional - may be NULL
+  external retro_set_initial_image_t set_initial_image;
+
+  /// Optional - may be NULL
+  external retro_get_image_path_t get_image_path;
+
+  /// Optional - may be NULL
+  external retro_get_image_label_t get_image_label;
+}
+
+/// Sets initial image to insert in drive when calling
+/// core_load_game().
+/// Since we cannot pass the initial index when loading
+/// content (this would require a major API change), this
+/// is set by the frontend *before* calling the core's
+/// retro_load_game()/retro_load_game_special() implementation.
+/// A core should therefore cache the index/path values and handle
+/// them inside retro_load_game()/retro_load_game_special().
+/// - If 'index' is invalid (index >= get_num_images()), the
+/// core should ignore the set value and instead use 0
+/// - 'path' is used purely for error checking - i.e. when
+/// content is loaded, the core should verify that the
+/// disk specified by 'index' has the specified file path.
+/// This is to guard against auto selecting the wrong image
+/// if (for example) the user should modify an existing M3U
+/// playlist. We have to let the core handle this because
+/// set_initial_image() must be called before loading content,
+/// i.e. the frontend cannot access image paths in advance
+/// and thus cannot perform the error check itself.
+/// If set path and content path do not match, the core should
+/// ignore the set 'index' value and instead use 0
+/// Returns 'false' if index or 'path' are invalid, or core
+/// does not support this functionality
+typedef retro_set_initial_image_t = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Bool Function(ffi.UnsignedInt index, ffi.Pointer<ffi.Char> path)>>;
+
+/// Fetches the path of the specified disk image file.
+/// Returns 'false' if index is invalid (index >= get_num_images())
+/// or path is otherwise unavailable.
+typedef retro_get_image_path_t = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Bool Function(
+            ffi.UnsignedInt index, ffi.Pointer<ffi.Char> path, ffi.Size len)>>;
+
+/// Fetches a core-provided 'label' for the specified disk
+/// image file. In the simplest case this may be a file name
+/// (without extension), but for cores with more complex
+/// content requirements information may be provided to
+/// facilitate user disk swapping - for example, a core
+/// running floppy-disk-based content may uniquely label
+/// save disks, data disks, level disks, etc. with names
+/// corresponding to in-game disk change prompts (so the
+/// frontend can provide better user guidance than a 'dumb'
+/// disk index value).
+/// Returns 'false' if index is invalid (index >= get_num_images())
+/// or label is otherwise unavailable.
+typedef retro_get_image_label_t = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Bool Function(
+            ffi.UnsignedInt index, ffi.Pointer<ffi.Char> label, ffi.Size len)>>;
+
+abstract class retro_pixel_format {
+  /// 0RGB1555, native endian.
+  /// 0 bit must be set to 0.
+  /// This pixel format is default for compatibility concerns only.
+  /// If a 15/16-bit pixel format is desired, consider using RGB565.
+  static const int RETRO_PIXEL_FORMAT_0RGB1555 = 0;
+
+  /// XRGB8888, native endian.
+  /// X bits are ignored.
+  static const int RETRO_PIXEL_FORMAT_XRGB8888 = 1;
+
+  /// RGB565, native endian.
+  /// This pixel format is the recommended format to use if a 15/16-bit
+  /// format is desired as it is the pixel format that is typically
+  /// available on a wide range of low-power devices.
+  ///
+  /// It is also natively supported in APIs like OpenGL ES.
+  static const int RETRO_PIXEL_FORMAT_RGB565 = 2;
+
+  /// Ensure sizeof() == sizeof(int).
+  static const int RETRO_PIXEL_FORMAT_UNKNOWN = 2147483647;
+}
+
+final class retro_message extends ffi.Struct {
+  /// Message to be displayed.
+  external ffi.Pointer<ffi.Char> msg;
+
+  /// Duration in frames of message.
+  @ffi.UnsignedInt()
+  external int frames;
+}
+
+/// Describes how the libretro implementation maps a libretro input bind
+/// to its internal input system through a human readable string.
+/// This string can be used to better let a user configure input.
+final class retro_input_descriptor extends ffi.Struct {
+  /// Associates given parameters with a description.
+  @ffi.UnsignedInt()
+  external int port;
+
+  @ffi.UnsignedInt()
+  external int device;
+
+  @ffi.UnsignedInt()
+  external int index;
+
+  @ffi.UnsignedInt()
+  external int id;
+
+  /// Human readable description for parameters.
+  /// The pointer must remain valid until
+  /// retro_unload_game() is called.
+  external ffi.Pointer<ffi.Char> description;
+}
+
+final class retro_system_info extends ffi.Struct {
+  /// Descriptive name of library. Should not
+  /// contain any version numbers, etc.
+  external ffi.Pointer<ffi.Char> library_name;
+
+  /// Descriptive version of core.
+  external ffi.Pointer<ffi.Char> library_version;
+
+  /// A string listing probably content
+  /// extensions the core will be able to
+  /// load, separated with pipe.
+  /// I.e. "bin|rom|iso".
+  /// Typically used for a GUI to filter
+  /// out extensions.
+  external ffi.Pointer<ffi.Char> valid_extensions;
+
+  /// Libretro cores that need to have direct access to their content
+  /// files, including cores which use the path of the content files to
+  /// determine the paths of other files, should set need_fullpath to true.
+  ///
+  /// Cores should strive for setting need_fullpath to false,
+  /// as it allows the frontend to perform patching, etc.
+  ///
+  /// If need_fullpath is true and retro_load_game() is called:
+  /// - retro_game_info::path is guaranteed to have a valid path
+  /// - retro_game_info::data and retro_game_info::size are invalid
+  ///
+  /// If need_fullpath is false and retro_load_game() is called:
+  /// - retro_game_info::path may be NULL
+  /// - retro_game_info::data and retro_game_info::size are guaranteed
+  /// to be valid
+  ///
+  /// See also:
+  /// - RETRO_ENVIRONMENT_GET_SYSTEM_DIRECTORY
+  /// - RETRO_ENVIRONMENT_GET_SAVE_DIRECTORY
+  @ffi.Bool()
+  external bool need_fullpath;
+
+  /// If true, the frontend is not allowed to extract any archives before
+  /// loading the real content.
+  /// Necessary for certain libretro implementations that load games
+  /// from zipped archives.
+  @ffi.Bool()
+  external bool block_extract;
+}
+
+final class retro_game_geometry extends ffi.Struct {
+  /// Nominal video width of game.
+  @ffi.UnsignedInt()
+  external int base_width;
+
+  /// Nominal video height of game.
+  @ffi.UnsignedInt()
+  external int base_height;
+
+  /// Maximum possible width of game.
+  @ffi.UnsignedInt()
+  external int max_width;
+
+  /// Maximum possible height of game.
+  @ffi.UnsignedInt()
+  external int max_height;
+
+  /// Nominal aspect ratio of game. If
+  /// aspect_ratio is <= 0.0, an aspect ratio
+  /// of base_width / base_height is assumed.
+  /// A frontend could override this setting,
+  /// if desired.
+  @ffi.Float()
+  external double aspect_ratio;
+}
+
+final class retro_system_timing extends ffi.Struct {
+  /// FPS of video content.
+  @ffi.Double()
+  external double fps;
+
+  /// Sampling rate of audio.
+  @ffi.Double()
+  external double sample_rate;
+}
+
+final class retro_system_av_info extends ffi.Struct {
+  external retro_game_geometry geometry;
+
+  external retro_system_timing timing;
+}
+
+final class retro_variable extends ffi.Struct {
+  /// Variable to query in RETRO_ENVIRONMENT_GET_VARIABLE.
+  /// If NULL, obtains the complete environment string if more
+  /// complex parsing is necessary.
+  /// The environment string is formatted as key-value pairs
+  /// delimited by semicolons as so:
+  /// "key1=value1;key2=value2;..."
+  external ffi.Pointer<ffi.Char> key;
+
+  /// Value to be obtained. If key does not exist, it is set to NULL.
+  external ffi.Pointer<ffi.Char> value;
+}
+
+final class retro_core_option_display extends ffi.Struct {
+  /// Variable to configure in RETRO_ENVIRONMENT_SET_CORE_OPTIONS_DISPLAY
+  external ffi.Pointer<ffi.Char> key;
+
+  /// Specifies whether variable should be displayed
+  /// when presenting core options to the user
+  @ffi.Bool()
+  external bool visible;
+}
+
+final class retro_core_option_value extends ffi.Struct {
+  /// Expected option value
+  external ffi.Pointer<ffi.Char> value;
+
+  /// Human-readable value label. If NULL, value itself
+  /// will be displayed by the frontend
+  external ffi.Pointer<ffi.Char> label;
+}
+
+final class retro_core_option_definition extends ffi.Struct {
+  /// Variable to query in RETRO_ENVIRONMENT_GET_VARIABLE.
+  external ffi.Pointer<ffi.Char> key;
+
+  /// Human-readable core option description (used as menu label)
+  external ffi.Pointer<ffi.Char> desc;
+
+  /// Human-readable core option information (used as menu sublabel)
+  external ffi.Pointer<ffi.Char> info;
+
+  /// Array of retro_core_option_value structs, terminated by NULL
+  @ffi.Array.multi([128])
+  external ffi.Array<retro_core_option_value> values;
+
+  /// Default core option value. Must match one of the values
+  /// in the retro_core_option_value array, otherwise will be
+  /// ignored
+  external ffi.Pointer<ffi.Char> default_value;
+}
+
+final class retro_core_options_intl extends ffi.Struct {
+  /// Pointer to an array of retro_core_option_definition structs
+  /// - US English implementation
+  /// - Must point to a valid array
+  external ffi.Pointer<retro_core_option_definition> us;
+
+  /// Pointer to an array of retro_core_option_definition structs
+  /// - Implementation for current frontend language
+  /// - May be NULL
+  external ffi.Pointer<retro_core_option_definition> local;
+}
+
+/// The memory in data is cached.
+/// If not cached, random writes and/or reading from the buffer is expected to be very slow.
+final class retro_framebuffer extends ffi.Struct {
+  /// The framebuffer which the core can render into.
+  /// Set by frontend in GET_CURRENT_SOFTWARE_FRAMEBUFFER.
+  /// The initial contents of data are unspecified.
+  external ffi.Pointer<ffi.Void> data;
+
+  /// The framebuffer width used by the core. Set by core.
+  @ffi.UnsignedInt()
+  external int width;
+
+  /// The framebuffer height used by the core. Set by core.
+  @ffi.UnsignedInt()
+  external int height;
+
+  /// The number of bytes between the beginning of a scanline,
+  /// and beginning of the next scanline.
+  /// Set by frontend in GET_CURRENT_SOFTWARE_FRAMEBUFFER.
+  @ffi.Size()
+  external int pitch;
+
+  /// The pixel format the core must use to render into data.
+  /// This format could differ from the format used in
+  /// SET_PIXEL_FORMAT.
+  /// Set by frontend in GET_CURRENT_SOFTWARE_FRAMEBUFFER.
+  @ffi.Int32()
+  external int format;
+
+  /// How the core will access the memory in the framebuffer.
+  /// RETRO_MEMORY_ACCESS_* flags.
+  /// Set by core.
+  @ffi.UnsignedInt()
+  external int access_flags;
+
+  /// Flags telling core how the memory has been mapped.
+  /// RETRO_MEMORY_TYPE_* flags.
+  /// Set by frontend in GET_CURRENT_SOFTWARE_FRAMEBUFFER.
+  @ffi.UnsignedInt()
+  external int memory_flags;
+}
+
+/// Environment callback. Gives implementations a way of performing
+/// uncommon tasks. Extensible.
+typedef retro_environment_t = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Bool Function(ffi.UnsignedInt cmd, ffi.Pointer<ffi.Void> data)>>;
+
+/// Render a frame. Pixel format is 15-bit 0RGB1555 native endian
+/// unless changed (see RETRO_ENVIRONMENT_SET_PIXEL_FORMAT).
+///
+/// Width and height specify dimensions of buffer.
+/// Pitch specifices length in bytes between two lines in buffer.
+///
+/// For performance reasons, it is highly recommended to have a frame
+/// that is packed in memory, i.e. pitch == width * byte_per_pixel.
+/// Certain graphic APIs, such as OpenGL ES, do not like textures
+/// that are not packed in memory.
+typedef retro_video_refresh_t = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Void Function(ffi.Pointer<ffi.Void> data, ffi.UnsignedInt width,
+            ffi.UnsignedInt height, ffi.Size pitch)>>;
+
+/// Renders a single audio frame. Should only be used if implementation
+/// generates a single sample at a time.
+/// Format is signed 16-bit native endian.
+typedef retro_audio_sample_t = ffi.Pointer<
+    ffi.NativeFunction<ffi.Void Function(ffi.Int16 left, ffi.Int16 right)>>;
+
+/// Renders multiple audio frames in one go.
+///
+/// One frame is defined as a sample of left and right channels, interleaved.
+/// I.e. int16_t buf[4] = { l, r, l, r }; would be 2 frames.
+/// Only one of the audio callbacks must ever be used.
+typedef retro_audio_sample_batch_t = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Size Function(ffi.Pointer<ffi.Int16> data, ffi.Size frames)>>;
+
+/// Polls input.
+typedef retro_input_poll_t
+    = ffi.Pointer<ffi.NativeFunction<ffi.Void Function()>>;
+
+/// Queries for input for player 'port'. device will be masked with
+/// RETRO_DEVICE_MASK.
+///
+/// Specialization of devices such as RETRO_DEVICE_JOYPAD_MULTITAP that
+/// have been set with retro_set_controller_port_device()
+/// will still use the higher level RETRO_DEVICE_JOYPAD to request input.
+typedef retro_input_state_t = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Int16 Function(ffi.UnsignedInt port, ffi.UnsignedInt device,
+            ffi.UnsignedInt index, ffi.UnsignedInt id)>>;
+
+/// \brief The SDL keysym structure, used in key events.
+///
+/// \note  If you are looking for translated character input, see the ::SDL_TEXTINPUT event.
+final class SDL_Keysym extends ffi.Struct {
+  /// < SDL physical key code - see ::SDL_Scancode for details
+  @ffi.Int32()
+  external int scancode;
+
+  /// < SDL virtual key code - see ::SDL_Keycode for details
+  @SDL_Keycode()
+  external int sym;
+
+  /// < current key modifiers
+  @Uint16()
+  external int mod;
+
+  @Uint32()
+  external int unused;
+}
+
+/// \brief The SDL keyboard scancode representation.
+///
+/// Values of this type are used to represent keyboard keys, among other places
+/// in the \link SDL_Keysym::scancode key.keysym.scancode \endlink field of the
+/// SDL_Event structure.
+///
+/// The values in this enumeration are based on the USB usage page standard:
+/// https://www.usb.org/sites/default/files/documents/hut1_12v2.pdf
+abstract class SDL_Scancode {
+  static const int SDL_SCANCODE_UNKNOWN = 0;
+
+  /// \name Usage page 0x07
+  ///
+  /// These values are from usage page 0x07 (USB keyboard page).
+  /// /
+  /// /* @{
+  static const int SDL_SCANCODE_A = 4;
+  static const int SDL_SCANCODE_B = 5;
+  static const int SDL_SCANCODE_C = 6;
+  static const int SDL_SCANCODE_D = 7;
+  static const int SDL_SCANCODE_E = 8;
+  static const int SDL_SCANCODE_F = 9;
+  static const int SDL_SCANCODE_G = 10;
+  static const int SDL_SCANCODE_H = 11;
+  static const int SDL_SCANCODE_I = 12;
+  static const int SDL_SCANCODE_J = 13;
+  static const int SDL_SCANCODE_K = 14;
+  static const int SDL_SCANCODE_L = 15;
+  static const int SDL_SCANCODE_M = 16;
+  static const int SDL_SCANCODE_N = 17;
+  static const int SDL_SCANCODE_O = 18;
+  static const int SDL_SCANCODE_P = 19;
+  static const int SDL_SCANCODE_Q = 20;
+  static const int SDL_SCANCODE_R = 21;
+  static const int SDL_SCANCODE_S = 22;
+  static const int SDL_SCANCODE_T = 23;
+  static const int SDL_SCANCODE_U = 24;
+  static const int SDL_SCANCODE_V = 25;
+  static const int SDL_SCANCODE_W = 26;
+  static const int SDL_SCANCODE_X = 27;
+  static const int SDL_SCANCODE_Y = 28;
+  static const int SDL_SCANCODE_Z = 29;
+  static const int SDL_SCANCODE_1 = 30;
+  static const int SDL_SCANCODE_2 = 31;
+  static const int SDL_SCANCODE_3 = 32;
+  static const int SDL_SCANCODE_4 = 33;
+  static const int SDL_SCANCODE_5 = 34;
+  static const int SDL_SCANCODE_6 = 35;
+  static const int SDL_SCANCODE_7 = 36;
+  static const int SDL_SCANCODE_8 = 37;
+  static const int SDL_SCANCODE_9 = 38;
+  static const int SDL_SCANCODE_0 = 39;
+  static const int SDL_SCANCODE_RETURN = 40;
+  static const int SDL_SCANCODE_ESCAPE = 41;
+  static const int SDL_SCANCODE_BACKSPACE = 42;
+  static const int SDL_SCANCODE_TAB = 43;
+  static const int SDL_SCANCODE_SPACE = 44;
+  static const int SDL_SCANCODE_MINUS = 45;
+  static const int SDL_SCANCODE_EQUALS = 46;
+  static const int SDL_SCANCODE_LEFTBRACKET = 47;
+  static const int SDL_SCANCODE_RIGHTBRACKET = 48;
+
+  /// < Located at the lower left of the return
+  /// key on ISO keyboards and at the right end
+  /// of the QWERTY row on ANSI keyboards.
+  /// Produces REVERSE SOLIDUS (backslash) and
+  /// VERTICAL LINE in a US layout, REVERSE
+  /// SOLIDUS and VERTICAL LINE in a UK Mac
+  /// layout, NUMBER SIGN and TILDE in a UK
+  /// Windows layout, DOLLAR SIGN and POUND SIGN
+  /// in a Swiss German layout, NUMBER SIGN and
+  /// APOSTROPHE in a German layout, GRAVE
+  /// ACCENT and POUND SIGN in a French Mac
+  /// layout, and ASTERISK and MICRO SIGN in a
+  /// French Windows layout.
+  static const int SDL_SCANCODE_BACKSLASH = 49;
+
+  /// < ISO USB keyboards actually use this code
+  /// instead of 49 for the same key, but all
+  /// OSes I've seen treat the two codes
+  /// identically. So, as an implementor, unless
+  /// your keyboard generates both of those
+  /// codes and your OS treats them differently,
+  /// you should generate SDL_SCANCODE_BACKSLASH
+  /// instead of this code. As a user, you
+  /// should not rely on this code because SDL
+  /// will never generate it with most (all?)
+  /// keyboards.
+  static const int SDL_SCANCODE_NONUSHASH = 50;
+  static const int SDL_SCANCODE_SEMICOLON = 51;
+  static const int SDL_SCANCODE_APOSTROPHE = 52;
+
+  /// < Located in the top left corner (on both ANSI
+  /// and ISO keyboards). Produces GRAVE ACCENT and
+  /// TILDE in a US Windows layout and in US and UK
+  /// Mac layouts on ANSI keyboards, GRAVE ACCENT
+  /// and NOT SIGN in a UK Windows layout, SECTION
+  /// SIGN and PLUS-MINUS SIGN in US and UK Mac
+  /// layouts on ISO keyboards, SECTION SIGN and
+  /// DEGREE SIGN in a Swiss German layout (Mac:
+  /// only on ISO keyboards), CIRCUMFLEX ACCENT and
+  /// DEGREE SIGN in a German layout (Mac: only on
+  /// ISO keyboards), SUPERSCRIPT TWO and TILDE in a
+  /// French Windows layout, COMMERCIAL AT and
+  /// NUMBER SIGN in a French Mac layout on ISO
+  /// keyboards, and LESS-THAN SIGN and GREATER-THAN
+  /// SIGN in a Swiss German, German, or French Mac
+  /// layout on ANSI keyboards.
+  static const int SDL_SCANCODE_GRAVE = 53;
+  static const int SDL_SCANCODE_COMMA = 54;
+  static const int SDL_SCANCODE_PERIOD = 55;
+  static const int SDL_SCANCODE_SLASH = 56;
+  static const int SDL_SCANCODE_CAPSLOCK = 57;
+  static const int SDL_SCANCODE_F1 = 58;
+  static const int SDL_SCANCODE_F2 = 59;
+  static const int SDL_SCANCODE_F3 = 60;
+  static const int SDL_SCANCODE_F4 = 61;
+  static const int SDL_SCANCODE_F5 = 62;
+  static const int SDL_SCANCODE_F6 = 63;
+  static const int SDL_SCANCODE_F7 = 64;
+  static const int SDL_SCANCODE_F8 = 65;
+  static const int SDL_SCANCODE_F9 = 66;
+  static const int SDL_SCANCODE_F10 = 67;
+  static const int SDL_SCANCODE_F11 = 68;
+  static const int SDL_SCANCODE_F12 = 69;
+  static const int SDL_SCANCODE_PRINTSCREEN = 70;
+  static const int SDL_SCANCODE_SCROLLLOCK = 71;
+  static const int SDL_SCANCODE_PAUSE = 72;
+
+  /// < insert on PC, help on some Mac keyboards (but
+  /// does send code 73, not 117)
+  static const int SDL_SCANCODE_INSERT = 73;
+  static const int SDL_SCANCODE_HOME = 74;
+  static const int SDL_SCANCODE_PAGEUP = 75;
+  static const int SDL_SCANCODE_DELETE = 76;
+  static const int SDL_SCANCODE_END = 77;
+  static const int SDL_SCANCODE_PAGEDOWN = 78;
+  static const int SDL_SCANCODE_RIGHT = 79;
+  static const int SDL_SCANCODE_LEFT = 80;
+  static const int SDL_SCANCODE_DOWN = 81;
+  static const int SDL_SCANCODE_UP = 82;
+
+  /// < num lock on PC, clear on Mac keyboards
+  static const int SDL_SCANCODE_NUMLOCKCLEAR = 83;
+  static const int SDL_SCANCODE_KP_DIVIDE = 84;
+  static const int SDL_SCANCODE_KP_MULTIPLY = 85;
+  static const int SDL_SCANCODE_KP_MINUS = 86;
+  static const int SDL_SCANCODE_KP_PLUS = 87;
+  static const int SDL_SCANCODE_KP_ENTER = 88;
+  static const int SDL_SCANCODE_KP_1 = 89;
+  static const int SDL_SCANCODE_KP_2 = 90;
+  static const int SDL_SCANCODE_KP_3 = 91;
+  static const int SDL_SCANCODE_KP_4 = 92;
+  static const int SDL_SCANCODE_KP_5 = 93;
+  static const int SDL_SCANCODE_KP_6 = 94;
+  static const int SDL_SCANCODE_KP_7 = 95;
+  static const int SDL_SCANCODE_KP_8 = 96;
+  static const int SDL_SCANCODE_KP_9 = 97;
+  static const int SDL_SCANCODE_KP_0 = 98;
+  static const int SDL_SCANCODE_KP_PERIOD = 99;
+
+  /// < This is the additional key that ISO
+  /// keyboards have over ANSI ones,
+  /// located between left shift and Y.
+  /// Produces GRAVE ACCENT and TILDE in a
+  /// US or UK Mac layout, REVERSE SOLIDUS
+  /// (backslash) and VERTICAL LINE in a
+  /// US or UK Windows layout, and
+  /// LESS-THAN SIGN and GREATER-THAN SIGN
+  /// in a Swiss German, German, or French
+  /// layout.
+  static const int SDL_SCANCODE_NONUSBACKSLASH = 100;
+
+  /// < windows contextual menu, compose
+  static const int SDL_SCANCODE_APPLICATION = 101;
+
+  /// < The USB document says this is a status flag,
+  /// not a physical key - but some Mac keyboards
+  /// do have a power key.
+  static const int SDL_SCANCODE_POWER = 102;
+  static const int SDL_SCANCODE_KP_EQUALS = 103;
+  static const int SDL_SCANCODE_F13 = 104;
+  static const int SDL_SCANCODE_F14 = 105;
+  static const int SDL_SCANCODE_F15 = 106;
+  static const int SDL_SCANCODE_F16 = 107;
+  static const int SDL_SCANCODE_F17 = 108;
+  static const int SDL_SCANCODE_F18 = 109;
+  static const int SDL_SCANCODE_F19 = 110;
+  static const int SDL_SCANCODE_F20 = 111;
+  static const int SDL_SCANCODE_F21 = 112;
+  static const int SDL_SCANCODE_F22 = 113;
+  static const int SDL_SCANCODE_F23 = 114;
+  static const int SDL_SCANCODE_F24 = 115;
+  static const int SDL_SCANCODE_EXECUTE = 116;
+
+  /// < AL Integrated Help Center
+  static const int SDL_SCANCODE_HELP = 117;
+
+  /// < Menu (show menu)
+  static const int SDL_SCANCODE_MENU = 118;
+  static const int SDL_SCANCODE_SELECT = 119;
+
+  /// < AC Stop
+  static const int SDL_SCANCODE_STOP = 120;
+
+  /// < AC Redo/Repeat
+  static const int SDL_SCANCODE_AGAIN = 121;
+
+  /// < AC Undo
+  static const int SDL_SCANCODE_UNDO = 122;
+
+  /// < AC Cut
+  static const int SDL_SCANCODE_CUT = 123;
+
+  /// < AC Copy
+  static const int SDL_SCANCODE_COPY = 124;
+
+  /// < AC Paste
+  static const int SDL_SCANCODE_PASTE = 125;
+
+  /// < AC Find
+  static const int SDL_SCANCODE_FIND = 126;
+  static const int SDL_SCANCODE_MUTE = 127;
+  static const int SDL_SCANCODE_VOLUMEUP = 128;
+  static const int SDL_SCANCODE_VOLUMEDOWN = 129;
+
+  /// not sure whether there's a reason to enable these */
+  /// /*     SDL_SCANCODE_LOCKINGCAPSLOCK = 130,  */
+  /// /*     SDL_SCANCODE_LOCKINGNUMLOCK = 131, */
+  /// /*     SDL_SCANCODE_LOCKINGSCROLLLOCK = 132,
+  static const int SDL_SCANCODE_KP_COMMA = 133;
+  static const int SDL_SCANCODE_KP_EQUALSAS400 = 134;
+
+  /// < used on Asian keyboards, see
+  /// footnotes in USB doc
+  static const int SDL_SCANCODE_INTERNATIONAL1 = 135;
+  static const int SDL_SCANCODE_INTERNATIONAL2 = 136;
+
+  /// < Yen
+  static const int SDL_SCANCODE_INTERNATIONAL3 = 137;
+  static const int SDL_SCANCODE_INTERNATIONAL4 = 138;
+  static const int SDL_SCANCODE_INTERNATIONAL5 = 139;
+  static const int SDL_SCANCODE_INTERNATIONAL6 = 140;
+  static const int SDL_SCANCODE_INTERNATIONAL7 = 141;
+  static const int SDL_SCANCODE_INTERNATIONAL8 = 142;
+  static const int SDL_SCANCODE_INTERNATIONAL9 = 143;
+
+  /// < Hangul/English toggle
+  static const int SDL_SCANCODE_LANG1 = 144;
+
+  /// < Hanja conversion
+  static const int SDL_SCANCODE_LANG2 = 145;
+
+  /// < Katakana
+  static const int SDL_SCANCODE_LANG3 = 146;
+
+  /// < Hiragana
+  static const int SDL_SCANCODE_LANG4 = 147;
+
+  /// < Zenkaku/Hankaku
+  static const int SDL_SCANCODE_LANG5 = 148;
+
+  /// < reserved
+  static const int SDL_SCANCODE_LANG6 = 149;
+
+  /// < reserved
+  static const int SDL_SCANCODE_LANG7 = 150;
+
+  /// < reserved
+  static const int SDL_SCANCODE_LANG8 = 151;
+
+  /// < reserved
+  static const int SDL_SCANCODE_LANG9 = 152;
+
+  /// < Erase-Eaze
+  static const int SDL_SCANCODE_ALTERASE = 153;
+  static const int SDL_SCANCODE_SYSREQ = 154;
+
+  /// < AC Cancel
+  static const int SDL_SCANCODE_CANCEL = 155;
+  static const int SDL_SCANCODE_CLEAR = 156;
+  static const int SDL_SCANCODE_PRIOR = 157;
+  static const int SDL_SCANCODE_RETURN2 = 158;
+  static const int SDL_SCANCODE_SEPARATOR = 159;
+  static const int SDL_SCANCODE_OUT = 160;
+  static const int SDL_SCANCODE_OPER = 161;
+  static const int SDL_SCANCODE_CLEARAGAIN = 162;
+  static const int SDL_SCANCODE_CRSEL = 163;
+  static const int SDL_SCANCODE_EXSEL = 164;
+  static const int SDL_SCANCODE_KP_00 = 176;
+  static const int SDL_SCANCODE_KP_000 = 177;
+  static const int SDL_SCANCODE_THOUSANDSSEPARATOR = 178;
+  static const int SDL_SCANCODE_DECIMALSEPARATOR = 179;
+  static const int SDL_SCANCODE_CURRENCYUNIT = 180;
+  static const int SDL_SCANCODE_CURRENCYSUBUNIT = 181;
+  static const int SDL_SCANCODE_KP_LEFTPAREN = 182;
+  static const int SDL_SCANCODE_KP_RIGHTPAREN = 183;
+  static const int SDL_SCANCODE_KP_LEFTBRACE = 184;
+  static const int SDL_SCANCODE_KP_RIGHTBRACE = 185;
+  static const int SDL_SCANCODE_KP_TAB = 186;
+  static const int SDL_SCANCODE_KP_BACKSPACE = 187;
+  static const int SDL_SCANCODE_KP_A = 188;
+  static const int SDL_SCANCODE_KP_B = 189;
+  static const int SDL_SCANCODE_KP_C = 190;
+  static const int SDL_SCANCODE_KP_D = 191;
+  static const int SDL_SCANCODE_KP_E = 192;
+  static const int SDL_SCANCODE_KP_F = 193;
+  static const int SDL_SCANCODE_KP_XOR = 194;
+  static const int SDL_SCANCODE_KP_POWER = 195;
+  static const int SDL_SCANCODE_KP_PERCENT = 196;
+  static const int SDL_SCANCODE_KP_LESS = 197;
+  static const int SDL_SCANCODE_KP_GREATER = 198;
+  static const int SDL_SCANCODE_KP_AMPERSAND = 199;
+  static const int SDL_SCANCODE_KP_DBLAMPERSAND = 200;
+  static const int SDL_SCANCODE_KP_VERTICALBAR = 201;
+  static const int SDL_SCANCODE_KP_DBLVERTICALBAR = 202;
+  static const int SDL_SCANCODE_KP_COLON = 203;
+  static const int SDL_SCANCODE_KP_HASH = 204;
+  static const int SDL_SCANCODE_KP_SPACE = 205;
+  static const int SDL_SCANCODE_KP_AT = 206;
+  static const int SDL_SCANCODE_KP_EXCLAM = 207;
+  static const int SDL_SCANCODE_KP_MEMSTORE = 208;
+  static const int SDL_SCANCODE_KP_MEMRECALL = 209;
+  static const int SDL_SCANCODE_KP_MEMCLEAR = 210;
+  static const int SDL_SCANCODE_KP_MEMADD = 211;
+  static const int SDL_SCANCODE_KP_MEMSUBTRACT = 212;
+  static const int SDL_SCANCODE_KP_MEMMULTIPLY = 213;
+  static const int SDL_SCANCODE_KP_MEMDIVIDE = 214;
+  static const int SDL_SCANCODE_KP_PLUSMINUS = 215;
+  static const int SDL_SCANCODE_KP_CLEAR = 216;
+  static const int SDL_SCANCODE_KP_CLEARENTRY = 217;
+  static const int SDL_SCANCODE_KP_BINARY = 218;
+  static const int SDL_SCANCODE_KP_OCTAL = 219;
+  static const int SDL_SCANCODE_KP_DECIMAL = 220;
+  static const int SDL_SCANCODE_KP_HEXADECIMAL = 221;
+  static const int SDL_SCANCODE_LCTRL = 224;
+  static const int SDL_SCANCODE_LSHIFT = 225;
+
+  /// < alt, option
+  static const int SDL_SCANCODE_LALT = 226;
+
+  /// < windows, command (apple), meta
+  static const int SDL_SCANCODE_LGUI = 227;
+  static const int SDL_SCANCODE_RCTRL = 228;
+  static const int SDL_SCANCODE_RSHIFT = 229;
+
+  /// < alt gr, option
+  static const int SDL_SCANCODE_RALT = 230;
+
+  /// < windows, command (apple), meta
+  static const int SDL_SCANCODE_RGUI = 231;
+
+  /// < I'm not sure if this is really not covered
+  /// by any of the above, but since there's a
+  /// special KMOD_MODE for it I'm adding it here
+  static const int SDL_SCANCODE_MODE = 257;
+
+  /// \name Usage page 0x0C
+  ///
+  /// These values are mapped from usage page 0x0C (USB consumer page).
+  /// See https://usb.org/sites/default/files/hut1_2.pdf
+  ///
+  /// There are way more keys in the spec than we can represent in the
+  /// current scancode range, so pick the ones that commonly come up in
+  /// real world usage.
+  /// /
+  /// /* @{
+  static const int SDL_SCANCODE_AUDIONEXT = 258;
+  static const int SDL_SCANCODE_AUDIOPREV = 259;
+  static const int SDL_SCANCODE_AUDIOSTOP = 260;
+  static const int SDL_SCANCODE_AUDIOPLAY = 261;
+  static const int SDL_SCANCODE_AUDIOMUTE = 262;
+  static const int SDL_SCANCODE_MEDIASELECT = 263;
+
+  /// < AL Internet Browser
+  static const int SDL_SCANCODE_WWW = 264;
+  static const int SDL_SCANCODE_MAIL = 265;
+
+  /// < AL Calculator
+  static const int SDL_SCANCODE_CALCULATOR = 266;
+  static const int SDL_SCANCODE_COMPUTER = 267;
+
+  /// < AC Search
+  static const int SDL_SCANCODE_AC_SEARCH = 268;
+
+  /// < AC Home
+  static const int SDL_SCANCODE_AC_HOME = 269;
+
+  /// < AC Back
+  static const int SDL_SCANCODE_AC_BACK = 270;
+
+  /// < AC Forward
+  static const int SDL_SCANCODE_AC_FORWARD = 271;
+
+  /// < AC Stop
+  static const int SDL_SCANCODE_AC_STOP = 272;
+
+  /// < AC Refresh
+  static const int SDL_SCANCODE_AC_REFRESH = 273;
+
+  /// < AC Bookmarks
+  static const int SDL_SCANCODE_AC_BOOKMARKS = 274;
+
+  /// \name Walther keys
+  ///
+  /// These are values that Christian Walther added (for mac keyboard?).
+  /// /
+  /// /* @{
+  static const int SDL_SCANCODE_BRIGHTNESSDOWN = 275;
+  static const int SDL_SCANCODE_BRIGHTNESSUP = 276;
+
+  /// < display mirroring/dual display
+  /// switch, video mode switch
+  static const int SDL_SCANCODE_DISPLAYSWITCH = 277;
+  static const int SDL_SCANCODE_KBDILLUMTOGGLE = 278;
+  static const int SDL_SCANCODE_KBDILLUMDOWN = 279;
+  static const int SDL_SCANCODE_KBDILLUMUP = 280;
+  static const int SDL_SCANCODE_EJECT = 281;
+
+  /// < SC System Sleep
+  static const int SDL_SCANCODE_SLEEP = 282;
+  static const int SDL_SCANCODE_APP1 = 283;
+  static const int SDL_SCANCODE_APP2 = 284;
+
+  /// \name Usage page 0x0C (additional media keys)
+  ///
+  /// These values are mapped from usage page 0x0C (USB consumer page).
+  /// /
+  /// /* @{
+  static const int SDL_SCANCODE_AUDIOREWIND = 285;
+  static const int SDL_SCANCODE_AUDIOFASTFORWARD = 286;
+
+  /// < Usually situated below the display on phones and
+  /// used as a multi-function feature key for selecting
+  /// a software defined function shown on the bottom left
+  /// of the display.
+  static const int SDL_SCANCODE_SOFTLEFT = 287;
+
+  /// < Usually situated below the display on phones and
+  /// used as a multi-function feature key for selecting
+  /// a software defined function shown on the bottom right
+  /// of the display.
+  static const int SDL_SCANCODE_SOFTRIGHT = 288;
+
+  /// < Used for accepting phone calls.
+  static const int SDL_SCANCODE_CALL = 289;
+
+  /// < Used for rejecting phone calls.
+  static const int SDL_SCANCODE_ENDCALL = 290;
+
+  /// < not a key, just marks the number of scancodes
+  /// for array bounds
+  static const int SDL_NUM_SCANCODES = 512;
+}
+
+/// \brief The SDL virtual key representation.
+///
+/// Values of this type are used to represent keyboard keys using the current
+/// layout of the keyboard.  These values include Unicode values representing
+/// the unmodified character that would be generated by pressing the key, or
+/// an SDLK_* constant for those keys that do not generate characters.
+///
+/// A special exception is the number keys at the top of the keyboard which
+/// map to SDLK_0...SDLK_9 on AZERTY layouts.
+typedef SDL_Keycode = Sint32;
+typedef Uint16 = ffi.Uint16;
+typedef Uint32 = ffi.Uint32;
+
+final class SDL_Window extends ffi.Opaque {}
+
+typedef Uint8 = ffi.Uint8;
+
+/// \brief Enumeration of valid key mods (possibly OR'd together).
+abstract class SDL_Keymod {
+  static const int KMOD_NONE = 0;
+  static const int KMOD_LSHIFT = 1;
+  static const int KMOD_RSHIFT = 2;
+  static const int KMOD_LCTRL = 64;
+  static const int KMOD_RCTRL = 128;
+  static const int KMOD_LALT = 256;
+  static const int KMOD_RALT = 512;
+  static const int KMOD_LGUI = 1024;
+  static const int KMOD_RGUI = 2048;
+  static const int KMOD_NUM = 4096;
+  static const int KMOD_CAPS = 8192;
+  static const int KMOD_MODE = 16384;
+  static const int KMOD_SCROLL = 32768;
+  static const int KMOD_CTRL = 192;
+  static const int KMOD_SHIFT = 3;
+  static const int KMOD_ALT = 768;
+  static const int KMOD_GUI = 3072;
+
+  /// This is for source-level compatibility with SDL 2.0.0.
+  static const int KMOD_RESERVED = 32768;
+}
+
+abstract class SDL_bool {
+  static const int SDL_FALSE = 0;
+  static const int SDL_TRUE = 1;
+}
+
+/// A rectangle, with the origin at the upper left (integer).
+///
+/// \sa SDL_RectEmpty
+/// \sa SDL_RectEquals
+/// \sa SDL_HasIntersection
+/// \sa SDL_IntersectRect
+/// \sa SDL_IntersectRectAndLine
+/// \sa SDL_UnionRect
+/// \sa SDL_EnclosePoints
+final class SDL_Rect extends ffi.Struct {
+  @ffi.Int()
+  external int x;
+
+  @ffi.Int()
+  external int y;
+
+  @ffi.Int()
+  external int w;
+
+  @ffi.Int()
+  external int h;
+}
+
+final class _SDL_Joystick extends ffi.Opaque {}
+
+abstract class SDL_JoystickType {
+  static const int SDL_JOYSTICK_TYPE_UNKNOWN = 0;
+  static const int SDL_JOYSTICK_TYPE_GAMECONTROLLER = 1;
+  static const int SDL_JOYSTICK_TYPE_WHEEL = 2;
+  static const int SDL_JOYSTICK_TYPE_ARCADE_STICK = 3;
+  static const int SDL_JOYSTICK_TYPE_FLIGHT_STICK = 4;
+  static const int SDL_JOYSTICK_TYPE_DANCE_PAD = 5;
+  static const int SDL_JOYSTICK_TYPE_GUITAR = 6;
+  static const int SDL_JOYSTICK_TYPE_DRUM_KIT = 7;
+  static const int SDL_JOYSTICK_TYPE_ARCADE_PAD = 8;
+  static const int SDL_JOYSTICK_TYPE_THROTTLE = 9;
+}
+
+abstract class SDL_JoystickPowerLevel {
+  static const int SDL_JOYSTICK_POWER_UNKNOWN = -1;
+
+  /// <= 5%
+  static const int SDL_JOYSTICK_POWER_EMPTY = 0;
+
+  /// <= 20%
+  static const int SDL_JOYSTICK_POWER_LOW = 1;
+
+  /// <= 70%
+  static const int SDL_JOYSTICK_POWER_MEDIUM = 2;
+
+  /// <= 100%
+  static const int SDL_JOYSTICK_POWER_FULL = 3;
+  static const int SDL_JOYSTICK_POWER_WIRED = 4;
+  static const int SDL_JOYSTICK_POWER_MAX = 5;
+}
+
+/// A structure that encodes the stable unique id for a joystick device
+typedef SDL_JoystickGUID = SDL_GUID;
+
+/// An SDL_GUID is a 128-bit identifier for an input device that
+/// identifies that device across runs of SDL programs on the same
+/// platform.  If the device is detached and then re-attached to a
+/// different port, or if the base system is rebooted, the device
+/// should still report the same GUID.
+///
+/// GUIDs are as precise as possible but are not guaranteed to
+/// distinguish physically distinct but equivalent devices.  For
+/// example, two game controllers from the same vendor with the same
+/// product ID and revision may have the same GUID.
+///
+/// GUIDs may be platform-dependent (i.e., the same device may report
+/// different GUIDs on different operating systems).
+final class SDL_GUID extends ffi.Struct {
+  @ffi.Array.multi([16])
+  external ffi.Array<Uint8> data;
+}
+
+typedef SDL_Joystick = _SDL_Joystick;
+
+/// The structure that defines an extended virtual joystick description
+///
+/// The caller must zero the structure and then initialize the version with `SDL_VIRTUAL_JOYSTICK_DESC_VERSION` before passing it to SDL_JoystickAttachVirtualEx()
+/// All other elements of this structure are optional and can be left 0.
+///
+/// \sa SDL_JoystickAttachVirtualEx
+final class SDL_VirtualJoystickDesc extends ffi.Struct {
+  /// < `SDL_VIRTUAL_JOYSTICK_DESC_VERSION`
+  @Uint16()
+  external int version;
+
+  /// < `SDL_JoystickType`
+  @Uint16()
+  external int type;
+
+  /// < the number of axes on this joystick
+  @Uint16()
+  external int naxes;
+
+  /// < the number of buttons on this joystick
+  @Uint16()
+  external int nbuttons;
+
+  /// < the number of hats on this joystick
+  @Uint16()
+  external int nhats;
+
+  /// < the USB vendor ID of this joystick
+  @Uint16()
+  external int vendor_id;
+
+  /// < the USB product ID of this joystick
+  @Uint16()
+  external int product_id;
+
+  /// < unused
+  @Uint16()
+  external int padding;
+
+  /// < A mask of which buttons are valid for this controller
+  /// e.g. (1 << SDL_CONTROLLER_BUTTON_A)
+  @Uint32()
+  external int button_mask;
+
+  /// < A mask of which axes are valid for this controller
+  /// e.g. (1 << SDL_CONTROLLER_AXIS_LEFTX)
+  @Uint32()
+  external int axis_mask;
+
+  /// < the name of the joystick
+  external ffi.Pointer<ffi.Char> name;
+
+  /// < User data pointer passed to callbacks
+  external ffi.Pointer<ffi.Void> userdata;
+
+  /// < Called when the joystick state should be updated
+  external ffi.Pointer<
+          ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Void> userdata)>>
+      Update;
+
+  /// < Called when the player index is set
+  external ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Void Function(
+                  ffi.Pointer<ffi.Void> userdata, ffi.Int player_index)>>
+      SetPlayerIndex;
+
+  /// < Implements SDL_JoystickRumble()
+  external ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int Function(
+              ffi.Pointer<ffi.Void> userdata,
+              Uint16 low_frequency_rumble,
+              Uint16 high_frequency_rumble)>> Rumble;
+
+  /// < Implements SDL_JoystickRumbleTriggers()
+  external ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int Function(ffi.Pointer<ffi.Void> userdata, Uint16 left_rumble,
+              Uint16 right_rumble)>> RumbleTriggers;
+
+  /// < Implements SDL_JoystickSetLED()
+  external ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int Function(ffi.Pointer<ffi.Void> userdata, Uint8 red,
+              Uint8 green, Uint8 blue)>> SetLED;
+
+  /// < Implements SDL_JoystickSendEffect()
+  external ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Int Function(ffi.Pointer<ffi.Void> userdata,
+              ffi.Pointer<ffi.Void> data, ffi.Int size)>> SendEffect;
+}
+
+typedef Sint16 = ffi.Int16;
+
+abstract class SDL_GameControllerType {
+  static const int SDL_CONTROLLER_TYPE_UNKNOWN = 0;
+  static const int SDL_CONTROLLER_TYPE_XBOX360 = 1;
+  static const int SDL_CONTROLLER_TYPE_XBOXONE = 2;
+  static const int SDL_CONTROLLER_TYPE_PS3 = 3;
+  static const int SDL_CONTROLLER_TYPE_PS4 = 4;
+  static const int SDL_CONTROLLER_TYPE_NINTENDO_SWITCH_PRO = 5;
+  static const int SDL_CONTROLLER_TYPE_VIRTUAL = 6;
+  static const int SDL_CONTROLLER_TYPE_PS5 = 7;
+  static const int SDL_CONTROLLER_TYPE_AMAZON_LUNA = 8;
+  static const int SDL_CONTROLLER_TYPE_GOOGLE_STADIA = 9;
+  static const int SDL_CONTROLLER_TYPE_NVIDIA_SHIELD = 10;
+  static const int SDL_CONTROLLER_TYPE_NINTENDO_SWITCH_JOYCON_LEFT = 11;
+  static const int SDL_CONTROLLER_TYPE_NINTENDO_SWITCH_JOYCON_RIGHT = 12;
+  static const int SDL_CONTROLLER_TYPE_NINTENDO_SWITCH_JOYCON_PAIR = 13;
+}
+
+abstract class SDL_GameControllerBindType {
+  static const int SDL_CONTROLLER_BINDTYPE_NONE = 0;
+  static const int SDL_CONTROLLER_BINDTYPE_BUTTON = 1;
+  static const int SDL_CONTROLLER_BINDTYPE_AXIS = 2;
+  static const int SDL_CONTROLLER_BINDTYPE_HAT = 3;
+}
+
+/// Get the SDL joystick layer binding for this controller button/axis mapping
+final class SDL_GameControllerButtonBind extends ffi.Struct {
+  @ffi.Int32()
+  external int bindType;
+
+  external UnnamedUnion1 value;
+}
+
+final class UnnamedUnion1 extends ffi.Union {
+  @ffi.Int()
+  external int button;
+
+  @ffi.Int()
+  external int axis;
+
+  external UnnamedStruct1 hat;
+}
+
+final class UnnamedStruct1 extends ffi.Struct {
+  @ffi.Int()
+  external int hat;
+
+  @ffi.Int()
+  external int hat_mask;
+}
+
+/// This is the read/write operation structure -- very basic.
+final class SDL_RWops extends ffi.Struct {
+  /// Return the size of the file in this rwops, or -1 if unknown
+  external ffi.Pointer<
+      ffi.NativeFunction<Sint64 Function(ffi.Pointer<SDL_RWops> context)>> size;
+
+  /// Seek to \c offset relative to \c whence, one of stdio's whence values:
+  /// RW_SEEK_SET, RW_SEEK_CUR, RW_SEEK_END
+  ///
+  /// \return the final offset in the data stream, or -1 on error.
+  external ffi.Pointer<
+      ffi.NativeFunction<
+          Sint64 Function(ffi.Pointer<SDL_RWops> context, Sint64 offset,
+              ffi.Int whence)>> seek;
+
+  /// Read up to \c maxnum objects each of size \c size from the data
+  /// stream to the area pointed at by \c ptr.
+  ///
+  /// \return the number of objects read, or 0 at error or end of file.
+  external ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Size Function(ffi.Pointer<SDL_RWops> context,
+              ffi.Pointer<ffi.Void> ptr, ffi.Size size, ffi.Size maxnum)>> read;
+
+  /// Write exactly \c num objects each of size \c size from the area
+  /// pointed at by \c ptr to data stream.
+  ///
+  /// \return the number of objects written, or 0 at error or end of file.
+  external ffi.Pointer<
+      ffi.NativeFunction<
+          ffi.Size Function(ffi.Pointer<SDL_RWops> context,
+              ffi.Pointer<ffi.Void> ptr, ffi.Size size, ffi.Size num)>> write;
+
+  /// Close and free an allocated SDL_RWops structure.
+  ///
+  /// \return 0 if successful or -1 on write error when flushing data.
+  external ffi.Pointer<
+          ffi.NativeFunction<ffi.Int Function(ffi.Pointer<SDL_RWops> context)>>
+      close;
+
+  @Uint32()
+  external int type;
+
+  external UnnamedUnion2 hidden;
+}
+
+typedef Sint64 = ffi.Int64;
+
+final class UnnamedUnion2 extends ffi.Union {
+  external UnnamedStruct2 windowsio;
+
+  external UnnamedStruct4 mem;
+
+  external UnnamedStruct5 unknown;
+}
+
+final class UnnamedStruct2 extends ffi.Struct {
+  @ffi.Int32()
+  external int append;
+
+  external ffi.Pointer<ffi.Void> h;
+
+  external UnnamedStruct3 buffer;
+}
+
+final class UnnamedStruct3 extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> data;
+
+  @ffi.Size()
+  external int size;
+
+  @ffi.Size()
+  external int left;
+}
+
+final class UnnamedStruct4 extends ffi.Struct {
+  external ffi.Pointer<Uint8> base;
+
+  external ffi.Pointer<Uint8> here;
+
+  external ffi.Pointer<Uint8> stop;
+}
+
+final class UnnamedStruct5 extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> data1;
+
+  external ffi.Pointer<ffi.Void> data2;
+}
+
+/// The list of axes available from a controller
+///
+/// Thumbstick axis values range from SDL_JOYSTICK_AXIS_MIN to SDL_JOYSTICK_AXIS_MAX,
+/// and are centered within ~8000 of zero, though advanced UI will allow users to set
+/// or autodetect the dead zone, which varies between controllers.
+///
+/// Trigger axis values range from 0 to SDL_JOYSTICK_AXIS_MAX.
+abstract class SDL_GameControllerAxis {
+  static const int SDL_CONTROLLER_AXIS_INVALID = -1;
+  static const int SDL_CONTROLLER_AXIS_LEFTX = 0;
+  static const int SDL_CONTROLLER_AXIS_LEFTY = 1;
+  static const int SDL_CONTROLLER_AXIS_RIGHTX = 2;
+  static const int SDL_CONTROLLER_AXIS_RIGHTY = 3;
+  static const int SDL_CONTROLLER_AXIS_TRIGGERLEFT = 4;
+  static const int SDL_CONTROLLER_AXIS_TRIGGERRIGHT = 5;
+  static const int SDL_CONTROLLER_AXIS_MAX = 6;
+}
+
+/// The different sensors defined by SDL
+///
+/// Additional sensors may be available, using platform dependent semantics.
+///
+/// Hare are the additional Android sensors:
+/// https://developer.android.com/reference/android/hardware/SensorEvent.html#values
+abstract class SDL_SensorType {
+  /// < Returned for an invalid sensor
+  static const int SDL_SENSOR_INVALID = -1;
+
+  /// < Unknown sensor type
+  static const int SDL_SENSOR_UNKNOWN = 0;
+
+  /// < Accelerometer
+  static const int SDL_SENSOR_ACCEL = 1;
+
+  /// < Gyroscope
+  static const int SDL_SENSOR_GYRO = 2;
+
+  /// < Accelerometer for left Joy-Con controller and Wii nunchuk
+  static const int SDL_SENSOR_ACCEL_L = 3;
+
+  /// < Gyroscope for left Joy-Con controller
+  static const int SDL_SENSOR_GYRO_L = 4;
+
+  /// < Accelerometer for right Joy-Con controller
+  static const int SDL_SENSOR_ACCEL_R = 5;
+
+  /// < Gyroscope for right Joy-Con controller
+  static const int SDL_SENSOR_GYRO_R = 6;
+}
+
+typedef Uint64 = ffi.Uint64;
+
+const int WFL_DEVICE_KEYBOARD = 1;
+
+const int WFL_DEVICE_JOYSTICK = 2;
+
+const int RETRO_API_VERSION = 1;
+
+const int RETRO_DEVICE_TYPE_SHIFT = 8;
+
+const int RETRO_DEVICE_MASK = 255;
+
+const int RETRO_DEVICE_NONE = 0;
+
+const int RETRO_DEVICE_JOYPAD = 1;
+
+const int RETRO_DEVICE_MOUSE = 2;
+
+const int RETRO_DEVICE_KEYBOARD = 3;
+
+const int RETRO_DEVICE_LIGHTGUN = 4;
+
+const int RETRO_DEVICE_ANALOG = 5;
+
+const int RETRO_DEVICE_POINTER = 6;
+
+const int RETRO_DEVICE_ID_JOYPAD_B = 0;
+
+const int RETRO_DEVICE_ID_JOYPAD_Y = 1;
+
+const int RETRO_DEVICE_ID_JOYPAD_SELECT = 2;
+
+const int RETRO_DEVICE_ID_JOYPAD_START = 3;
+
+const int RETRO_DEVICE_ID_JOYPAD_UP = 4;
+
+const int RETRO_DEVICE_ID_JOYPAD_DOWN = 5;
+
+const int RETRO_DEVICE_ID_JOYPAD_LEFT = 6;
+
+const int RETRO_DEVICE_ID_JOYPAD_RIGHT = 7;
+
+const int RETRO_DEVICE_ID_JOYPAD_A = 8;
+
+const int RETRO_DEVICE_ID_JOYPAD_X = 9;
+
+const int RETRO_DEVICE_ID_JOYPAD_L = 10;
+
+const int RETRO_DEVICE_ID_JOYPAD_R = 11;
+
+const int RETRO_DEVICE_ID_JOYPAD_L2 = 12;
+
+const int RETRO_DEVICE_ID_JOYPAD_R2 = 13;
+
+const int RETRO_DEVICE_ID_JOYPAD_L3 = 14;
+
+const int RETRO_DEVICE_ID_JOYPAD_R3 = 15;
+
+const int RETRO_DEVICE_ID_JOYPAD_MASK = 256;
+
+const int RETRO_DEVICE_INDEX_ANALOG_LEFT = 0;
+
+const int RETRO_DEVICE_INDEX_ANALOG_RIGHT = 1;
+
+const int RETRO_DEVICE_INDEX_ANALOG_BUTTON = 2;
+
+const int RETRO_DEVICE_ID_ANALOG_X = 0;
+
+const int RETRO_DEVICE_ID_ANALOG_Y = 1;
+
+const int RETRO_DEVICE_ID_MOUSE_X = 0;
+
+const int RETRO_DEVICE_ID_MOUSE_Y = 1;
+
+const int RETRO_DEVICE_ID_MOUSE_LEFT = 2;
+
+const int RETRO_DEVICE_ID_MOUSE_RIGHT = 3;
+
+const int RETRO_DEVICE_ID_MOUSE_WHEELUP = 4;
+
+const int RETRO_DEVICE_ID_MOUSE_WHEELDOWN = 5;
+
+const int RETRO_DEVICE_ID_MOUSE_MIDDLE = 6;
+
+const int RETRO_DEVICE_ID_MOUSE_HORIZ_WHEELUP = 7;
+
+const int RETRO_DEVICE_ID_MOUSE_HORIZ_WHEELDOWN = 8;
+
+const int RETRO_DEVICE_ID_MOUSE_BUTTON_4 = 9;
+
+const int RETRO_DEVICE_ID_MOUSE_BUTTON_5 = 10;
+
+const int RETRO_DEVICE_ID_LIGHTGUN_SCREEN_X = 13;
+
+const int RETRO_DEVICE_ID_LIGHTGUN_SCREEN_Y = 14;
+
+const int RETRO_DEVICE_ID_LIGHTGUN_IS_OFFSCREEN = 15;
+
+const int RETRO_DEVICE_ID_LIGHTGUN_TRIGGER = 2;
+
+const int RETRO_DEVICE_ID_LIGHTGUN_RELOAD = 16;
+
+const int RETRO_DEVICE_ID_LIGHTGUN_AUX_A = 3;
+
+const int RETRO_DEVICE_ID_LIGHTGUN_AUX_B = 4;
+
+const int RETRO_DEVICE_ID_LIGHTGUN_START = 6;
+
+const int RETRO_DEVICE_ID_LIGHTGUN_SELECT = 7;
+
+const int RETRO_DEVICE_ID_LIGHTGUN_AUX_C = 8;
+
+const int RETRO_DEVICE_ID_LIGHTGUN_DPAD_UP = 9;
+
+const int RETRO_DEVICE_ID_LIGHTGUN_DPAD_DOWN = 10;
+
+const int RETRO_DEVICE_ID_LIGHTGUN_DPAD_LEFT = 11;
+
+const int RETRO_DEVICE_ID_LIGHTGUN_DPAD_RIGHT = 12;
+
+const int RETRO_DEVICE_ID_LIGHTGUN_X = 0;
+
+const int RETRO_DEVICE_ID_LIGHTGUN_Y = 1;
+
+const int RETRO_DEVICE_ID_LIGHTGUN_CURSOR = 3;
+
+const int RETRO_DEVICE_ID_LIGHTGUN_TURBO = 4;
+
+const int RETRO_DEVICE_ID_LIGHTGUN_PAUSE = 5;
+
+const int RETRO_DEVICE_ID_POINTER_X = 0;
+
+const int RETRO_DEVICE_ID_POINTER_Y = 1;
+
+const int RETRO_DEVICE_ID_POINTER_PRESSED = 2;
+
+const int RETRO_DEVICE_ID_POINTER_COUNT = 3;
+
+const int RETRO_REGION_NTSC = 0;
+
+const int RETRO_REGION_PAL = 1;
+
+const int RETRO_MEMORY_MASK = 255;
+
+const int RETRO_MEMORY_SAVE_RAM = 0;
+
+const int RETRO_MEMORY_RTC = 1;
+
+const int RETRO_MEMORY_SYSTEM_RAM = 2;
+
+const int RETRO_MEMORY_VIDEO_RAM = 3;
+
+const int RETRO_ENVIRONMENT_EXPERIMENTAL = 65536;
+
+const int RETRO_ENVIRONMENT_PRIVATE = 131072;
+
+const int RETRO_ENVIRONMENT_SET_ROTATION = 1;
+
+const int RETRO_ENVIRONMENT_GET_OVERSCAN = 2;
+
+const int RETRO_ENVIRONMENT_GET_CAN_DUPE = 3;
+
+const int RETRO_ENVIRONMENT_SET_MESSAGE = 6;
+
+const int RETRO_ENVIRONMENT_SHUTDOWN = 7;
+
+const int RETRO_ENVIRONMENT_SET_PERFORMANCE_LEVEL = 8;
+
+const int RETRO_ENVIRONMENT_GET_SYSTEM_DIRECTORY = 9;
+
+const int RETRO_ENVIRONMENT_SET_PIXEL_FORMAT = 10;
+
+const int RETRO_ENVIRONMENT_SET_INPUT_DESCRIPTORS = 11;
+
+const int RETRO_ENVIRONMENT_SET_KEYBOARD_CALLBACK = 12;
+
+const int RETRO_ENVIRONMENT_SET_DISK_CONTROL_INTERFACE = 13;
+
+const int RETRO_ENVIRONMENT_SET_HW_RENDER = 14;
+
+const int RETRO_ENVIRONMENT_GET_VARIABLE = 15;
+
+const int RETRO_ENVIRONMENT_SET_VARIABLES = 16;
+
+const int RETRO_ENVIRONMENT_GET_VARIABLE_UPDATE = 17;
+
+const int RETRO_ENVIRONMENT_SET_SUPPORT_NO_GAME = 18;
+
+const int RETRO_ENVIRONMENT_GET_LIBRETRO_PATH = 19;
+
+const int RETRO_ENVIRONMENT_SET_FRAME_TIME_CALLBACK = 21;
+
+const int RETRO_ENVIRONMENT_SET_AUDIO_CALLBACK = 22;
+
+const int RETRO_ENVIRONMENT_GET_RUMBLE_INTERFACE = 23;
+
+const int RETRO_ENVIRONMENT_GET_INPUT_DEVICE_CAPABILITIES = 24;
+
+const int RETRO_ENVIRONMENT_GET_SENSOR_INTERFACE = 65561;
+
+const int RETRO_ENVIRONMENT_GET_CAMERA_INTERFACE = 65562;
+
+const int RETRO_ENVIRONMENT_GET_LOG_INTERFACE = 27;
+
+const int RETRO_ENVIRONMENT_GET_PERF_INTERFACE = 28;
+
+const int RETRO_ENVIRONMENT_GET_LOCATION_INTERFACE = 29;
+
+const int RETRO_ENVIRONMENT_GET_CONTENT_DIRECTORY = 30;
+
+const int RETRO_ENVIRONMENT_GET_CORE_ASSETS_DIRECTORY = 30;
+
+const int RETRO_ENVIRONMENT_GET_SAVE_DIRECTORY = 31;
+
+const int RETRO_ENVIRONMENT_SET_SYSTEM_AV_INFO = 32;
+
+const int RETRO_ENVIRONMENT_SET_PROC_ADDRESS_CALLBACK = 33;
+
+const int RETRO_ENVIRONMENT_SET_SUBSYSTEM_INFO = 34;
+
+const int RETRO_ENVIRONMENT_SET_CONTROLLER_INFO = 35;
+
+const int RETRO_ENVIRONMENT_SET_MEMORY_MAPS = 65572;
+
+const int RETRO_ENVIRONMENT_SET_GEOMETRY = 37;
+
+const int RETRO_ENVIRONMENT_GET_USERNAME = 38;
+
+const int RETRO_ENVIRONMENT_GET_LANGUAGE = 39;
+
+const int RETRO_ENVIRONMENT_GET_CURRENT_SOFTWARE_FRAMEBUFFER = 65576;
+
+const int RETRO_ENVIRONMENT_GET_HW_RENDER_INTERFACE = 65577;
+
+const int RETRO_ENVIRONMENT_SET_SUPPORT_ACHIEVEMENTS = 65578;
+
+const int RETRO_ENVIRONMENT_SET_HW_RENDER_CONTEXT_NEGOTIATION_INTERFACE = 65579;
+
+const int RETRO_ENVIRONMENT_SET_SERIALIZATION_QUIRKS = 44;
+
+const int RETRO_ENVIRONMENT_SET_HW_SHARED_CONTEXT = 65580;
+
+const int RETRO_ENVIRONMENT_GET_VFS_INTERFACE = 65581;
+
+const int RETRO_ENVIRONMENT_GET_LED_INTERFACE = 65582;
+
+const int RETRO_ENVIRONMENT_GET_AUDIO_VIDEO_ENABLE = 65583;
+
+const int RETRO_ENVIRONMENT_GET_MIDI_INTERFACE = 65584;
+
+const int RETRO_ENVIRONMENT_GET_FASTFORWARDING = 65585;
+
+const int RETRO_ENVIRONMENT_GET_TARGET_REFRESH_RATE = 65586;
+
+const int RETRO_ENVIRONMENT_GET_INPUT_BITMASKS = 65587;
+
+const int RETRO_ENVIRONMENT_GET_CORE_OPTIONS_VERSION = 52;
+
+const int RETRO_ENVIRONMENT_SET_CORE_OPTIONS = 53;
+
+const int RETRO_ENVIRONMENT_SET_CORE_OPTIONS_INTL = 54;
+
+const int RETRO_ENVIRONMENT_SET_CORE_OPTIONS_DISPLAY = 55;
+
+const int RETRO_ENVIRONMENT_GET_PREFERRED_HW_RENDER = 56;
+
+const int RETRO_ENVIRONMENT_GET_DISK_CONTROL_INTERFACE_VERSION = 57;
+
+const int RETRO_ENVIRONMENT_SET_DISK_CONTROL_EXT_INTERFACE = 58;
+
+const int RETRO_VFS_FILE_ACCESS_READ = 1;
+
+const int RETRO_VFS_FILE_ACCESS_WRITE = 2;
+
+const int RETRO_VFS_FILE_ACCESS_READ_WRITE = 3;
+
+const int RETRO_VFS_FILE_ACCESS_UPDATE_EXISTING = 4;
+
+const int RETRO_VFS_FILE_ACCESS_HINT_NONE = 0;
+
+const int RETRO_VFS_FILE_ACCESS_HINT_FREQUENT_ACCESS = 1;
+
+const int RETRO_VFS_SEEK_POSITION_START = 0;
+
+const int RETRO_VFS_SEEK_POSITION_CURRENT = 1;
+
+const int RETRO_VFS_SEEK_POSITION_END = 2;
+
+const int RETRO_VFS_STAT_IS_VALID = 1;
+
+const int RETRO_VFS_STAT_IS_DIRECTORY = 2;
+
+const int RETRO_VFS_STAT_IS_CHARACTER_SPECIAL = 4;
+
+const int RETRO_SERIALIZATION_QUIRK_INCOMPLETE = 1;
+
+const int RETRO_SERIALIZATION_QUIRK_MUST_INITIALIZE = 2;
+
+const int RETRO_SERIALIZATION_QUIRK_CORE_VARIABLE_SIZE = 4;
+
+const int RETRO_SERIALIZATION_QUIRK_FRONT_VARIABLE_SIZE = 8;
+
+const int RETRO_SERIALIZATION_QUIRK_SINGLE_SESSION = 16;
+
+const int RETRO_SERIALIZATION_QUIRK_ENDIAN_DEPENDENT = 32;
+
+const int RETRO_SERIALIZATION_QUIRK_PLATFORM_DEPENDENT = 64;
+
+const int RETRO_MEMDESC_CONST = 1;
+
+const int RETRO_MEMDESC_BIGENDIAN = 2;
+
+const int RETRO_MEMDESC_SYSTEM_RAM = 4;
+
+const int RETRO_MEMDESC_SAVE_RAM = 8;
+
+const int RETRO_MEMDESC_VIDEO_RAM = 16;
+
+const int RETRO_MEMDESC_ALIGN_2 = 65536;
+
+const int RETRO_MEMDESC_ALIGN_4 = 131072;
+
+const int RETRO_MEMDESC_ALIGN_8 = 196608;
+
+const int RETRO_MEMDESC_MINSIZE_2 = 16777216;
+
+const int RETRO_MEMDESC_MINSIZE_4 = 33554432;
+
+const int RETRO_MEMDESC_MINSIZE_8 = 50331648;
+
+const int RETRO_SIMD_SSE = 1;
+
+const int RETRO_SIMD_SSE2 = 2;
+
+const int RETRO_SIMD_VMX = 4;
+
+const int RETRO_SIMD_VMX128 = 8;
+
+const int RETRO_SIMD_AVX = 16;
+
+const int RETRO_SIMD_NEON = 32;
+
+const int RETRO_SIMD_SSE3 = 64;
+
+const int RETRO_SIMD_SSSE3 = 128;
+
+const int RETRO_SIMD_MMX = 256;
+
+const int RETRO_SIMD_MMXEXT = 512;
+
+const int RETRO_SIMD_SSE4 = 1024;
+
+const int RETRO_SIMD_SSE42 = 2048;
+
+const int RETRO_SIMD_AVX2 = 4096;
+
+const int RETRO_SIMD_VFPU = 8192;
+
+const int RETRO_SIMD_PS = 16384;
+
+const int RETRO_SIMD_AES = 32768;
+
+const int RETRO_SIMD_VFPV3 = 65536;
+
+const int RETRO_SIMD_VFPV4 = 131072;
+
+const int RETRO_SIMD_POPCNT = 262144;
+
+const int RETRO_SIMD_MOVBE = 524288;
+
+const int RETRO_SIMD_CMOV = 1048576;
+
+const int RETRO_SIMD_ASIMD = 2097152;
+
+const int RETRO_SENSOR_ACCELEROMETER_X = 0;
+
+const int RETRO_SENSOR_ACCELEROMETER_Y = 1;
+
+const int RETRO_SENSOR_ACCELEROMETER_Z = 2;
+
+const int RETRO_SENSOR_GYROSCOPE_X = 3;
+
+const int RETRO_SENSOR_GYROSCOPE_Y = 4;
+
+const int RETRO_SENSOR_GYROSCOPE_Z = 5;
+
+const int RETRO_SENSOR_ILLUMINANCE = 6;
+
+const int RETRO_NUM_CORE_OPTION_VALUES_MAX = 128;
+
+const int RETRO_MEMORY_ACCESS_WRITE = 1;
+
+const int RETRO_MEMORY_ACCESS_READ = 2;
+
+const int RETRO_MEMORY_TYPE_CACHED = 1;
+
+const double SDL_IPHONE_MAX_GFORCE = 5.0;
+
+const int SDL_VIRTUAL_JOYSTICK_DESC_VERSION = 1;
+
+const int SDL_JOYSTICK_AXIS_MAX = 32767;
+
+const int SDL_JOYSTICK_AXIS_MIN = -32768;
+
+const int SDL_HAT_CENTERED = 0;
+
+const int SDL_HAT_UP = 1;
+
+const int SDL_HAT_RIGHT = 2;
+
+const int SDL_HAT_DOWN = 4;
+
+const int SDL_HAT_LEFT = 8;
+
+const int SDL_HAT_RIGHTUP = 3;
+
+const int SDL_HAT_RIGHTDOWN = 6;
+
+const int SDL_HAT_LEFTUP = 9;
+
+const int SDL_HAT_LEFTDOWN = 12;

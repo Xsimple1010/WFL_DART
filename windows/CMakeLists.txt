@@ -6,7 +6,7 @@ cmake_minimum_required(VERSION 3.14)
 
 # Project-level configuration.
 set(PROJECT_NAME "wfl_dart")
-project(${PROJECT_NAME} LANGUAGES CXX)
+project(${PROJECT_NAME})
 
 set(WFL_ROOT "../third_party/WFL/")
 
@@ -15,7 +15,7 @@ set(WFL_ROOT "../third_party/WFL/")
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../src" "${CMAKE_CURRENT_BINARY_DIR}/shared")
 
 
-find_package(SDL2 REQUIRED)
+# find_package(SDL2 REQUIRED)
 
 # List of absolute paths to libraries that should be bundled with the plugin.
 # This list could contain prebuilt libraries, or libraries created by an
@@ -25,6 +25,6 @@ set(wfl_dart_bundled_libraries
   # This can be changed to accommodate different builds.
   # "${SDL2MAIN_LIBRARY}"
   $<TARGET_FILE:wfl_dart>
-  "${SDL2_BINDIR}/SDL2.dll"
+  # "${SDL2_BINDIR}/SDL2.dll"
   PARENT_SCOPE
 )

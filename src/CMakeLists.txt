@@ -7,14 +7,11 @@ project(wfl_dart_library VERSION 0.0.1)
 
 set(WFL_ROOT "../third_party/WFL/")
 
-include(
-  "C:/Projetos/wfl_dart/third_party/WFL/sources.cmake"
-)
-
 message(${WFL_ROOT}src/Audio.cpp)
 
 add_library(wfl_dart SHARED
   "wfl_dart.cpp"
+  ${WFL_ROOT}src/WFL.cpp
   ${WFL_ROOT}src/WFL_GL/wflGl.cpp
   ${WFL_ROOT}src/Audio.cpp
   ${WFL_ROOT}src/controller.cpp
@@ -25,6 +22,9 @@ add_library(wfl_dart SHARED
   ${WFL_ROOT}src/Video.cpp
 
   ${WFL_ROOT}include/gamecontrollerdb.txt
+  ${WFL_ROOT}include/WFL.h
+  ${WFL_ROOT}include/videoDefs.hpp
+  ${WFL_ROOT}include/libretro.h
 )
 
 set_target_properties(wfl_dart PROPERTIES
@@ -36,7 +36,6 @@ find_package(SDL2 REQUIRED)
 
 target_include_directories(wfl_dart 
   PUBLIC ${SDL2_INCLUDE_DIRS}
-
   PUBLIC ${WFL_ROOT}include/
 )
 

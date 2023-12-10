@@ -32,9 +32,7 @@ class WFL {
     controllerEvents.ref.onConnect = Pointer.fromFunction(onConnect);
     controllerEvents.ref.onDisconnect = Pointer.fromFunction(onDisconnect);
 
-    _bindings.wflSetCallbacks(controllerEvents.ref);
-
-    _bindings.wflInit();
+    _bindings.wflDartInit(controllerEvents.ref);
   }
 
   static void onConnect(Pointer<SDL_GameController> gmController) {
@@ -46,15 +44,15 @@ class WFL {
   }
 
   loadCore(String path) {
-    _bindings.wflLoadCore(path.toNativeUtf8());
+    _bindings.wflDartLoadCore(path.toNativeUtf8());
   }
 
   loadGame(String path) {
-    _bindings.wflLoadGame(path.toNativeUtf8());
+    _bindings.wflDarLoadGame(path.toNativeUtf8());
   }
 
   deInit() {
+    _bindings.wflDartStop();
     calloc.free(controllerEvents);
-    _bindings.wflDeinit();
   }
 }

@@ -11,27 +11,17 @@
 #define FFI_PLUGIN_EXPORT
 #endif
 
-#include "SDL.h"
-
 //wfl includes
 #include "controllerDefs.hpp"
-#include "Controller.hpp"
-#include "LibretroClass.hpp"
-#include "debug.hpp"
-#include "CpuFeatures.hpp"
-#include "Audio.hpp"
-#include "Video.hpp"
+#include "WFL.h"
+#include "SDL.h"
 
-extern "C" void FFI_PLUGIN_EXPORT wflSetCallbacks(controller_events events);
+EXTERN_C void FFI_PLUGIN_EXPORT wflDartInit(controller_events events);
 
-extern "C" void FFI_PLUGIN_EXPORT wflInit();
+EXTERN_C void FFI_PLUGIN_EXPORT wflDartLoadCore(const char* path);
 
-extern "C" void FFI_PLUGIN_EXPORT wflLoadCore(const char* path);
+EXTERN_C void FFI_PLUGIN_EXPORT wflDarLoadGame(const char* path);
 
-extern "C" void FFI_PLUGIN_EXPORT wflLoadGame(const char* path);
+EXTERN_C void FFI_PLUGIN_EXPORT wflDartSetController(controller_device device);
 
-extern "C" void FFI_PLUGIN_EXPORT wflUnloadGame();
-
-extern "C" void FFI_PLUGIN_EXPORT wflSetController(controller_device device);
-
-void FFI_PLUGIN_EXPORT wflDeinit();
+EXTERN_C void FFI_PLUGIN_EXPORT wflDartStop();

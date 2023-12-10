@@ -29,85 +29,69 @@ class WflDartBindings {
           lookup)
       : _lookup = lookup;
 
-  void wflSetCallbacks(
+  void wflDartInit(
     controller_events events,
   ) {
-    return _wflSetCallbacks(
+    return _wflDartInit(
       events,
     );
   }
 
-  late final _wflSetCallbacksPtr =
+  late final _wflDartInitPtr =
       _lookup<ffi.NativeFunction<ffi.Void Function(controller_events)>>(
-          'wflSetCallbacks');
-  late final _wflSetCallbacks =
-      _wflSetCallbacksPtr.asFunction<void Function(controller_events)>();
+          'wflDartInit');
+  late final _wflDartInit =
+      _wflDartInitPtr.asFunction<void Function(controller_events)>();
 
-  void wflInit() {
-    return _wflInit();
-  }
-
-  late final _wflInitPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function()>>('wflInit');
-  late final _wflInit = _wflInitPtr.asFunction<void Function()>();
-
-  void wflLoadCore(
+  void wflDartLoadCore(
     ffi.Pointer<Utf8> path,
   ) {
-    return _wflLoadCore(
+    return _wflDartLoadCore(
       path,
     );
   }
 
-  late final _wflLoadCorePtr =
+  late final _wflDartLoadCorePtr =
       _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<Utf8>)>>(
-          'wflLoadCore');
-  late final _wflLoadCore =
-      _wflLoadCorePtr.asFunction<void Function(ffi.Pointer<Utf8>)>();
+          'wflDartLoadCore');
+  late final _wflDartLoadCore =
+      _wflDartLoadCorePtr.asFunction<void Function(ffi.Pointer<Utf8>)>();
 
-  void wflLoadGame(
+  void wflDarLoadGame(
     ffi.Pointer<Utf8> path,
   ) {
-    return _wflLoadGame(
+    return _wflDarLoadGame(
       path,
     );
   }
 
-  late final _wflLoadGamePtr =
+  late final _wflDarLoadGamePtr =
       _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<Utf8>)>>(
-          'wflLoadGame');
-  late final _wflLoadGame =
-      _wflLoadGamePtr.asFunction<void Function(ffi.Pointer<Utf8>)>();
+          'wflDarLoadGame');
+  late final _wflDarLoadGame =
+      _wflDarLoadGamePtr.asFunction<void Function(ffi.Pointer<Utf8>)>();
 
-  void wflUnloadGame() {
-    return _wflUnloadGame();
-  }
-
-  late final _wflUnloadGamePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function()>>('wflUnloadGame');
-  late final _wflUnloadGame = _wflUnloadGamePtr.asFunction<void Function()>();
-
-  void wflSetController(
+  void wflDartSetController(
     int device,
   ) {
-    return _wflSetController(
+    return _wflDartSetController(
       device,
     );
   }
 
-  late final _wflSetControllerPtr =
+  late final _wflDartSetControllerPtr =
       _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Int)>>(
-          'wflSetController');
-  late final _wflSetController =
-      _wflSetControllerPtr.asFunction<void Function(int)>();
+          'wflDartSetController');
+  late final _wflDartSetController =
+      _wflDartSetControllerPtr.asFunction<void Function(int)>();
 
-  void wflDeinit() {
-    return _wflDeinit();
+  void wflDartStop() {
+    return _wflDartStop();
   }
 
-  late final _wflDeinitPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function()>>('wflDeinit');
-  late final _wflDeinit = _wflDeinitPtr.asFunction<void Function()>();
+  late final _wflDartStopPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function()>>('wflDartStop');
+  late final _wflDartStop = _wflDartStopPtr.asFunction<void Function()>();
 
   late final ffi.Pointer<ffi.Size> _deviceMaxSize =
       _lookup<ffi.Size>('deviceMaxSize');
@@ -528,6 +512,63 @@ class WflDartBindings {
           'retro_get_memory_size');
   late final _retro_get_memory_size =
       _retro_get_memory_sizePtr.asFunction<int Function(int)>();
+
+  void wflInit(
+    controller_events events,
+  ) {
+    return _wflInit(
+      events,
+    );
+  }
+
+  late final _wflInitPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(controller_events)>>(
+          'wflInit');
+  late final _wflInit =
+      _wflInitPtr.asFunction<void Function(controller_events)>();
+
+  void wflLoadCore(
+    ffi.Pointer<ffi.Char> path,
+  ) {
+    return _wflLoadCore(
+      path,
+    );
+  }
+
+  late final _wflLoadCorePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Char>)>>(
+          'wflLoadCore');
+  late final _wflLoadCore =
+      _wflLoadCorePtr.asFunction<void Function(ffi.Pointer<ffi.Char>)>();
+
+  void wflLoadGame(
+    ffi.Pointer<ffi.Char> path,
+  ) {
+    return _wflLoadGame(
+      path,
+    );
+  }
+
+  late final _wflLoadGamePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Char>)>>(
+          'wflLoadGame');
+  late final _wflLoadGame =
+      _wflLoadGamePtr.asFunction<void Function(ffi.Pointer<ffi.Char>)>();
+
+  /// void wflPause();
+  void wflSetController(
+    controller_device device,
+  ) {
+    return _wflSetController(
+      device,
+    );
+  }
+
+  late final _wflSetControllerPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(controller_device)>>(
+          'wflSetController');
+  late final _wflSetController =
+      _wflSetControllerPtr.asFunction<void Function(controller_device)>();
 
   /// Query the window which currently has keyboard focus.
   ///
@@ -4112,124 +4153,6 @@ class WflDartBindings {
               ffi.Pointer<SDL_GameController>, int)>();
 }
 
-/// keyboard end other inputs
-final class Keyboard_keymap extends ffi.Struct {
-  @ffi.UnsignedInt()
-  external int native;
-
-  @ffi.UnsignedInt()
-  external int retro;
-}
-
-final class joystick_keymap extends ffi.Struct {
-  @ffi.Int32()
-  external int native;
-
-  @ffi.UnsignedInt()
-  external int retro;
-}
-
-/// The list of buttons available from a controller
-abstract class SDL_GameControllerButton {
-  static const int SDL_CONTROLLER_BUTTON_INVALID = -1;
-  static const int SDL_CONTROLLER_BUTTON_A = 0;
-  static const int SDL_CONTROLLER_BUTTON_B = 1;
-  static const int SDL_CONTROLLER_BUTTON_X = 2;
-  static const int SDL_CONTROLLER_BUTTON_Y = 3;
-  static const int SDL_CONTROLLER_BUTTON_BACK = 4;
-  static const int SDL_CONTROLLER_BUTTON_GUIDE = 5;
-  static const int SDL_CONTROLLER_BUTTON_START = 6;
-  static const int SDL_CONTROLLER_BUTTON_LEFTSTICK = 7;
-  static const int SDL_CONTROLLER_BUTTON_RIGHTSTICK = 8;
-  static const int SDL_CONTROLLER_BUTTON_LEFTSHOULDER = 9;
-  static const int SDL_CONTROLLER_BUTTON_RIGHTSHOULDER = 10;
-  static const int SDL_CONTROLLER_BUTTON_DPAD_UP = 11;
-  static const int SDL_CONTROLLER_BUTTON_DPAD_DOWN = 12;
-  static const int SDL_CONTROLLER_BUTTON_DPAD_LEFT = 13;
-  static const int SDL_CONTROLLER_BUTTON_DPAD_RIGHT = 14;
-
-  /// Xbox Series X share button, PS5 microphone button, Nintendo Switch Pro capture button, Amazon Luna microphone button
-  static const int SDL_CONTROLLER_BUTTON_MISC1 = 15;
-
-  /// Xbox Elite paddle P1 (upper left, facing the back)
-  static const int SDL_CONTROLLER_BUTTON_PADDLE1 = 16;
-
-  /// Xbox Elite paddle P3 (upper right, facing the back)
-  static const int SDL_CONTROLLER_BUTTON_PADDLE2 = 17;
-
-  /// Xbox Elite paddle P2 (lower left, facing the back)
-  static const int SDL_CONTROLLER_BUTTON_PADDLE3 = 18;
-
-  /// Xbox Elite paddle P4 (lower right, facing the back)
-  static const int SDL_CONTROLLER_BUTTON_PADDLE4 = 19;
-
-  /// PS4/PS5 touchpad button
-  static const int SDL_CONTROLLER_BUTTON_TOUCHPAD = 20;
-  static const int SDL_CONTROLLER_BUTTON_MAX = 21;
-}
-
-final class controller_events extends ffi.Struct {
-  external ffi.Pointer<on_device_disconnect_t> onDisconnect;
-
-  external ffi.Pointer<on_device_connect_t> onConnect;
-}
-
-typedef on_device_disconnect_t
-    = ffi.NativeFunction<ffi.Void Function(SDL_JoystickID id, ffi.Int port)>;
-
-/// This is a unique ID for a joystick for the time it is connected to the system,
-/// and is never reused for the lifetime of the application. If the joystick is
-/// disconnected and reconnected, it will get a new ID.
-///
-/// The ID value starts at 0 and increments from there. The value -1 is an invalid ID.
-typedef SDL_JoystickID = Sint32;
-typedef Sint32 = ffi.Int32;
-typedef on_device_connect_t = ffi.NativeFunction<
-    ffi.Void Function(ffi.Pointer<SDL_GameController> gmController)>;
-typedef SDL_GameController = _SDL_GameController;
-
-/// The gamecontroller structure used to identify an SDL game controller
-final class _SDL_GameController extends ffi.Opaque {}
-
-final class controller_native_info extends ffi.Struct {
-  @ffi.UnsignedInt()
-  external int type;
-
-  external ffi.Pointer<SDL_GameController> controllerToken;
-}
-
-final class Joystick extends ffi.Struct {
-  @SDL_JoystickID()
-  external int id;
-
-  @ffi.Int()
-  external int index;
-
-  external ffi.Pointer<ffi.Char> name;
-}
-
-final class controller_device extends ffi.Struct {
-  @SDL_JoystickID()
-  external int id;
-
-  @ffi.Int()
-  external int index;
-
-  @ffi.Int()
-  external int port;
-
-  @ffi.UnsignedInt()
-  external int type;
-
-  external controller_native_info nativeInfo;
-
-  @ffi.Array.multi([16])
-  external ffi.Array<Keyboard_keymap> keyboardKeyBinds;
-
-  @ffi.Array.multi([16])
-  external ffi.Array<joystick_keymap> joystickKeyBinds;
-}
-
 final class g_video_t extends ffi.Struct {
   @GLuint()
   external int texeture_id;
@@ -5952,6 +5875,117 @@ typedef retro_input_state_t = ffi.Pointer<
         ffi.Int16 Function(ffi.UnsignedInt port, ffi.UnsignedInt device,
             ffi.UnsignedInt index, ffi.UnsignedInt id)>>;
 
+final class controller_events extends ffi.Struct {
+  external ffi.Pointer<on_device_disconnect_t> onDisconnect;
+
+  external ffi.Pointer<on_device_connect_t> onConnect;
+}
+
+typedef on_device_disconnect_t
+    = ffi.NativeFunction<ffi.Void Function(SDL_JoystickID id, ffi.Int port)>;
+
+/// This is a unique ID for a joystick for the time it is connected to the system,
+/// and is never reused for the lifetime of the application. If the joystick is
+/// disconnected and reconnected, it will get a new ID.
+///
+/// The ID value starts at 0 and increments from there. The value -1 is an invalid ID.
+typedef SDL_JoystickID = Sint32;
+typedef Sint32 = ffi.Int32;
+typedef on_device_connect_t = ffi.NativeFunction<
+    ffi.Void Function(ffi.Pointer<SDL_GameController> gmController)>;
+typedef SDL_GameController = _SDL_GameController;
+
+/// The gamecontroller structure used to identify an SDL game controller
+final class _SDL_GameController extends ffi.Opaque {}
+
+final class controller_device extends ffi.Struct {
+  @SDL_JoystickID()
+  external int id;
+
+  @ffi.Int()
+  external int index;
+
+  @ffi.Int()
+  external int port;
+
+  @ffi.UnsignedInt()
+  external int type;
+
+  external controller_native_info nativeInfo;
+
+  @ffi.Array.multi([16])
+  external ffi.Array<Keyboard_keymap> keyboardKeyBinds;
+
+  @ffi.Array.multi([16])
+  external ffi.Array<joystick_keymap> joystickKeyBinds;
+
+  @ffi.Bool()
+  external bool operator1;
+}
+
+final class controller_native_info extends ffi.Struct {
+  @ffi.UnsignedInt()
+  external int type;
+
+  external ffi.Pointer<SDL_GameController> controllerToken;
+}
+
+/// keyboard end other inputs
+final class Keyboard_keymap extends ffi.Struct {
+  @ffi.UnsignedInt()
+  external int native;
+
+  @ffi.UnsignedInt()
+  external int retro;
+}
+
+final class joystick_keymap extends ffi.Struct {
+  @ffi.Int32()
+  external int native;
+
+  @ffi.UnsignedInt()
+  external int retro;
+}
+
+/// The list of buttons available from a controller
+abstract class SDL_GameControllerButton {
+  static const int SDL_CONTROLLER_BUTTON_INVALID = -1;
+  static const int SDL_CONTROLLER_BUTTON_A = 0;
+  static const int SDL_CONTROLLER_BUTTON_B = 1;
+  static const int SDL_CONTROLLER_BUTTON_X = 2;
+  static const int SDL_CONTROLLER_BUTTON_Y = 3;
+  static const int SDL_CONTROLLER_BUTTON_BACK = 4;
+  static const int SDL_CONTROLLER_BUTTON_GUIDE = 5;
+  static const int SDL_CONTROLLER_BUTTON_START = 6;
+  static const int SDL_CONTROLLER_BUTTON_LEFTSTICK = 7;
+  static const int SDL_CONTROLLER_BUTTON_RIGHTSTICK = 8;
+  static const int SDL_CONTROLLER_BUTTON_LEFTSHOULDER = 9;
+  static const int SDL_CONTROLLER_BUTTON_RIGHTSHOULDER = 10;
+  static const int SDL_CONTROLLER_BUTTON_DPAD_UP = 11;
+  static const int SDL_CONTROLLER_BUTTON_DPAD_DOWN = 12;
+  static const int SDL_CONTROLLER_BUTTON_DPAD_LEFT = 13;
+  static const int SDL_CONTROLLER_BUTTON_DPAD_RIGHT = 14;
+
+  /// Xbox Series X share button, PS5 microphone button, Nintendo Switch Pro capture button, Amazon Luna microphone button
+  static const int SDL_CONTROLLER_BUTTON_MISC1 = 15;
+
+  /// Xbox Elite paddle P1 (upper left, facing the back)
+  static const int SDL_CONTROLLER_BUTTON_PADDLE1 = 16;
+
+  /// Xbox Elite paddle P3 (upper right, facing the back)
+  static const int SDL_CONTROLLER_BUTTON_PADDLE2 = 17;
+
+  /// Xbox Elite paddle P2 (lower left, facing the back)
+  static const int SDL_CONTROLLER_BUTTON_PADDLE3 = 18;
+
+  /// Xbox Elite paddle P4 (lower right, facing the back)
+  static const int SDL_CONTROLLER_BUTTON_PADDLE4 = 19;
+
+  /// PS4/PS5 touchpad button
+  static const int SDL_CONTROLLER_BUTTON_TOUCHPAD = 20;
+  static const int SDL_CONTROLLER_BUTTON_MAX = 21;
+}
+
 /// \brief The SDL keysym structure, used in key events.
 ///
 /// \note  If you are looking for translated character input, see the ::SDL_TEXTINPUT event.
@@ -6838,10 +6872,6 @@ abstract class SDL_SensorType {
 }
 
 typedef Uint64 = ffi.Uint64;
-
-const int WFL_DEVICE_KEYBOARD = 1;
-
-const int WFL_DEVICE_JOYSTICK = 2;
 
 const int RETRO_API_VERSION = 1;
 

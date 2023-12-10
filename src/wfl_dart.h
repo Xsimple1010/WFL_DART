@@ -1,17 +1,3 @@
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <SDL.h>
-
-//wfl includes
-#include "Controller.hpp"
-#include "LibretroClass.hpp"
-#include "debug.hpp"
-#include "CpuFeatures.hpp"
-#include "Audio.hpp"
-#include "Video.hpp"
-
-
 #if _WIN32
 #include <windows.h>
 #else
@@ -25,16 +11,27 @@
 #define FFI_PLUGIN_EXPORT
 #endif
 
-// A very short-lived native function.
-//
-// For very short-lived functions, it is fine to call them on the main isolate.
-// They will block the Dart execution while running the native function, so
-// only do this for native functions which are guaranteed to be short-lived.
-extern "C" FFI_PLUGIN_EXPORT intptr_t sum(intptr_t a, intptr_t b);
+#include "SDL.h"
 
-// A longer lived native function, which occupies the thread calling it.
-//
-// Do not call these kind of native functions in the main isolate. They will
-// block Dart execution. This will cause dropped frames in Flutter applications.
-// Instead, call these native functions on a separate isolate.
-extern "C" FFI_PLUGIN_EXPORT intptr_t sum_long_running(intptr_t a, intptr_t b);
+//wfl includes
+#include "controllerDefs.hpp"
+#include "Controller.hpp"
+#include "LibretroClass.hpp"
+#include "debug.hpp"
+#include "CpuFeatures.hpp"
+#include "Audio.hpp"
+#include "Video.hpp"
+
+extern "C" void FFI_PLUGIN_EXPORT wflSetCallbacks(controller_events events);
+
+extern "C" void FFI_PLUGIN_EXPORT wflInit();
+
+extern "C" void FFI_PLUGIN_EXPORT wflLoadCore(const char* path);
+
+extern "C" void FFI_PLUGIN_EXPORT wflLoadGame(const char* path);
+
+extern "C" void FFI_PLUGIN_EXPORT wflUnloadGame();
+
+extern "C" void FFI_PLUGIN_EXPORT wflSetController(controller_device device);
+
+void FFI_PLUGIN_EXPORT wflDeinit();

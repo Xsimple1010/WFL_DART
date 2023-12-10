@@ -1,7 +1,7 @@
 #ifndef WFL_KEYBOARD_DEFS_H
 #define WFL_KEYBOARD_DEFS_H 
 
-#include <SDL2/SDL_gamecontroller.h>
+#include "SDL2/SDL_gamecontroller.h"
 #include "libretro.h"
 
 #define WFL_DEVICE_KEYBOARD       1
@@ -41,7 +41,7 @@ struct controller_device {
 	int index;
 	int port;
 	unsigned int type;	
-	controller_native_info nativeInfo;
+	struct controller_native_info nativeInfo;
 	struct Keyboard_keymap keyboardKeyBinds[RETRO_DEVICE_ID_JOYPAD_R3 + 1];
 	struct joystick_keymap joystickKeyBinds[RETRO_DEVICE_ID_JOYPAD_R3 + 1];
 	bool operator==(const controller_device& other) const {

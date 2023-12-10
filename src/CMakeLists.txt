@@ -6,17 +6,25 @@ cmake_minimum_required(VERSION 3.10)
 project(wfl_dart_library VERSION 0.0.1)
 
 set(WFL_ROOT "../third_party/WFL/")
-message(${WFL_ROOT})
 
 include(
   "C:/Projetos/wfl_dart/third_party/WFL/sources.cmake"
 )
 
-# message(${WFL_SOURCES})
+message(${WFL_ROOT}src/Audio.cpp)
 
 add_library(wfl_dart SHARED
   "wfl_dart.cpp"
-  ${WFL_SOURCES}
+  ${WFL_ROOT}src/WFL_GL/wflGl.cpp
+  ${WFL_ROOT}src/Audio.cpp
+  ${WFL_ROOT}src/controller.cpp
+  ${WFL_ROOT}src/cpuFeatures.cpp
+  ${WFL_ROOT}src/debug.cpp
+  ${WFL_ROOT}src/glad.c
+  ${WFL_ROOT}src/libretroClass.cpp
+  ${WFL_ROOT}src/Video.cpp
+
+  ${WFL_ROOT}include/gamecontrollerdb.txt
 )
 
 set_target_properties(wfl_dart PROPERTIES
@@ -29,7 +37,7 @@ find_package(SDL2 REQUIRED)
 target_include_directories(wfl_dart 
   PUBLIC ${SDL2_INCLUDE_DIRS}
 
-  PRIVATE ${WFL_ROOT}include/
+  PUBLIC ${WFL_ROOT}include/
 )
 
 link_libraries(${WFL_ROOT}include/glad/glad.h ${WFL_ROOT}src/glad.c)

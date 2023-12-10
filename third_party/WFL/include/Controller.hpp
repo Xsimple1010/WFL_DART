@@ -1,7 +1,7 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-#include <SDL2/SDL.h>
+#include "SDL.h"
 #include <iostream>
 #include <vector>
 #include <xmemory>

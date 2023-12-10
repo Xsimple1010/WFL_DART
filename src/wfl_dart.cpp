@@ -1,43 +1,193 @@
 #include "wfl_dart.h"
 
+bool running = true;
+SDL_Event event;
+
+static controller_events controllerEvents;
+static libretro_external_data externalCoreData;
+static core_event_functions eventFunction; 
+
+static Libretro libretro = Libretro(&eventFunction, &externalCoreData);
+static ControllerClass controller = ControllerClass(&controllerEvents);
 static VideoClass video;
-static bool running = true;
-static SDL_Event event;
+
+//audio
+static void audioSample(int16_t left, int16_t right) {
+	int16_t buffer[2] = { left, right };
+
+	audioWrite(buffer, 1);
+}
+
+static size_t audioSampleBatch(const int16_t* data, size_t frames) {
+	return audioWrite(data, frames);
+	return frames;
+}
+
+//inputs
+static void inputPoll() {
+	controller.inputPoll();
+}
+
+static int16_t inputState(unsigned port, unsigned device, unsigned index, unsigned id) {
+	return controller.inputState(port, device, index, id);
+	return 1;
+}
+
+//video
+static void videoInit(retro_game_geometry *geometry) {
+	std::cout << geometry->max_height << std::endl;
+
+	video.init(&externalCoreData, geometry);
+};
+
+static bool setPixelFormat(unsigned format) {
+	return video.setPixelFormat(format, &externalCoreData);
+	return true;
+}
+
+static void refreshVertexData() {
+	video.refreshVertexData();
+}
+
+static void resizeToAspect(double ratio, int sw, int sh, int* dw, int* dh) {
+	video.resizeToAspect(ratio, sw, sh, dw, dh);
+}
+
+static void videoRefresh(const void* data, unsigned width, unsigned height, size_t pitch) {
+	video.videoRefresh(data, width, height, pitch);
+}
 
 
-FFI_PLUGIN_EXPORT intptr_t sum(intptr_t a, intptr_t b) { return a + b; }
+//initialization variables
+static void noop() {}
+
+static void initializeVariables() {
+	eventFunction.setPixelFormat = setPixelFormat;
+	eventFunction.refreshVertexData = refreshVertexData;
+	eventFunction.resizeToAspect = resizeToAspect;
+	eventFunction.videoRefresh = videoRefresh;
+	eventFunction.audioSample = audioSample;
+	eventFunction.audioSampleBatch = audioSampleBatch;
+	eventFunction.inputPoll = inputPoll;
+	eventFunction.inputState = inputState;
+
+	externalCoreData.window = NULL;
+	externalCoreData.gVideo = {0};
+	externalCoreData.gScale = 1;
+	externalCoreData.audioCallback;
+	externalCoreData.runLoopFrameTime;
+	externalCoreData.runLoopFrameTimeLast = 0;
+
+	externalCoreData.gVideo.hw.version_major = 4;
+	externalCoreData.gVideo.hw.version_minor = 5;
+	externalCoreData.gVideo.hw.context_type = RETRO_HW_CONTEXT_OPENGL_CORE;
+	externalCoreData.gVideo.hw.context_reset = noop;
+	externalCoreData.gVideo.hw.context_destroy = noop;
+
+	//controllerEvents.onConnect = onConnect;
+	//controllerEvents.onDisconnect = onDisconnect;
+}
+//===========================================
 
 
-FFI_PLUGIN_EXPORT intptr_t sum_long_running(intptr_t a, intptr_t b) {
-  // Simulate work.
+//FFI_PLUGIN_EXPORT
+void FFI_PLUGIN_EXPORT wflSetCallbacks(controller_events events) {
+	controllerEvents.onConnect = events.onConnect;
+	controllerEvents.onDisconnect = events.onDisconnect;
+}
 
-  SDL_Window* window = NULL;
-  SDL_Surface* screenSurface = NULL;
+void FFI_PLUGIN_EXPORT wflInit() {
+	initializeVariables();
+}
 
-  if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-      printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
-  } else {
-      window = SDL_CreateWindow("Janela SDL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480, SDL_WINDOW_SHOWN);
-      if (window == NULL) {
-          printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
-      } else {
-          screenSurface = SDL_GetWindowSurface(window);
-          SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface->format, 0xFF, 0xFF, 0xFF));
-          SDL_UpdateWindowSurface(window);
-          SDL_Delay(2000);
-      }
-  }
+void FFI_PLUGIN_EXPORT wflLoadCore(const char* path) {
+	libretro.coreLoad(path);
+}
 
-  SDL_DestroyWindow(window);
-  SDL_Quit();
+void FFI_PLUGIN_EXPORT wflLoadGame(const char* path) {
+	retro_system_av_info avInfo = libretro.loadGame(path);
 
-  #if _WIN32
-    Sleep(5000);
-  #else
-    usleep(5000 * 1000);
-  #endif
+	videoInit(&avInfo.geometry);
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_EVENTS | SDL_INIT_GAMECONTROLLER) < 0) {
+		die("SDL could not initialize! SDL_Error: ", SDL_GetError());
+    }
+	audioInit(avInfo.timing.sample_rate);
 
-  
+	while (running) {
 
-  return a + b;
+		if (externalCoreData.runLoopFrameTime.callback) {
+			retro_time_t current = cpuFeaturesGetTimeUsec();
+			retro_time_t delta = current - externalCoreData.runLoopFrameTimeLast;
+
+			if (!externalCoreData.runLoopFrameTimeLast) {
+				delta = externalCoreData.runLoopFrameTime.reference;
+			}
+
+			externalCoreData.runLoopFrameTimeLast = current;
+			externalCoreData.runLoopFrameTime.callback(delta);
+		}
+
+
+		if (externalCoreData.audioCallback.callback) {
+			externalCoreData.audioCallback.callback();
+		}
+
+        while (SDL_PollEvent(&event)) {
+            switch (event.type) {
+               case SDL_QUIT: {
+					running = false; break;
+					break;
+				}
+			
+				case SDL_WINDOWEVENT:
+				{
+					switch (event.window.event) {
+
+						case SDL_WINDOWEVENT_CLOSE: 
+						{
+							running = false;
+							break;
+						}
+
+						//case SDL_WINDOWEVENT_RESIZED:
+							//resize_cb(ev.window.data1, ev.window.data2);
+							//break;
+					}
+
+				}
+
+				case SDL_CONTROLLERDEVICEADDED: {
+					controller.onConnect(event.cdevice.which);
+					break;
+				}
+
+				case SDL_CONTROLLERDEVICEREMOVED: {
+					controller.onDisconnect(event.cdevice.which);
+					break;
+				}
+            }
+        }
+
+		libretro.run();
+	}
+}
+
+void FFI_PLUGIN_EXPORT wflUnloadGame() {
+	// libretro.
+
+	audioDeinit();
+	video.deinit();
+}
+
+void FFI_PLUGIN_EXPORT wflSetController(controller_device device) {
+	controller.append(device);
+}
+
+void FFI_PLUGIN_EXPORT wflDeinit() {
+	controller.deinit();
+    SDL_Quit();
+}
+
+int main(int argc, char* argv[]) {
+    return 0;
 }

@@ -25,11 +25,11 @@ vector<Joystick> ControllerClass::getConnectedJoysticks() {
 	{	
 
 		if(SDL_IsGameController(i) == SDL_TRUE) {
-			Joystick joy = {
-				.id = SDL_JoystickGetDeviceInstanceID(i),
-				.index = i,
-				.name = SDL_JoystickNameForIndex(i),
-			};
+			Joystick joy = {0};
+
+			joy.id = SDL_JoystickGetDeviceInstanceID(i);
+			joy.index = i;
+			joy.name = SDL_JoystickNameForIndex(i);
 
 			joysticks.push_back(joy);
 		}

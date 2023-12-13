@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'dart:io';
 
 import 'package:wfl_dart/wfl_dart.dart';
 import 'package:wfl_dart_example/components/coreList.dart';
-import 'package:wfl_dart_example/tools/file.dart';
 import 'components/gamelist.dart';
 
 WFL wfl = WFL();
+WFLDirectoryManager wflDirManger = WFLDirectoryManager();
 
 void main() {
   runApp(const MyApp());
@@ -20,37 +19,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final rootDir = Directory("C:\\WFL");
-  late List<FileSystemEntity> cores;
-  late List<FileSystemEntity> roms;
   late String coreSelected = "";
 
   @override
   void initState() {
     super.initState();
-
-    if (rootDir.existsSync()) {
-      rootDir.create(recursive: true);
-    }
-
-    getCores();
-    getGames();
-  }
-
-  getCores() async {
-    final coreDir = Directory("${rootDir.path}\\cores");
-
-    if (!coreDir.existsSync()) coreDir.createSync();
-
-    cores = coreDir.listSync();
-  }
-
-  getGames() async {
-    final romsDir = Directory("${rootDir.path}\\roms");
-
-    if (!romsDir.existsSync()) romsDir.createSync();
-
-    roms = romsDir.listSync();
   }
 
   onCoreChange(String path) {
@@ -70,13 +43,13 @@ class _MyAppState extends State<MyApp> {
       darkTheme: ThemeData.dark(),
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('WFL_DART'),
+          title: const Text('WFL_DART DEMO'),
         ),
         body: Row(
           children: [
             Expanded(
               flex: 3,
-              child: GameList(games: roms, onClick: onRomSelected),
+              child: GameList(games: wflDirManger.roms, onClick: onRomSelected),
             ),
             Expanded(
               child: Card(
@@ -88,11 +61,12 @@ class _MyAppState extends State<MyApp> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text("Nucleos Disponiveis"),
-                          Text("(${cores.length})"),
+                          Text("(${wflDirManger.cores.length})"),
                         ],
                       ),
                       Expanded(
-                        child: CoreList(cores: cores, onClick: onCoreChange),
+                        child: CoreList(
+                            cores: wflDirManger.cores, onClick: onCoreChange),
                       ),
                     ],
                   ),

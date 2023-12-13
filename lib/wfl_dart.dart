@@ -1,7 +1,7 @@
-import 'dart:async';
 import 'dart:ffi';
 import 'dart:io';
 import 'package:ffi/ffi.dart';
+export 'tools/directory_manager.dart';
 
 import 'wfl_dart_bindings_generated.dart';
 

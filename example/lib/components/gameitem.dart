@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:wfl_dart_example/tools/file.dart';
-import 'package:wfl_dart_example/components/coreItem.dart';
 
 class GameItem extends StatelessWidget {
   const GameItem({

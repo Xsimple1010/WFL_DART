@@ -93,49 +93,6 @@ class WflDartBindings {
       _lookup<ffi.NativeFunction<ffi.Void Function()>>('wflDartStop');
   late final _wflDartStop = _wflDartStopPtr.asFunction<void Function()>();
 
-  late final ffi.Pointer<ffi.Size> _deviceMaxSize =
-      _lookup<ffi.Size>('deviceMaxSize');
-
-  int get deviceMaxSize => _deviceMaxSize.value;
-
-  set deviceMaxSize(int value) => _deviceMaxSize.value = value;
-
-  bool audioInit(
-    int frequency,
-  ) {
-    return _audioInit(
-      frequency,
-    );
-  }
-
-  late final _audioInitPtr =
-      _lookup<ffi.NativeFunction<ffi.Bool Function(ffi.Int)>>('audioInit');
-  late final _audioInit = _audioInitPtr.asFunction<bool Function(int)>();
-
-  void audioDeinit() {
-    return _audioDeinit();
-  }
-
-  late final _audioDeinitPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function()>>('audioDeinit');
-  late final _audioDeinit = _audioDeinitPtr.asFunction<void Function()>();
-
-  int audioWrite(
-    ffi.Pointer<ffi.Int16> buffer,
-    int frames,
-  ) {
-    return _audioWrite(
-      buffer,
-      frames,
-    );
-  }
-
-  late final _audioWritePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Size Function(ffi.Pointer<ffi.Int16>, ffi.Size)>>('audioWrite');
-  late final _audioWrite =
-      _audioWritePtr.asFunction<int Function(ffi.Pointer<ffi.Int16>, int)>();
-
   /// Sets callbacks. retro_set_environment() is guaranteed to be called
   /// before retro_init().
   ///
@@ -512,63 +469,6 @@ class WflDartBindings {
           'retro_get_memory_size');
   late final _retro_get_memory_size =
       _retro_get_memory_sizePtr.asFunction<int Function(int)>();
-
-  void wflInit(
-    controller_events events,
-  ) {
-    return _wflInit(
-      events,
-    );
-  }
-
-  late final _wflInitPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(controller_events)>>(
-          'wflInit');
-  late final _wflInit =
-      _wflInitPtr.asFunction<void Function(controller_events)>();
-
-  void wflLoadCore(
-    ffi.Pointer<ffi.Char> path,
-  ) {
-    return _wflLoadCore(
-      path,
-    );
-  }
-
-  late final _wflLoadCorePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Char>)>>(
-          'wflLoadCore');
-  late final _wflLoadCore =
-      _wflLoadCorePtr.asFunction<void Function(ffi.Pointer<ffi.Char>)>();
-
-  void wflLoadGame(
-    ffi.Pointer<ffi.Char> path,
-  ) {
-    return _wflLoadGame(
-      path,
-    );
-  }
-
-  late final _wflLoadGamePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Char>)>>(
-          'wflLoadGame');
-  late final _wflLoadGame =
-      _wflLoadGamePtr.asFunction<void Function(ffi.Pointer<ffi.Char>)>();
-
-  /// void wflPause();
-  void wflSetController(
-    controller_device device,
-  ) {
-    return _wflSetController(
-      device,
-    );
-  }
-
-  late final _wflSetControllerPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(controller_device)>>(
-          'wflSetController');
-  late final _wflSetController =
-      _wflSetControllerPtr.asFunction<void Function(controller_device)>();
 
   /// Query the window which currently has keyboard focus.
   ///
@@ -4153,192 +4053,130 @@ class WflDartBindings {
               ffi.Pointer<SDL_GameController>, int)>();
 }
 
-final class g_video_t extends ffi.Struct {
-  @GLuint()
-  external int texeture_id;
+/// keyboard end other inputs
+final class Keyboard_keymap extends ffi.Struct {
+  @ffi.UnsignedInt()
+  external int native;
 
-  @GLuint()
-  external int fbo_id;
-
-  @GLuint()
-  external int rbo_id;
-
-  @ffi.Int()
-  external int glmajor;
-
-  @ffi.Int()
-  external int glminor;
-
-  @GLuint()
-  external int pitch;
-
-  @GLint()
-  external int texture_w;
-
-  @GLint()
-  external int texture_h;
-
-  @GLuint()
-  external int clip_w;
-
-  @GLuint()
-  external int clip_h;
-
-  @GLuint()
-  external int pixelfmt;
-
-  @GLuint()
-  external int pixeltype;
-
-  @GLuint()
-  external int bpp;
-
-  external retro_hw_render_callback hw;
+  @ffi.UnsignedInt()
+  external int retro;
 }
 
-typedef GLuint = ffi.UnsignedInt;
-typedef GLint = ffi.Int;
-
-final class retro_hw_render_callback extends ffi.Struct {
-  /// Which API to use. Set by libretro core.
+final class joystick_keymap extends ffi.Struct {
   @ffi.Int32()
-  external int context_type;
+  external int native;
 
-  /// Called when a context has been created or when it has been reset.
-  /// An OpenGL context is only valid after context_reset() has been called.
-  ///
-  /// When context_reset is called, OpenGL resources in the libretro
-  /// implementation are guaranteed to be invalid.
-  ///
-  /// It is possible that context_reset is called multiple times during an
-  /// application lifecycle.
-  /// If context_reset is called without any notification (context_destroy),
-  /// the OpenGL context was lost and resources should just be recreated
-  /// without any attempt to "free" old resources.
-  external retro_hw_context_reset_t context_reset;
-
-  /// Set by frontend.
-  /// TODO: This is rather obsolete. The frontend should not
-  /// be providing preallocated framebuffers.
-  external retro_hw_get_current_framebuffer_t get_current_framebuffer;
-
-  /// Set by frontend.
-  /// Can return all relevant functions, including glClear on Windows.
-  external retro_hw_get_proc_address_t get_proc_address;
-
-  /// Set if render buffers should have depth component attached.
-  /// TODO: Obsolete.
-  @ffi.Bool()
-  external bool depth;
-
-  /// Set if stencil buffers should be attached.
-  /// TODO: Obsolete.
-  @ffi.Bool()
-  external bool stencil;
-
-  /// Use conventional bottom-left origin convention. If false,
-  /// standard libretro top-left origin semantics are used.
-  /// TODO: Move to GL specific interface.
-  @ffi.Bool()
-  external bool bottom_left_origin;
-
-  /// Major version number for core GL context or GLES 3.1+.
   @ffi.UnsignedInt()
-  external int version_major;
+  external int retro;
+}
 
-  /// Minor version number for core GL context or GLES 3.1+.
+/// The list of buttons available from a controller
+abstract class SDL_GameControllerButton {
+  static const int SDL_CONTROLLER_BUTTON_INVALID = -1;
+  static const int SDL_CONTROLLER_BUTTON_A = 0;
+  static const int SDL_CONTROLLER_BUTTON_B = 1;
+  static const int SDL_CONTROLLER_BUTTON_X = 2;
+  static const int SDL_CONTROLLER_BUTTON_Y = 3;
+  static const int SDL_CONTROLLER_BUTTON_BACK = 4;
+  static const int SDL_CONTROLLER_BUTTON_GUIDE = 5;
+  static const int SDL_CONTROLLER_BUTTON_START = 6;
+  static const int SDL_CONTROLLER_BUTTON_LEFTSTICK = 7;
+  static const int SDL_CONTROLLER_BUTTON_RIGHTSTICK = 8;
+  static const int SDL_CONTROLLER_BUTTON_LEFTSHOULDER = 9;
+  static const int SDL_CONTROLLER_BUTTON_RIGHTSHOULDER = 10;
+  static const int SDL_CONTROLLER_BUTTON_DPAD_UP = 11;
+  static const int SDL_CONTROLLER_BUTTON_DPAD_DOWN = 12;
+  static const int SDL_CONTROLLER_BUTTON_DPAD_LEFT = 13;
+  static const int SDL_CONTROLLER_BUTTON_DPAD_RIGHT = 14;
+
+  /// Xbox Series X share button, PS5 microphone button, Nintendo Switch Pro capture button, Amazon Luna microphone button
+  static const int SDL_CONTROLLER_BUTTON_MISC1 = 15;
+
+  /// Xbox Elite paddle P1 (upper left, facing the back)
+  static const int SDL_CONTROLLER_BUTTON_PADDLE1 = 16;
+
+  /// Xbox Elite paddle P3 (upper right, facing the back)
+  static const int SDL_CONTROLLER_BUTTON_PADDLE2 = 17;
+
+  /// Xbox Elite paddle P2 (lower left, facing the back)
+  static const int SDL_CONTROLLER_BUTTON_PADDLE3 = 18;
+
+  /// Xbox Elite paddle P4 (lower right, facing the back)
+  static const int SDL_CONTROLLER_BUTTON_PADDLE4 = 19;
+
+  /// PS4/PS5 touchpad button
+  static const int SDL_CONTROLLER_BUTTON_TOUCHPAD = 20;
+  static const int SDL_CONTROLLER_BUTTON_MAX = 21;
+}
+
+final class controller_events extends ffi.Struct {
+  external ffi.Pointer<on_device_disconnect_t> onDisconnect;
+
+  external ffi.Pointer<on_device_connect_t> onConnect;
+}
+
+typedef on_device_disconnect_t
+    = ffi.NativeFunction<ffi.Void Function(SDL_JoystickID id, ffi.Int port)>;
+
+/// This is a unique ID for a joystick for the time it is connected to the system,
+/// and is never reused for the lifetime of the application. If the joystick is
+/// disconnected and reconnected, it will get a new ID.
+///
+/// The ID value starts at 0 and increments from there. The value -1 is an invalid ID.
+typedef SDL_JoystickID = Sint32;
+typedef Sint32 = ffi.Int32;
+typedef on_device_connect_t = ffi.NativeFunction<
+    ffi.Void Function(ffi.Pointer<SDL_GameController> gmController)>;
+typedef SDL_GameController = _SDL_GameController;
+
+/// The gamecontroller structure used to identify an SDL game controller
+final class _SDL_GameController extends ffi.Opaque {}
+
+final class controller_native_info extends ffi.Struct {
   @ffi.UnsignedInt()
-  external int version_minor;
+  external int type;
 
-  /// If this is true, the frontend will go very far to avoid
-  /// resetting context in scenarios like toggling fullscreen, etc.
-  /// TODO: Obsolete? Maybe frontend should just always assume this ...
-  @ffi.Bool()
-  external bool cache_context;
-
-  /// A callback to be called before the context is destroyed in a
-  /// controlled way by the frontend.
-  external retro_hw_context_reset_t context_destroy;
-
-  /// Creates a debug context.
-  @ffi.Bool()
-  external bool debug_context;
+  external ffi.Pointer<SDL_GameController> controllerToken;
 }
 
-abstract class retro_hw_context_type {
-  static const int RETRO_HW_CONTEXT_NONE = 0;
+final class wfl_joystick extends ffi.Struct {
+  @SDL_JoystickID()
+  external int id;
 
-  /// OpenGL 2.x. Driver can choose to use latest compatibility context.
-  static const int RETRO_HW_CONTEXT_OPENGL = 1;
+  @ffi.Int()
+  external int index;
 
-  /// OpenGL ES 2.0.
-  static const int RETRO_HW_CONTEXT_OPENGLES2 = 2;
-
-  /// Modern desktop core GL context. Use version_major/
-  /// version_minor fields to set GL version.
-  static const int RETRO_HW_CONTEXT_OPENGL_CORE = 3;
-
-  /// OpenGL ES 3.0
-  static const int RETRO_HW_CONTEXT_OPENGLES3 = 4;
-
-  /// OpenGL ES 3.1+. Set version_major/version_minor. For GLES2 and GLES3,
-  /// use the corresponding enums directly.
-  static const int RETRO_HW_CONTEXT_OPENGLES_VERSION = 5;
-
-  /// Vulkan, see RETRO_ENVIRONMENT_GET_HW_RENDER_INTERFACE.
-  static const int RETRO_HW_CONTEXT_VULKAN = 6;
-
-  /// Direct3D, set version_major to select the type of interface
-  /// returned by RETRO_ENVIRONMENT_GET_HW_RENDER_INTERFACE
-  static const int RETRO_HW_CONTEXT_DIRECT3D = 7;
-  static const int RETRO_HW_CONTEXT_DUMMY = 2147483647;
+  external ffi.Pointer<ffi.Char> name;
 }
 
-/// Invalidates the current HW context.
-/// Any GL state is lost, and must not be deinitialized explicitly.
-/// If explicit deinitialization is desired by the libretro core,
-/// it should implement context_destroy callback.
-/// If called, all GPU resources must be reinitialized.
-/// Usually called when frontend reinits video driver.
-/// Also called first time video driver is initialized,
-/// allowing libretro core to initialize resources.
-typedef retro_hw_context_reset_t
-    = ffi.Pointer<ffi.NativeFunction<ffi.Void Function()>>;
+final class controller_device extends ffi.Struct {
+  @SDL_JoystickID()
+  external int id;
 
-/// Gets current framebuffer which is to be rendered to.
-/// Could change every frame potentially.
-typedef retro_hw_get_current_framebuffer_t
-    = ffi.Pointer<ffi.NativeFunction<ffi.UintPtr Function()>>;
+  @ffi.Int()
+  external int index;
 
-/// Get a symbol from HW context.
-typedef retro_hw_get_proc_address_t = ffi.Pointer<
-    ffi
-    .NativeFunction<retro_proc_address_t Function(ffi.Pointer<ffi.Char> sym)>>;
-typedef retro_proc_address_t
-    = ffi.Pointer<ffi.NativeFunction<ffi.Void Function()>>;
+  @ffi.Int()
+  external int port;
 
-final class g_shader_t extends ffi.Struct {
-  @GLuint()
-  external int vao;
+  @ffi.UnsignedInt()
+  external int type;
 
-  @GLuint()
-  external int vbo;
+  external controller_native_info nativeInfo;
 
-  @GLuint()
-  external int program;
+  @ffi.Array.multi([16])
+  external ffi.Array<Keyboard_keymap> keyboardKeyBinds;
 
-  @GLint()
-  external int i_pos;
-
-  @GLint()
-  external int i_coord;
-
-  @GLint()
-  external int u_tex;
-
-  @GLint()
-  external int u_mvp;
+  @ffi.Array.multi([16])
+  external ffi.Array<joystick_keymap> joystickKeyBinds;
 }
+
+final class controller_internal_events extends ffi.Struct {
+  external ffi.Pointer<on_device_append_t> onAppend;
+}
+
+typedef on_device_append_t
+    = ffi.NativeFunction<ffi.Void Function(controller_device device)>;
 
 /// Id values for LANGUAGE
 abstract class retro_language {
@@ -5036,6 +4874,8 @@ final class retro_get_proc_address_interface extends ffi.Struct {
 typedef retro_get_proc_address_t = ffi.Pointer<
     ffi
     .NativeFunction<retro_proc_address_t Function(ffi.Pointer<ffi.Char> sym)>>;
+typedef retro_proc_address_t
+    = ffi.Pointer<ffi.NativeFunction<ffi.Void Function()>>;
 
 abstract class retro_log_level {
   static const int RETRO_LOG_DEBUG = 0;
@@ -5386,6 +5226,122 @@ typedef retro_frame_time_callback_t
 ///
 /// In those scenarios the reference frame time value will be used.
 typedef retro_usec_t = ffi.Int64;
+
+abstract class retro_hw_context_type {
+  static const int RETRO_HW_CONTEXT_NONE = 0;
+
+  /// OpenGL 2.x. Driver can choose to use latest compatibility context.
+  static const int RETRO_HW_CONTEXT_OPENGL = 1;
+
+  /// OpenGL ES 2.0.
+  static const int RETRO_HW_CONTEXT_OPENGLES2 = 2;
+
+  /// Modern desktop core GL context. Use version_major/
+  /// version_minor fields to set GL version.
+  static const int RETRO_HW_CONTEXT_OPENGL_CORE = 3;
+
+  /// OpenGL ES 3.0
+  static const int RETRO_HW_CONTEXT_OPENGLES3 = 4;
+
+  /// OpenGL ES 3.1+. Set version_major/version_minor. For GLES2 and GLES3,
+  /// use the corresponding enums directly.
+  static const int RETRO_HW_CONTEXT_OPENGLES_VERSION = 5;
+
+  /// Vulkan, see RETRO_ENVIRONMENT_GET_HW_RENDER_INTERFACE.
+  static const int RETRO_HW_CONTEXT_VULKAN = 6;
+
+  /// Direct3D, set version_major to select the type of interface
+  /// returned by RETRO_ENVIRONMENT_GET_HW_RENDER_INTERFACE
+  static const int RETRO_HW_CONTEXT_DIRECT3D = 7;
+  static const int RETRO_HW_CONTEXT_DUMMY = 2147483647;
+}
+
+final class retro_hw_render_callback extends ffi.Struct {
+  /// Which API to use. Set by libretro core.
+  @ffi.Int32()
+  external int context_type;
+
+  /// Called when a context has been created or when it has been reset.
+  /// An OpenGL context is only valid after context_reset() has been called.
+  ///
+  /// When context_reset is called, OpenGL resources in the libretro
+  /// implementation are guaranteed to be invalid.
+  ///
+  /// It is possible that context_reset is called multiple times during an
+  /// application lifecycle.
+  /// If context_reset is called without any notification (context_destroy),
+  /// the OpenGL context was lost and resources should just be recreated
+  /// without any attempt to "free" old resources.
+  external retro_hw_context_reset_t context_reset;
+
+  /// Set by frontend.
+  /// TODO: This is rather obsolete. The frontend should not
+  /// be providing preallocated framebuffers.
+  external retro_hw_get_current_framebuffer_t get_current_framebuffer;
+
+  /// Set by frontend.
+  /// Can return all relevant functions, including glClear on Windows.
+  external retro_hw_get_proc_address_t get_proc_address;
+
+  /// Set if render buffers should have depth component attached.
+  /// TODO: Obsolete.
+  @ffi.Bool()
+  external bool depth;
+
+  /// Set if stencil buffers should be attached.
+  /// TODO: Obsolete.
+  @ffi.Bool()
+  external bool stencil;
+
+  /// Use conventional bottom-left origin convention. If false,
+  /// standard libretro top-left origin semantics are used.
+  /// TODO: Move to GL specific interface.
+  @ffi.Bool()
+  external bool bottom_left_origin;
+
+  /// Major version number for core GL context or GLES 3.1+.
+  @ffi.UnsignedInt()
+  external int version_major;
+
+  /// Minor version number for core GL context or GLES 3.1+.
+  @ffi.UnsignedInt()
+  external int version_minor;
+
+  /// If this is true, the frontend will go very far to avoid
+  /// resetting context in scenarios like toggling fullscreen, etc.
+  /// TODO: Obsolete? Maybe frontend should just always assume this ...
+  @ffi.Bool()
+  external bool cache_context;
+
+  /// A callback to be called before the context is destroyed in a
+  /// controlled way by the frontend.
+  external retro_hw_context_reset_t context_destroy;
+
+  /// Creates a debug context.
+  @ffi.Bool()
+  external bool debug_context;
+}
+
+/// Invalidates the current HW context.
+/// Any GL state is lost, and must not be deinitialized explicitly.
+/// If explicit deinitialization is desired by the libretro core,
+/// it should implement context_destroy callback.
+/// If called, all GPU resources must be reinitialized.
+/// Usually called when frontend reinits video driver.
+/// Also called first time video driver is initialized,
+/// allowing libretro core to initialize resources.
+typedef retro_hw_context_reset_t
+    = ffi.Pointer<ffi.NativeFunction<ffi.Void Function()>>;
+
+/// Gets current framebuffer which is to be rendered to.
+/// Could change every frame potentially.
+typedef retro_hw_get_current_framebuffer_t
+    = ffi.Pointer<ffi.NativeFunction<ffi.UintPtr Function()>>;
+
+/// Get a symbol from HW context.
+typedef retro_hw_get_proc_address_t = ffi.Pointer<
+    ffi
+    .NativeFunction<retro_proc_address_t Function(ffi.Pointer<ffi.Char> sym)>>;
 
 final class retro_keyboard_callback extends ffi.Struct {
   external retro_keyboard_event_t callback;
@@ -5874,117 +5830,6 @@ typedef retro_input_state_t = ffi.Pointer<
     ffi.NativeFunction<
         ffi.Int16 Function(ffi.UnsignedInt port, ffi.UnsignedInt device,
             ffi.UnsignedInt index, ffi.UnsignedInt id)>>;
-
-final class controller_events extends ffi.Struct {
-  external ffi.Pointer<on_device_disconnect_t> onDisconnect;
-
-  external ffi.Pointer<on_device_connect_t> onConnect;
-}
-
-typedef on_device_disconnect_t
-    = ffi.NativeFunction<ffi.Void Function(SDL_JoystickID id, ffi.Int port)>;
-
-/// This is a unique ID for a joystick for the time it is connected to the system,
-/// and is never reused for the lifetime of the application. If the joystick is
-/// disconnected and reconnected, it will get a new ID.
-///
-/// The ID value starts at 0 and increments from there. The value -1 is an invalid ID.
-typedef SDL_JoystickID = Sint32;
-typedef Sint32 = ffi.Int32;
-typedef on_device_connect_t = ffi.NativeFunction<
-    ffi.Void Function(ffi.Pointer<SDL_GameController> gmController)>;
-typedef SDL_GameController = _SDL_GameController;
-
-/// The gamecontroller structure used to identify an SDL game controller
-final class _SDL_GameController extends ffi.Opaque {}
-
-final class controller_device extends ffi.Struct {
-  @SDL_JoystickID()
-  external int id;
-
-  @ffi.Int()
-  external int index;
-
-  @ffi.Int()
-  external int port;
-
-  @ffi.UnsignedInt()
-  external int type;
-
-  external controller_native_info nativeInfo;
-
-  @ffi.Array.multi([16])
-  external ffi.Array<Keyboard_keymap> keyboardKeyBinds;
-
-  @ffi.Array.multi([16])
-  external ffi.Array<joystick_keymap> joystickKeyBinds;
-
-  @ffi.Bool()
-  external bool operator1;
-}
-
-final class controller_native_info extends ffi.Struct {
-  @ffi.UnsignedInt()
-  external int type;
-
-  external ffi.Pointer<SDL_GameController> controllerToken;
-}
-
-/// keyboard end other inputs
-final class Keyboard_keymap extends ffi.Struct {
-  @ffi.UnsignedInt()
-  external int native;
-
-  @ffi.UnsignedInt()
-  external int retro;
-}
-
-final class joystick_keymap extends ffi.Struct {
-  @ffi.Int32()
-  external int native;
-
-  @ffi.UnsignedInt()
-  external int retro;
-}
-
-/// The list of buttons available from a controller
-abstract class SDL_GameControllerButton {
-  static const int SDL_CONTROLLER_BUTTON_INVALID = -1;
-  static const int SDL_CONTROLLER_BUTTON_A = 0;
-  static const int SDL_CONTROLLER_BUTTON_B = 1;
-  static const int SDL_CONTROLLER_BUTTON_X = 2;
-  static const int SDL_CONTROLLER_BUTTON_Y = 3;
-  static const int SDL_CONTROLLER_BUTTON_BACK = 4;
-  static const int SDL_CONTROLLER_BUTTON_GUIDE = 5;
-  static const int SDL_CONTROLLER_BUTTON_START = 6;
-  static const int SDL_CONTROLLER_BUTTON_LEFTSTICK = 7;
-  static const int SDL_CONTROLLER_BUTTON_RIGHTSTICK = 8;
-  static const int SDL_CONTROLLER_BUTTON_LEFTSHOULDER = 9;
-  static const int SDL_CONTROLLER_BUTTON_RIGHTSHOULDER = 10;
-  static const int SDL_CONTROLLER_BUTTON_DPAD_UP = 11;
-  static const int SDL_CONTROLLER_BUTTON_DPAD_DOWN = 12;
-  static const int SDL_CONTROLLER_BUTTON_DPAD_LEFT = 13;
-  static const int SDL_CONTROLLER_BUTTON_DPAD_RIGHT = 14;
-
-  /// Xbox Series X share button, PS5 microphone button, Nintendo Switch Pro capture button, Amazon Luna microphone button
-  static const int SDL_CONTROLLER_BUTTON_MISC1 = 15;
-
-  /// Xbox Elite paddle P1 (upper left, facing the back)
-  static const int SDL_CONTROLLER_BUTTON_PADDLE1 = 16;
-
-  /// Xbox Elite paddle P3 (upper right, facing the back)
-  static const int SDL_CONTROLLER_BUTTON_PADDLE2 = 17;
-
-  /// Xbox Elite paddle P2 (lower left, facing the back)
-  static const int SDL_CONTROLLER_BUTTON_PADDLE3 = 18;
-
-  /// Xbox Elite paddle P4 (lower right, facing the back)
-  static const int SDL_CONTROLLER_BUTTON_PADDLE4 = 19;
-
-  /// PS4/PS5 touchpad button
-  static const int SDL_CONTROLLER_BUTTON_TOUCHPAD = 20;
-  static const int SDL_CONTROLLER_BUTTON_MAX = 21;
-}
 
 /// \brief The SDL keysym structure, used in key events.
 ///
@@ -6872,6 +6717,10 @@ abstract class SDL_SensorType {
 }
 
 typedef Uint64 = ffi.Uint64;
+
+const int WFL_DEVICE_KEYBOARD = 1;
+
+const int WFL_DEVICE_JOYSTICK = 2;
 
 const int RETRO_API_VERSION = 1;
 

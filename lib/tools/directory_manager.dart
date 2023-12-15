@@ -8,6 +8,8 @@ class WFLDirectoryManager {
   late Directory coreDir;
   late Directory romsDir;
   late Directory tempDir;
+  late Directory saveDir;
+  late Directory systemDir;
 
   WFLDirectoryManager() {
     if (_rootDir.existsSync()) {
@@ -17,19 +19,31 @@ class WFLDirectoryManager {
     coreDir = Directory("${_rootDir.path}${Platform.pathSeparator}cores");
     romsDir = Directory("${_rootDir.path}${Platform.pathSeparator}roms");
     tempDir = Directory("${_rootDir.path}${Platform.pathSeparator}temp");
+    saveDir = Directory("${_rootDir.path}${Platform.pathSeparator}save");
+    systemDir = Directory("${_rootDir.path}${Platform.pathSeparator}system");
 
     getCores();
     getGames();
   }
 
-  getCores() async {
+  getCores() {
     if (!coreDir.existsSync()) coreDir.createSync();
     cores = coreDir.listSync();
   }
 
-  getGames() async {
+  getGames() {
     if (!romsDir.existsSync()) romsDir.createSync();
     roms = romsDir.listSync();
+  }
+
+  String gedSystemDir() {
+    if (!systemDir.existsSync()) systemDir.createSync();
+    return systemDir.path;
+  }
+
+  String gedSaveDir() {
+    if (!saveDir.existsSync()) saveDir.createSync();
+    return saveDir.path;
   }
 
   clearTempFiles() {

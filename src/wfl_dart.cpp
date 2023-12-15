@@ -1,8 +1,8 @@
 #include "wfl_dart.h"
 
 //FFI_PLUGIN_EXPORT
-void FFI_PLUGIN_EXPORT wflDartInit(controller_events events) {
-	wflInit(events);
+void FFI_PLUGIN_EXPORT wflDartInit(controller_events events, wfl_paths paths) {
+	wflInit(events, paths);
 }
 
 void FFI_PLUGIN_EXPORT wflDartLoadCore(const char* path) {

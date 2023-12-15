@@ -13,10 +13,11 @@
 
 //wfl includes
 #include "controllerDefs.hpp"
+#include "WFLdefs.hpp"
 #include "WFL.h"
 #include "SDL.h"
 
-EXTERN_C void FFI_PLUGIN_EXPORT wflDartInit(controller_events events);
+EXTERN_C void FFI_PLUGIN_EXPORT wflDartInit(controller_events events, wfl_paths paths);
 
 EXTERN_C void FFI_PLUGIN_EXPORT wflDartLoadCore(const char* path);
 

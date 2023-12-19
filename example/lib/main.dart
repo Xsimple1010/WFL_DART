@@ -24,6 +24,14 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    wfl.init();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    wfl.deInit();
   }
 
   onCoreChange(String path) {

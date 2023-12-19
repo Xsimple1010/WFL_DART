@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ffi';
 import 'dart:io';
 import 'package:ffi/ffi.dart';
@@ -30,8 +31,11 @@ class WFL {
       calloc.allocate<controller_events>(sizeOf<controller_events>());
   final wflPaths = calloc.allocate<wfl_paths>(sizeOf<wfl_paths>());
   late WFLDirectoryManager _dirManage;
+  // final onConnectComplete = Completer();
+  late final NativeCallable<on_device_connect_t> onConnectCallback;
+  late final NativeCallable<on_device_disconnect_t> onDisconnectCallback;
 
-  WFL() {
+  init() {
     _dirManage = WFLDirectoryManager();
 
     final systemPath = _dirManage.gedSystemDir();
@@ -40,17 +44,20 @@ class WFL {
     wflPaths.ref.system = systemPath.toNativeUtf8();
     wflPaths.ref.save = savePath.toNativeUtf8();
 
-    controllerEvents.ref.onConnect = Pointer.fromFunction(onConnect);
-    controllerEvents.ref.onDisconnect = Pointer.fromFunction(onDisconnect);
+    onConnectCallback = NativeCallable.listener(onConnect);
+    onDisconnectCallback = NativeCallable.listener(onDisconnect);
+
+    controllerEvents.ref.onConnect = onConnectCallback.nativeFunction;
+    controllerEvents.ref.onDisconnect = onDisconnectCallback.nativeFunction;
 
     _bindings.wflDartInit(controllerEvents.ref, wflPaths.ref);
   }
 
-  static void onConnect(Pointer<SDL_GameController> gmController) {
+  void onConnect(Pointer<SDL_GameController> gmController) {
     print("connected");
   }
 
-  static void onDisconnect(int id, int port) {
+  void onDisconnect(int id, int port) {
     print("diConnected");
   }
 
@@ -64,6 +71,8 @@ class WFL {
 
   deInit() {
     _bindings.wflDartStop();
+    onConnectCallback.close();
+    onDisconnectCallback.close();
     calloc.free(controllerEvents);
     calloc.free(wflPaths);
   }

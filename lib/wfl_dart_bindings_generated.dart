@@ -4111,13 +4111,13 @@ abstract class SDL_GameControllerButton {
 }
 
 final class controller_events extends ffi.Struct {
-  external ffi.Pointer<on_device_disconnect_t> onDisconnect;
+  external ffi.Pointer<ffi.NativeFunction<on_device_disconnect_t>> onDisconnect;
 
-  external ffi.Pointer<on_device_connect_t> onConnect;
+  external ffi.Pointer<ffi.NativeFunction<on_device_connect_t>> onConnect;
 }
 
-typedef on_device_disconnect_t
-    = ffi.NativeFunction<ffi.Void Function(SDL_JoystickID id, ffi.Int port)>;
+typedef on_device_disconnect_t = ffi.Void Function(
+    SDL_JoystickID id, ffi.Int port);
 
 /// This is a unique ID for a joystick for the time it is connected to the system,
 /// and is never reused for the lifetime of the application. If the joystick is
@@ -4126,8 +4126,8 @@ typedef on_device_disconnect_t
 /// The ID value starts at 0 and increments from there. The value -1 is an invalid ID.
 typedef SDL_JoystickID = Sint32;
 typedef Sint32 = ffi.Int32;
-typedef on_device_connect_t = ffi.NativeFunction<
-    ffi.Void Function(ffi.Pointer<SDL_GameController> gmController)>;
+typedef on_device_connect_t = ffi.Void Function(
+    ffi.Pointer<SDL_GameController> gmController);
 typedef SDL_GameController = _SDL_GameController;
 
 /// The gamecontroller structure used to identify an SDL game controller

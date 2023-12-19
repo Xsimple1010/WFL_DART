@@ -2,7 +2,7 @@
 # installed. You should not increase this version, as doing so will cause
 # the plugin to fail to compile for some customers of the plugin.
 cmake_minimum_required(VERSION 3.10)
-
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 project(wfl_dart_library VERSION 0.0.1)
 
 set(WFL_ROOT "../third_party/WFL/")
@@ -20,9 +20,13 @@ add_library(wfl_dart SHARED
   ${WFL_ROOT}src/glad.c
   ${WFL_ROOT}src/libretroClass.cpp
   ${WFL_ROOT}src/Video.cpp
+  ${WFL_ROOT}src/threads/threadIoEvents.cpp
+  ${WFL_ROOT}src/threads/threadGameLoop.cpp
+  ${WFL_ROOT}src/gameLoop.cpp
 
   ${WFL_ROOT}include/gamecontrollerdb.txt
   ${WFL_ROOT}include/WFL.h
+  ${WFL_ROOT}include/WFLdefs.hpp
   ${WFL_ROOT}include/videoDefs.hpp
   ${WFL_ROOT}include/libretro.h
 )
@@ -42,4 +46,5 @@ target_include_directories(wfl_dart
 link_libraries(${WFL_ROOT}include/glad/glad.h ${WFL_ROOT}src/glad.c)
 
 target_link_libraries(wfl_dart PUBLIC ${SDL2_LIBRARIES} SDL2::SDL2 SDL2::SDL2main)
+
 target_compile_definitions(wfl_dart PUBLIC DART_SHARED_LIB)

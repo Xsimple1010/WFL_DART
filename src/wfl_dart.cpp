@@ -2,7 +2,7 @@
 
 //FFI_PLUGIN_EXPORT
 void FFI_PLUGIN_EXPORT wflDartInit(controller_events events, wfl_paths paths) {
-	wflInit(events, paths);
+	wflInit(false, events, paths);
 }
 
 void FFI_PLUGIN_EXPORT wflDartLoadCore(const char* path) {
@@ -18,7 +18,7 @@ void FFI_PLUGIN_EXPORT wflDartSetController(controller_device device) {
 }
 
 void FFI_PLUGIN_EXPORT wflDartStop() {
-	
+	wflStop();
 }
 
 //==============

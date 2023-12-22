@@ -17,7 +17,7 @@
 #include "WFL.h"
 #include "SDL.h"
 
-EXTERN_C void FFI_PLUGIN_EXPORT wflDartInit(controller_events events, wfl_paths paths);
+EXTERN_C void FFI_PLUGIN_EXPORT wflDartInit(wfl_events events, wfl_paths paths);
 
 EXTERN_C void FFI_PLUGIN_EXPORT wflDartLoadCore(const char* path);
 
@@ -26,3 +26,7 @@ EXTERN_C void FFI_PLUGIN_EXPORT wflDarLoadGame(const char* path);
 EXTERN_C void FFI_PLUGIN_EXPORT wflDartSetController(controller_device device);
 
 EXTERN_C void FFI_PLUGIN_EXPORT wflDartStop();
+
+EXTERN_C void FFI_PLUGIN_EXPORT wflDartPause();
+
+EXTERN_C void FFI_PLUGIN_EXPORT wflDartResume();

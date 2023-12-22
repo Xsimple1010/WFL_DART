@@ -1,8 +1,8 @@
 #include "wfl_dart.h"
 
 //FFI_PLUGIN_EXPORT
-void FFI_PLUGIN_EXPORT wflDartInit(controller_events events, wfl_paths paths) {
-	wflInit(false, events, paths);
+void FFI_PLUGIN_EXPORT wflDartInit(wfl_events events, wfl_paths paths) {
+	wflInit(false, false, events, paths);
 }
 
 void FFI_PLUGIN_EXPORT wflDartLoadCore(const char* path) {
@@ -18,7 +18,15 @@ void FFI_PLUGIN_EXPORT wflDartSetController(controller_device device) {
 }
 
 void FFI_PLUGIN_EXPORT wflDartStop() {
-	wflStop();
+	wflDeinit();
+}
+
+void FFI_PLUGIN_EXPORT wflDartPause() {
+	wflPause();
+}
+
+void FFI_PLUGIN_EXPORT wflDartResume() {
+	wflResume();
 }
 
 //==============

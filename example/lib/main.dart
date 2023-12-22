@@ -57,7 +57,10 @@ class _MyAppState extends State<MyApp> {
           children: [
             Expanded(
               flex: 3,
-              child: GameList(games: wflDirManger.roms, onClick: onRomSelected),
+              child: GameList(
+                games: wflDirManger.roms,
+                onClick: onRomSelected,
+              ),
             ),
             Expanded(
               child: Card(
@@ -68,14 +71,22 @@ class _MyAppState extends State<MyApp> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("Nucleos Disponiveis"),
+                          const Text("Núcleos Disponíveis"),
                           Text("(${wflDirManger.cores.length})"),
                         ],
                       ),
                       Expanded(
                         child: CoreList(
-                            cores: wflDirManger.cores, onClick: onCoreChange),
+                          cores: wflDirManger.cores,
+                          onClick: onCoreChange,
+                        ),
                       ),
+                      GestureDetector(
+                        onTap: () {
+                          wfl.pause();
+                        },
+                        child: Container(child: Text("parar")),
+                      )
                     ],
                   ),
                 ),

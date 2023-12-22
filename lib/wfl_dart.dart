@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:ffi';
 import 'dart:io';
 import 'package:ffi/ffi.dart';
@@ -27,13 +26,15 @@ final DynamicLibrary _dylib = () {
 final WflDartBindings _bindings = WflDartBindings(_dylib);
 
 class WFL {
-  final controllerEvents =
-      calloc.allocate<controller_events>(sizeOf<controller_events>());
+  final wflEvents = calloc.allocate<wfl_events>(sizeOf<controller_events>());
   final wflPaths = calloc.allocate<wfl_paths>(sizeOf<wfl_paths>());
   late WFLDirectoryManager _dirManage;
-  // final onConnectComplete = Completer();
+
+  //events
   late final NativeCallable<on_device_connect_t> onConnectCallback;
   late final NativeCallable<on_device_disconnect_t> onDisconnectCallback;
+  late final NativeCallable<on_game_start> onGameStartCallback;
+  late final NativeCallable<on_game_close> onGameCloseCallback;
 
   init() {
     _dirManage = WFLDirectoryManager();
@@ -46,11 +47,15 @@ class WFL {
 
     onConnectCallback = NativeCallable.listener(onConnect);
     onDisconnectCallback = NativeCallable.listener(onDisconnect);
+    onGameStartCallback = NativeCallable.listener(onGameStart);
+    onGameCloseCallback = NativeCallable.listener(onGameClose);
 
-    controllerEvents.ref.onConnect = onConnectCallback.nativeFunction;
-    controllerEvents.ref.onDisconnect = onDisconnectCallback.nativeFunction;
+    wflEvents.ref.onConnect = onConnectCallback.nativeFunction;
+    wflEvents.ref.onDisconnect = onDisconnectCallback.nativeFunction;
+    wflEvents.ref.onGameStart = onGameStartCallback.nativeFunction;
+    wflEvents.ref.onGameClose = onGameCloseCallback.nativeFunction;
 
-    _bindings.wflDartInit(controllerEvents.ref, wflPaths.ref);
+    _bindings.wflDartInit(wflEvents.ref, wflPaths.ref);
   }
 
   void onConnect(Pointer<SDL_GameController> gmController) {
@@ -61,6 +66,14 @@ class WFL {
     print("diConnected");
   }
 
+  void onGameStart() {
+    print("onGameStart");
+  }
+
+  void onGameClose() {
+    print("onGameClose");
+  }
+
   loadCore(String path) {
     _bindings.wflDartLoadCore(path.toNativeUtf8());
   }
@@ -69,11 +82,25 @@ class WFL {
     _bindings.wflDarLoadGame(path.toNativeUtf8());
   }
 
+  stop() {
+    _bindings.wflDartStop();
+  }
+
+  resume() {
+    _bindings.wflDartResume();
+  }
+
+  pause() {
+    _bindings.wflDartPause();
+  }
+
   deInit() {
     _bindings.wflDartStop();
     onConnectCallback.close();
     onDisconnectCallback.close();
-    calloc.free(controllerEvents);
+    onGameCloseCallback.close();
+    onGameStartCallback.close();
+    calloc.free(wflEvents);
     calloc.free(wflPaths);
   }
 }

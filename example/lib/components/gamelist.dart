@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:wfl_dart_example/main.dart';
 import 'gameitem.dart';
-import 'dart:io';
+import 'package:wfl_dart/wfl_dart.dart';
 
 class GameList extends StatelessWidget {
-  const GameList({
-    super.key,
-    required this.games,
-    required this.onClick,
-  });
+  final dirManger = WFLDirectoryManager();
 
-  final List<FileSystemEntity> games;
-  final Function(String path) onClick;
+  GameList({
+    super.key,
+  }) {
+    dirManger.getGames();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: GridView.builder(
-        itemCount: games.length,
+        itemCount: dirManger.roms.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 6,
         ),
         itemBuilder: (BuildContext context, int index) {
           return GridTile(
-            child: GameItem(gameFile: games.elementAt(index), onClick: onClick),
+            child: GameItem(gameFile: dirManger.roms.elementAt(index)),
           );
         },
       ),

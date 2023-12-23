@@ -1,16 +1,15 @@
-import 'package:flutter/material.dart';
 import 'dart:io';
-
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:wfl_dart/wfl_dart.dart';
 import 'package:wfl_dart_example/tools/file.dart';
 
 class CoreItem extends StatefulWidget {
   const CoreItem({
     super.key,
     required this.coreFile,
-    required this.onClick,
   });
 
-  final Function(String path) onClick;
   final FileSystemEntity coreFile;
 
   @override
@@ -20,16 +19,10 @@ class CoreItem extends StatefulWidget {
 class _CoreItemState extends State<CoreItem> {
   bool isChecked = false;
 
-  void change(bool? value) {
-    setState(() {
-      isChecked = !isChecked;
-    });
-
-    widget.onClick(isChecked ? widget.coreFile.path : "");
-  }
-
   @override
   Widget build(BuildContext context) {
+    final wfl = Provider.of<WFL>(context);
+
     return Container(
       margin: const EdgeInsets.all(12.0),
       height: 56,
@@ -40,7 +33,12 @@ class _CoreItemState extends State<CoreItem> {
       ),
       child: Row(
         children: [
-          Checkbox(value: isChecked, onChanged: change),
+          WFLOnCoreSelected(
+            builder: (context, selected, child) => Checkbox(
+              value: selected == widget.coreFile.path,
+              onChanged: (value) => wfl.selectCore(widget.coreFile),
+            ),
+          ),
           const Padding(padding: EdgeInsets.only(right: 12)),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,

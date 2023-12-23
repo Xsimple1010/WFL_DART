@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:wfl_dart/wfl_dart.dart';
 import 'coreItem.dart';
 import 'dart:io';
 
 class CoreList extends StatelessWidget {
-  const CoreList({
-    super.key,
-    required this.cores,
-    required this.onClick,
-  });
+  final dirManger = WFLDirectoryManager();
 
-  final List<FileSystemEntity> cores;
-  final Function(String path) onClick;
+  CoreList({
+    super.key,
+  }) {
+    dirManger.getCores();
+  }
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: cores.length,
+      itemCount: dirManger.cores.length,
       itemBuilder: (BuildContext context, int index) {
         return CoreItem(
-          coreFile: cores.elementAt(index),
-          onClick: onClick,
+          coreFile: dirManger.cores.elementAt(index),
         );
       },
     );

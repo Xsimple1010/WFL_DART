@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 import 'package:wfl_dart/wfl_dart.dart';
-import 'package:wfl_dart_example/components/coreList.dart';
-import 'components/gamelist.dart';
+import 'package:wfl_dart_example/home.dart';
 
-WFL wfl = WFL();
 WFLDirectoryManager wflDirManger = WFLDirectoryManager();
 
 void main() {
@@ -19,30 +17,19 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late String coreSelected = "";
+  final wfl = WFL();
 
   @override
   void initState() {
     super.initState();
+
     wfl.init();
   }
 
   @override
   void dispose() {
     super.dispose();
-
     wfl.deInit();
-  }
-
-  onCoreChange(String path) {
-    coreSelected = path;
-  }
-
-  onRomSelected(String path) {
-    if (coreSelected.isEmpty) return;
-
-    wfl.loadCore(coreSelected);
-    wfl.loadGame(path);
   }
 
   @override
@@ -53,46 +40,9 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('WFL_DART DEMO'),
         ),
-        body: Row(
-          children: [
-            Expanded(
-              flex: 3,
-              child: GameList(
-                games: wflDirManger.roms,
-                onClick: onRomSelected,
-              ),
-            ),
-            Expanded(
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text("Núcleos Disponíveis"),
-                          Text("(${wflDirManger.cores.length})"),
-                        ],
-                      ),
-                      Expanded(
-                        child: CoreList(
-                          cores: wflDirManger.cores,
-                          onClick: onCoreChange,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          wfl.pause();
-                        },
-                        child: Container(child: Text("parar")),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            )
-          ],
+        body: ChangeNotifierProvider.value(
+          value: wfl,
+          child: const Home(),
         ),
       ),
     );

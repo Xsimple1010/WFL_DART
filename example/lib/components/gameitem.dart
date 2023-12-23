@@ -1,21 +1,23 @@
-import 'package:flutter/material.dart';
 import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:wfl_dart/wfl_dart.dart';
 import 'package:wfl_dart_example/tools/file.dart';
+import 'package:provider/provider.dart';
 
 class GameItem extends StatelessWidget {
   const GameItem({
     super.key,
     required this.gameFile,
-    required this.onClick,
   });
 
   final FileSystemEntity gameFile;
-  final Function(String path) onClick;
 
   @override
   Widget build(BuildContext context) {
+    final wfl = Provider.of<WFL>(context);
+
     return GestureDetector(
-      onDoubleTap: () => onClick(gameFile.path),
+      onDoubleTap: () => wfl.loadGame(gameFile),
       child: Card(
         child: Padding(
           padding: const EdgeInsets.all(12),

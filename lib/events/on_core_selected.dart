@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:wfl_dart/wfl_dart.dart';
+import 'package:wfl_dart/providers/wfl_repository.dart';
 
 class WFLOnCoreSelected extends StatelessWidget {
   const WFLOnCoreSelected({
@@ -12,7 +12,7 @@ class WFLOnCoreSelected extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Selector<WFL, String>(
+    return Selector<WFLDart, String>(
       selector: (_, wfl) => wfl.coreSelected,
       builder: builder,
     );

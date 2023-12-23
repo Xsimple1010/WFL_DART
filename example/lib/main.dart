@@ -17,7 +17,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final wfl = WFL();
+  final wfl = WFLDart();
 
   @override
   void initState() {

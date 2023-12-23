@@ -1,22 +1,24 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:wfl_dart/wfl_dart.dart';
+import 'package:wfl_dart/models/wfl_events.dart';
+import 'package:wfl_dart/wfl.dart';
 
-class WFL with ChangeNotifier {
-  final _wflDart = WFLDart();
+class WFLDart with ChangeNotifier {
+  final _wfl = WFL();
   String coreSelected = "";
   String romSelected = "";
+  bool isPlaying = false;
 
   init() {
-    final events = WFLEvents(
+    final events = WFLDartEvents(
       onConnect: _onConnect,
       onDisconnect: _onDisconnect,
       onGameStart: _onGameStart,
       onGameClose: _onGameClose,
     );
 
-    _wflDart.init(events);
+    _wfl.init(events);
   }
 
   void _onConnect() {
@@ -24,27 +26,21 @@ class WFL with ChangeNotifier {
     notifyListeners();
   }
 
-  void _onDisconnect() {
+  void _onDisconnect(int id, int port) {
     print("disconnected");
     notifyListeners();
   }
 
   void _onGameStart() {
     print("gameStart");
+    isPlaying = true;
     notifyListeners();
   }
 
   void _onGameClose() {
     print("gameClose");
+    isPlaying = false;
     notifyListeners();
-  }
-
-  String getCoreLoaded() {
-    return coreSelected;
-  }
-
-  String getRomLoaded() {
-    return romSelected;
   }
 
   selectCore(FileSystemEntity core) {
@@ -57,12 +53,12 @@ class WFL with ChangeNotifier {
 
     romSelected = rom.path;
 
-    _wflDart.loadCore(coreSelected);
-    _wflDart.loadGame(rom.path);
+    _wfl.loadCore(coreSelected);
+    _wfl.loadGame(rom.path);
     notifyListeners();
   }
 
   void deInit() {
-    _wflDart.deInit();
+    _wfl.deInit();
   }
 }

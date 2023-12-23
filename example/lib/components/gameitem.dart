@@ -14,7 +14,7 @@ class GameItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final wfl = Provider.of<WFL>(context);
+    final wfl = Provider.of<WFLDart>(context);
 
     return GestureDetector(
       onDoubleTap: () => wfl.loadGame(gameFile),

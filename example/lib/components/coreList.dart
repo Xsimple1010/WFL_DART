@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wfl_dart/wfl_dart.dart';
 import 'coreItem.dart';
-import 'dart:io';
 
 class CoreList extends StatelessWidget {
   final dirManger = WFLDirectoryManager();

@@ -21,7 +21,7 @@ class _CoreItemState extends State<CoreItem> {
 
   @override
   Widget build(BuildContext context) {
-    final wfl = Provider.of<WFL>(context);
+    final wfl = Provider.of<WFLDart>(context);
 
     return Container(
       margin: const EdgeInsets.all(12.0),

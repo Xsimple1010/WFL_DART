@@ -40,8 +40,8 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('WFL_DART DEMO'),
         ),
-        body: ChangeNotifierProvider.value(
-          value: wfl,
+        body: WFLChangeNotifier(
+          wfl: wfl,
           child: const Home(),
         ),
       ),

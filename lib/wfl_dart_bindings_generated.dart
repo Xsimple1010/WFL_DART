@@ -4071,6 +4071,11 @@ class WflDartBindings {
               ffi.Pointer<SDL_GameController>, int)>();
 }
 
+abstract class WFL_DEVICE_TYPES {
+  static const int WFL_DEVICE_KEYBOARD = 0;
+  static const int WFL_DEVICE_JOYSTICK = 1;
+}
+
 abstract class wfl_joystick_native_buttons {
   static const int WFL_JOYSTICK_NATIVE_BT_INVALID = -1;
   static const int WFL_JOYSTICK_NATIVE_BT_A = 0;
@@ -4146,14 +4151,15 @@ final class joystick_keymap extends ffi.Struct {
   external int retro;
 }
 
-final class controller_events extends ffi.Struct {
-  external ffi.Pointer<ffi.NativeFunction<on_device_disconnect_t>> onDisconnect;
+final class wfl_joystick extends ffi.Struct {
+  @SDL_JoystickID()
+  external int id;
 
-  external ffi.Pointer<ffi.NativeFunction<on_device_connect_t>> onConnect;
+  @ffi.Int()
+  external int index;
+
+  external ffi.Pointer<Utf8> name;
 }
-
-typedef on_device_disconnect_t = ffi.Void Function(
-    SDL_JoystickID id, ffi.Int port);
 
 /// This is a unique ID for a joystick for the time it is connected to the system,
 /// and is never reused for the lifetime of the application. If the joystick is
@@ -4162,12 +4168,16 @@ typedef on_device_disconnect_t = ffi.Void Function(
 /// The ID value starts at 0 and increments from there. The value -1 is an invalid ID.
 typedef SDL_JoystickID = Sint32;
 typedef Sint32 = ffi.Int32;
-typedef on_device_connect_t = ffi.Void Function(
-    ffi.Pointer<SDL_GameController> gmController);
-typedef SDL_GameController = _SDL_GameController;
 
-/// The gamecontroller structure used to identify an SDL game controller
-final class _SDL_GameController extends ffi.Opaque {}
+final class controller_events extends ffi.Struct {
+  external ffi.Pointer<ffi.NativeFunction<on_device_disconnect_t>> onDisconnect;
+
+  external ffi.Pointer<ffi.NativeFunction<on_device_connect_t>> onConnect;
+}
+
+typedef on_device_disconnect_t = ffi.Void Function(
+    wfl_joystick joystick, ffi.Int port);
+typedef on_device_connect_t = ffi.Void Function(wfl_joystick joystick);
 
 final class controller_native_info extends ffi.Struct {
   @ffi.UnsignedInt()
@@ -4176,15 +4186,10 @@ final class controller_native_info extends ffi.Struct {
   external ffi.Pointer<SDL_GameController> controllerToken;
 }
 
-final class wfl_joystick extends ffi.Struct {
-  @SDL_JoystickID()
-  external int id;
+typedef SDL_GameController = _SDL_GameController;
 
-  @ffi.Int()
-  external int index;
-
-  external ffi.Pointer<ffi.Char> name;
-}
+/// The gamecontroller structure used to identify an SDL game controller
+final class _SDL_GameController extends ffi.Opaque {}
 
 final class controller_device extends ffi.Struct {
   @SDL_JoystickID()
@@ -4195,6 +4200,8 @@ final class controller_device extends ffi.Struct {
 
   @ffi.Int()
   external int port;
+
+  external ffi.Pointer<ffi.Char> name;
 
   @ffi.UnsignedInt()
   external int type;
@@ -5869,15 +5876,14 @@ final class wfl_events extends ffi.Struct {
   external ffi.Pointer<ffi.NativeFunction<on_device_disconnect_t1>>
       onDisconnect;
 
-  external ffi.Pointer<on_device_connect_t1> onConnect;
+  external ffi.Pointer<ffi.NativeFunction<on_device_connect_t1>> onConnect;
 }
 
 typedef on_game_close = ffi.Void Function();
 typedef on_game_start = ffi.Void Function();
 typedef on_device_disconnect_t1 = ffi.Void Function(
-    SDL_JoystickID id, ffi.Int port);
-typedef on_device_connect_t1 = ffi.NativeFunction<
-    ffi.Void Function(ffi.Pointer<SDL_GameController> gmController)>;
+    wfl_joystick joystick, ffi.Int port);
+typedef on_device_connect_t1 = ffi.Void Function(wfl_joystick joystick);
 
 final class wfl_paths extends ffi.Struct {
   external ffi.Pointer<Utf8> save;
@@ -6810,10 +6816,6 @@ abstract class SDL_SensorType {
 }
 
 typedef Uint64 = ffi.Uint64;
-
-const int WFL_DEVICE_KEYBOARD = 1;
-
-const int WFL_DEVICE_JOYSTICK = 2;
 
 const int RETRO_API_VERSION = 1;
 

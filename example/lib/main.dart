@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:wfl_dart/wfl_dart.dart';
+import 'package:wfl_dart_example/components/about_button.dart';
+import 'package:wfl_dart_example/components/game_pad_button.dart';
+import 'package:wfl_dart_example/components/status_button.dart';
 import 'package:wfl_dart_example/home.dart';
-
-WFLDirectoryManager wflDirManger = WFLDirectoryManager();
 
 void main() {
   runApp(const MyApp());
@@ -34,15 +34,20 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      darkTheme: ThemeData.dark(),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('WFL_DART DEMO'),
-        ),
-        body: WFLChangeNotifier(
-          wfl: wfl,
-          child: const Home(),
+    return WFLChangeNotifier(
+      wfl: wfl,
+      child: MaterialApp(
+        darkTheme: ThemeData.dark(),
+        home: Scaffold(
+          appBar: AppBar(
+            title: const Text('WFL_DART DEMO'),
+            actions: const [
+              GameStatusButtonIcon(),
+              GamePadButtonIcon(),
+              AboutButton()
+            ],
+          ),
+          body: const Home(),
         ),
       ),
     );

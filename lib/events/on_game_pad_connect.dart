@@ -1,0 +1,21 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:wfl_dart/models/wfl_gamepad.dart';
+import 'package:wfl_dart/providers/wfl_repository.dart';
+
+class WFLOnGamePadConnect extends StatelessWidget {
+  const WFLOnGamePadConnect({
+    super.key,
+    required this.builder,
+  });
+
+  final ValueWidgetBuilder<JoyStick> builder;
+
+  @override
+  Widget build(BuildContext context) {
+    return Selector<WFLDart, JoyStick>(
+      selector: (_, wfl) => wfl.lastConnectedJoyStick,
+      builder: builder,
+    );
+  }
+}

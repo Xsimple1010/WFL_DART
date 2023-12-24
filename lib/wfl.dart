@@ -60,12 +60,12 @@ class WFL {
     _bindings.wflDartInit(_wflEvents.ref, _wflPaths.ref);
   }
 
-  void _onConnect(Pointer<SDL_GameController> gmController) {
-    _events.onConnect();
+  void _onConnect(wfl_joystick joystick) {
+    _events.onConnect(joystick);
   }
 
-  void _onDisconnect(int id, int port) {
-    _events.onDisconnect(id, port);
+  void _onDisconnect(wfl_joystick joystick, int port) {
+    _events.onDisconnect(joystick, port);
   }
 
   void _onGameStart() {

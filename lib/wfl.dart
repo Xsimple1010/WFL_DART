@@ -35,6 +35,7 @@ class WFL {
   late final NativeCallable<on_device_disconnect_t> _onDisconnectCallback;
   late final NativeCallable<on_game_start> _onGameStartCallback;
   late final NativeCallable<on_game_close> _onGameCloseCallback;
+  late final NativeCallable<on_status_change_t> _onStatusChangeCallback;
 
   init(WFLDartEvents events) {
     _events = events;
@@ -51,11 +52,13 @@ class WFL {
     _onDisconnectCallback = NativeCallable.listener(_onDisconnect);
     _onGameStartCallback = NativeCallable.listener(_onGameStart);
     _onGameCloseCallback = NativeCallable.listener(_onGameClose);
+    _onStatusChangeCallback = NativeCallable.listener(_onStateChange);
 
     _wflEvents.ref.onConnect = _onConnectCallback.nativeFunction;
     _wflEvents.ref.onDisconnect = _onDisconnectCallback.nativeFunction;
     _wflEvents.ref.onGameStart = _onGameStartCallback.nativeFunction;
     _wflEvents.ref.onGameClose = _onGameCloseCallback.nativeFunction;
+    _wflEvents.ref.onStatusChange = _onStatusChangeCallback.nativeFunction;
 
     _bindings.wflDartInit(_wflEvents.ref, _wflPaths.ref);
   }
@@ -74,6 +77,10 @@ class WFL {
 
   void _onGameClose() {
     _events.onGameClose();
+  }
+
+  void _onStateChange(wfl_status status) {
+    _events.onStateChange(status);
   }
 
   loadCore(String path) {
@@ -102,6 +109,7 @@ class WFL {
     _onDisconnectCallback.close();
     _onGameCloseCallback.close();
     _onGameStartCallback.close();
+    _onStatusChangeCallback.close;
     calloc.free(_wflEvents);
     calloc.free(_wflPaths);
   }

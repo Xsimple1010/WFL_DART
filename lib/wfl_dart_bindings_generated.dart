@@ -5877,6 +5877,8 @@ final class wfl_events extends ffi.Struct {
       onDisconnect;
 
   external ffi.Pointer<ffi.NativeFunction<on_device_connect_t1>> onConnect;
+
+  external ffi.Pointer<ffi.NativeFunction<on_status_change_t>> onStatusChange;
 }
 
 typedef on_game_close = ffi.Void Function();
@@ -5884,6 +5886,18 @@ typedef on_game_start = ffi.Void Function();
 typedef on_device_disconnect_t1 = ffi.Void Function(
     wfl_joystick joystick, ffi.Int port);
 typedef on_device_connect_t1 = ffi.Void Function(wfl_joystick joystick);
+typedef on_status_change_t = ffi.Void Function(wfl_status status);
+
+final class wfl_status extends ffi.Struct {
+  @ffi.Bool()
+  external bool running;
+
+  @ffi.Bool()
+  external bool playing;
+
+  @ffi.Bool()
+  external bool pause;
+}
 
 final class wfl_paths extends ffi.Struct {
   external ffi.Pointer<Utf8> save;

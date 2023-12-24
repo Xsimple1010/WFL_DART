@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:ffi/ffi.dart';
 import 'package:flutter/material.dart';
+import 'package:wfl_dart/models/states.dart';
 import 'package:wfl_dart/models/wfl_events.dart';
 import 'package:wfl_dart/models/wfl_gamepad.dart';
 import 'package:wfl_dart/wfl.dart';
@@ -12,8 +13,11 @@ class WFLDart with ChangeNotifier {
   JoyStick lastDisConnectedJoyStick = JoyStick(id: -1, index: -1, name: "");
   String coreSelected = "";
   String romSelected = "";
-  bool isPlaying = false;
-  bool isPaused = true;
+  WflStates states = WflStates(
+    running: false,
+    playing: false,
+    pause: false,
+  );
 
   init() {
     final events = WFLDartEvents(
@@ -21,6 +25,7 @@ class WFLDart with ChangeNotifier {
       onDisconnect: _onDisconnect,
       onGameStart: _onGameStart,
       onGameClose: _onGameClose,
+      onStateChange: _onStateChange,
     );
 
     _wfl.init(events);
@@ -47,15 +52,21 @@ class WFLDart with ChangeNotifier {
     notifyListeners();
   }
 
+  void _onStateChange(wfl_status status) {
+    states = WflStates(
+      running: status.running,
+      playing: status.playing,
+      pause: status.pause,
+    );
+
+    notifyListeners();
+  }
+
   void _onGameStart() {
-    isPlaying = true;
-    isPaused = false;
     notifyListeners();
   }
 
   void _onGameClose() {
-    isPlaying = false;
-    isPaused = true;
     notifyListeners();
   }
 
@@ -71,20 +82,21 @@ class WFLDart with ChangeNotifier {
 
     _wfl.loadCore(coreSelected);
     _wfl.loadGame(rom.path);
-    isPaused = false;
     notifyListeners();
   }
 
   pause() {
     _wfl.pause();
-    isPaused = true;
     notifyListeners();
   }
 
   resume() {
     _wfl.resume();
-    isPaused = false;
     notifyListeners();
+  }
+
+  stop() {
+    _wfl.stop();
   }
 
   void deInit() {

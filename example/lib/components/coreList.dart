@@ -13,13 +13,15 @@ class CoreList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: dirManger.cores.length,
-      itemBuilder: (BuildContext context, int index) {
-        return CoreItem(
-          coreFile: dirManger.cores.elementAt(index),
-        );
-      },
+    return Card(
+      child: ListView.builder(
+        itemCount: dirManger.cores.length,
+        itemBuilder: (BuildContext context, int index) {
+          return CoreItem(
+            coreFile: dirManger.cores.elementAt(index),
+          );
+        },
+      ),
     );
   }
 }

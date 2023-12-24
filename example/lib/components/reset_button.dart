@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:wfl_dart/wfl_dart.dart';
 import 'package:provider/provider.dart';
 
-class GameStatusButtonIcon extends StatelessWidget {
-  const GameStatusButtonIcon({super.key});
+class ResetButtonIcon extends StatelessWidget {
+  const ResetButtonIcon({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,18 +11,12 @@ class GameStatusButtonIcon extends StatelessWidget {
     return WFLOnGameStatusChange(
       builder: (context, status, child) => IconButton(
         onPressed: () {
-          if (!status.running) return;
-
-          if (status.pause) {
-            wfl.resume();
-          } else {
-            wfl.pause();
-          }
+          wfl.stop();
         },
         color: status.playing ? Colors.cyan : Colors.white,
-        isSelected: status.playing,
-        icon: Icon(
-          status.pause ? Icons.play_arrow : Icons.pause,
+        isSelected: status.running,
+        icon: const Icon(
+          Icons.refresh_outlined,
         ),
       ),
     );

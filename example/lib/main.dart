@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wfl_dart/wfl_dart.dart';
 import 'package:wfl_dart_example/components/about_button.dart';
 import 'package:wfl_dart_example/components/game_pad_button.dart';
+import 'package:wfl_dart_example/components/reset_button.dart';
 import 'package:wfl_dart_example/components/status_button.dart';
 import 'package:wfl_dart_example/home.dart';
 
@@ -43,6 +44,7 @@ class _MyAppState extends State<MyApp> {
             title: const Text('WFL_DART DEMO'),
             actions: const [
               GameStatusButtonIcon(),
+              ResetButtonIcon(),
               GamePadButtonIcon(),
               AboutButton()
             ],

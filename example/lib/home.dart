@@ -18,12 +18,7 @@ class Home extends StatelessWidget {
               child: GameList(),
             ),
             Expanded(
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: CoreList(),
-                ),
-              ),
+              child: CoreList(),
             )
           ],
         ),

@@ -18,6 +18,7 @@ add_library(wfl_dart SHARED
   ${WFL_ROOT}src/cpuFeatures.cpp
   ${WFL_ROOT}src/debug.cpp
   ${WFL_ROOT}src/glad.c
+  ${WFL_ROOT}src/stateNotifier.cpp
   ${WFL_ROOT}src/libretroClass.cpp
   ${WFL_ROOT}src/Video.cpp
   ${WFL_ROOT}src/threads/threadIoEvents.cpp

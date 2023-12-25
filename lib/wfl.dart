@@ -91,6 +91,10 @@ class WFL {
     _bindings.wflDarLoadGame(path.toNativeUtf8());
   }
 
+  setController(controller_device device) {
+    _bindings.wflDartSetController(device);
+  }
+
   stop() {
     _bindings.wflDartStop();
   }

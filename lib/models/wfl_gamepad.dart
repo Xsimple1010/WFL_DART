@@ -1,4 +1,5 @@
 import 'package:wfl_dart/models/key_maps.dart';
+import 'package:wfl_dart/wfl_dart_bindings_generated.dart';
 
 class JoyStick {
   final int id;
@@ -14,15 +15,34 @@ class JoyStick {
   });
 }
 
+class GamePadNativeInfo {
+  int type;
+  GamePadNativeInfo({required this.type});
+}
+
 class GamePad {
   final int id;
+  final int index;
+  final int port;
+  final int type;
   final String name;
+  final GamePadNativeInfo nativeInfo;
+  late List<GamePadKeyMap> keyMaps;
 
-  final _defaultGamePadKeyMaps = List<GamePadKeyMap>.empty();
   GamePad({
     required this.id,
+    required this.index,
+    required this.port,
+    required this.type,
     required this.name,
-  });
+    required this.nativeInfo,
+  }) {
+    keyMaps = getDefaultKeyMaps();
+  }
+
+  setKeyMaps(List<GamePadKeyMap> newKeyMaps) {
+    keyMaps = newKeyMaps;
+  }
 
   List<GamePadKeyMap> getDefaultKeyMaps() {
     final keyMaps = <GamePadKeyMap>[
@@ -76,8 +96,6 @@ class GamePad {
       ),
     ];
 
-    _defaultGamePadKeyMaps.addAll(keyMaps);
-
-    return _defaultGamePadKeyMaps;
+    return List.from(keyMaps);
   }
 }

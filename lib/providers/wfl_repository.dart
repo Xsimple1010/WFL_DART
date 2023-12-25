@@ -1,9 +1,11 @@
+import 'dart:ffi';
 import 'dart:io';
 import 'package:ffi/ffi.dart';
 import 'package:flutter/material.dart';
 import 'package:wfl_dart/models/states.dart';
 import 'package:wfl_dart/models/wfl_events.dart';
 import 'package:wfl_dart/models/wfl_gamepad.dart';
+import 'package:wfl_dart/tools/make_controller_device.dart';
 import 'package:wfl_dart/wfl.dart';
 import 'package:wfl_dart/wfl_dart_bindings_generated.dart';
 
@@ -38,7 +40,18 @@ class WFLDart with ChangeNotifier {
       name: joystick.name.toDartString(),
     );
 
-    print(lastConnectedJoyStick.name);
+    GamePad gamePad = GamePad(
+      id: lastConnectedJoyStick.id,
+      index: lastConnectedJoyStick.index,
+      port: 0,
+      type: RETRO_DEVICE_JOYPAD,
+      name: lastConnectedJoyStick.name,
+      nativeInfo: GamePadNativeInfo(
+        type: WFL_DEVICE_TYPES.WFL_DEVICE_JOYSTICK,
+      ),
+    );
+
+    setGamePad(gamePad);
 
     notifyListeners();
   }
@@ -49,6 +62,7 @@ class WFLDart with ChangeNotifier {
       index: joystick.index,
       name: joystick.name.toDartString(),
     );
+    print(lastConnectedJoyStick.name);
     notifyListeners();
   }
 
@@ -83,6 +97,14 @@ class WFLDart with ChangeNotifier {
     _wfl.loadCore(coreSelected);
     _wfl.loadGame(rom.path);
     notifyListeners();
+  }
+
+  setGamePad(GamePad gamePad) {
+    final mkDevice = MakeDeviceController();
+
+    _wfl.setController(mkDevice.get(gamePad).ref);
+
+    mkDevice.close();
   }
 
   pause() {

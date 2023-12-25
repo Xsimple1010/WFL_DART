@@ -74,7 +74,7 @@ class WflDartBindings {
       _wflDarLoadGamePtr.asFunction<void Function(ffi.Pointer<Utf8>)>();
 
   void wflDartSetController(
-    int device,
+    controller_device device,
   ) {
     return _wflDartSetController(
       device,
@@ -82,10 +82,10 @@ class WflDartBindings {
   }
 
   late final _wflDartSetControllerPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Int)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(controller_device)>>(
           'wflDartSetController');
   late final _wflDartSetController =
-      _wflDartSetControllerPtr.asFunction<void Function(int)>();
+      _wflDartSetControllerPtr.asFunction<void Function(controller_device)>();
 
   void wflDartStop() {
     return _wflDartStop();
@@ -4201,7 +4201,7 @@ final class controller_device extends ffi.Struct {
   @ffi.Int()
   external int port;
 
-  external ffi.Pointer<ffi.Char> name;
+  external ffi.Pointer<Utf8> name;
 
   @ffi.UnsignedInt()
   external int type;

@@ -4,7 +4,7 @@ import 'package:wfl_dart_example/components/about_button.dart';
 import 'package:wfl_dart_example/components/game_pad_button.dart';
 import 'package:wfl_dart_example/components/reset_button.dart';
 import 'package:wfl_dart_example/components/status_button.dart';
-import 'package:wfl_dart_example/home.dart';
+import 'package:wfl_dart_example/page/home.dart';
 
 void main() {
   runApp(const MyApp());

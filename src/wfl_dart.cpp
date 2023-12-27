@@ -1,4 +1,8 @@
 #include "wfl_dart.h"
+#include "vector"
+#include <iostream>
+
+using std::vector;
 
 //FFI_PLUGIN_EXPORT
 void FFI_PLUGIN_EXPORT wflDartInit(wfl_events events, wfl_paths paths) {
@@ -27,6 +31,20 @@ void FFI_PLUGIN_EXPORT wflDartPause() {
 
 void FFI_PLUGIN_EXPORT wflDartResume() {
 	wflResume();
+}
+
+wfl_dart_find_controller wflDartFindControllers() {
+	vector<wfl_joystick> joysticks = wflGetConnectedJoysticks();
+
+	const int size = joysticks.size();
+	wfl_dart_find_controller response = {0};
+	response.size = size;
+
+	for (int i = 0; i < size; i++) {
+		response.joysticks[i] = joysticks.at(i);
+	}
+
+	return response;
 }
 
 //==============

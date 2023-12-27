@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:wfl_dart/wfl_dart.dart';
 
 class GamePadCard extends StatelessWidget {
   const GamePadCard({
@@ -10,11 +12,12 @@ class GamePadCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final wfl = Provider.of<WFLDart>(context);
+
     return Card(
       child: SizedBox(
         width: width,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
           children: [
             Padding(
               padding: const EdgeInsets.only(
@@ -31,38 +34,36 @@ class GamePadCard extends StatelessWidget {
                     style: TextStyle(fontSize: 20),
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      wfl.findController();
+                    },
                     icon: const Icon(Icons.refresh_outlined),
                   ),
                 ],
               ),
             ),
-            Container(
-              margin: const EdgeInsets.all(12.0),
-              height: 56,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Row(
-                    children: [
-                      Checkbox(
-                        value: true,
-                        onChanged: (value) {},
-                      ),
-                      const Padding(padding: EdgeInsets.only(right: 12)),
-                      const Text(
-                        "DualSense",
-                        style: TextStyle(fontWeight: FontWeight.w600),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      const Spacer(),
-                    ],
-                  ),
-                  const Divider()
-                ],
+            WFLOnGamePadFind(
+              builder: (context, joysticks, child) => ListView.builder(
+                shrinkWrap: true,
+                itemCount: joysticks.length,
+                itemBuilder: (context, index) => Row(
+                  children: [
+                    Checkbox(
+                      value: true,
+                      onChanged: (value) {},
+                    ),
+                    const Padding(padding: EdgeInsets.only(right: 12)),
+                    Text(
+                      joysticks[index].name,
+                      style: const TextStyle(fontWeight: FontWeight.w600),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const Spacer(),
+                  ],
+                ),
               ),
-            ),
+            )
           ],
         ),
       ),

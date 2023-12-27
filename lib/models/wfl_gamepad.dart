@@ -21,12 +21,12 @@ class GamePadNativeInfo {
 }
 
 class GamePad {
-  final int id;
-  final int index;
-  final int port;
-  final int type;
-  final String name;
-  final GamePadNativeInfo nativeInfo;
+  int id;
+  int index;
+  int port;
+  int type;
+  String name;
+  GamePadNativeInfo nativeInfo;
   late List<GamePadKeyMap> keyMaps;
 
   GamePad({

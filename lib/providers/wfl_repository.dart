@@ -6,6 +6,7 @@ import 'package:wfl_dart/models/states.dart';
 import 'package:wfl_dart/models/wfl_events.dart';
 import 'package:wfl_dart/models/wfl_gamepad.dart';
 import 'package:wfl_dart/tools/make_controller_device.dart';
+import 'package:wfl_dart/tools/make_joystick.dart';
 import 'package:wfl_dart/wfl.dart';
 import 'package:wfl_dart/wfl_dart_bindings_generated.dart';
 
@@ -13,6 +14,7 @@ class WFLDart with ChangeNotifier {
   final _wfl = WFL();
   JoyStick lastConnectedJoyStick = JoyStick(id: -1, index: -1, name: "");
   JoyStick lastDisConnectedJoyStick = JoyStick(id: -1, index: -1, name: "");
+  late List<JoyStick> joysticksAvailable = [];
   String coreSelected = "";
   String romSelected = "";
   WflStates states = WflStates(
@@ -40,7 +42,7 @@ class WFLDart with ChangeNotifier {
       name: joystick.name.toDartString(),
     );
 
-    GamePad gamePad = GamePad(
+    final gamePad = GamePad(
       id: lastConnectedJoyStick.id,
       index: lastConnectedJoyStick.index,
       port: 0,
@@ -62,7 +64,6 @@ class WFLDart with ChangeNotifier {
       index: joystick.index,
       name: joystick.name.toDartString(),
     );
-    print(lastConnectedJoyStick.name);
     notifyListeners();
   }
 
@@ -96,7 +97,6 @@ class WFLDart with ChangeNotifier {
 
     _wfl.loadCore(coreSelected);
     _wfl.loadGame(rom.path);
-    notifyListeners();
   }
 
   setGamePad(GamePad gamePad) {
@@ -119,6 +119,16 @@ class WFLDart with ChangeNotifier {
 
   stop() {
     _wfl.stop();
+  }
+
+  findController() {
+    wfl_dart_find_controller res = _wfl.findController();
+
+    final makeJoystick = MakeJoystick();
+
+    joysticksAvailable = makeJoystick.get(res);
+
+    notifyListeners();
   }
 
   void deInit() {

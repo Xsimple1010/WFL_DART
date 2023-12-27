@@ -17,6 +17,11 @@
 #include "WFL.h"
 #include "SDL.h"
 
+struct wfl_dart_find_controller {
+    size_t size;
+    wfl_joystick joysticks[30];
+};
+
 EXTERN_C void FFI_PLUGIN_EXPORT wflDartInit(wfl_events events, wfl_paths paths);
 
 EXTERN_C void FFI_PLUGIN_EXPORT wflDartLoadCore(const char* path);
@@ -30,3 +35,5 @@ EXTERN_C void FFI_PLUGIN_EXPORT wflDartStop();
 EXTERN_C void FFI_PLUGIN_EXPORT wflDartPause();
 
 EXTERN_C void FFI_PLUGIN_EXPORT wflDartResume();
+
+EXTERN_C wfl_dart_find_controller FFI_PLUGIN_EXPORT wflDartFindControllers();

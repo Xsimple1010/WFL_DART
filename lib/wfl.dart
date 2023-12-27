@@ -107,6 +107,10 @@ class WFL {
     _bindings.wflDartPause();
   }
 
+  wfl_dart_find_controller findController() {
+    return _bindings.wflDartFindControllers();
+  }
+
   deInit() {
     _bindings.wflDartStop();
     _onConnectCallback.close();

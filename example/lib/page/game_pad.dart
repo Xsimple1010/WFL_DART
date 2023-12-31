@@ -62,30 +62,15 @@ class _GamePadModalState extends State<GamePadModal> {
                   OptionContainer(
                     title: "Porta (Player)",
                     label: "Porta para o envio de comandos",
-                    // onClick: () => updatePort(0),
                   ),
                   OptionContainer(
                     title: "Identifica o GamePad",
                     label:
                         "So funciona se o GamePad tive funcionalidade de vibrar",
-                    // action: IconButton(
-                    //   onPressed: () {},
-                    //   icon: const Icon(
-                    //     Icons.vibration,
-                    //   ),
-                    // ),
-                    // onClick: () {},
                   ),
                   OptionContainer(
                     title: "Muda a cor do led ",
                     label: "Seve para o DualSense e DualShock",
-                    // action: IconButton(
-                    //   onPressed: () {},
-                    //   icon: const Icon(
-                    //     Icons.vibration,
-                    //   ),
-                    // ),
-                    // onClick: () {},
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 20, left: 20),

@@ -133,6 +133,7 @@ class _GamePadModalState extends State<GamePadModal> {
               ),
             ),
             GamePadCard(
+              onClick: (gamepad) {},
               width: constraints.maxWidth * .23,
             )
           ],

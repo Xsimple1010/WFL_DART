@@ -6,11 +6,11 @@ import 'package:wfl_dart/wfl_dart_bindings_generated.dart';
 
 class MakeDeviceController {
   final _controllerDevice =
-      calloc.allocate<controller_device>(sizeOf<controller_device>());
+      calloc.allocate<wfl_game_pad>(sizeOf<wfl_game_pad>());
   final _nativeInfo =
       calloc.allocate<controller_native_info>(sizeOf<controller_native_info>());
 
-  Pointer<controller_device> get(GamePad gamePad) {
+  Pointer<wfl_game_pad> get(GamePad gamePad) {
     _controllerDevice.ref.id = gamePad.id;
     _controllerDevice.ref.index = gamePad.index;
     _controllerDevice.ref.port = gamePad.port;
@@ -23,8 +23,8 @@ class MakeDeviceController {
 
     int i = 0;
     for (var keyMap in gamePad.keyMaps) {
-      _controllerDevice.ref.joystickKeyBinds[i].native = keyMap.native;
-      _controllerDevice.ref.joystickKeyBinds[i].retro = keyMap.retro;
+      _controllerDevice.ref.gamePadKeyBinds[i].native = keyMap.native;
+      _controllerDevice.ref.gamePadKeyBinds[i].retro = keyMap.retro;
       i++;
     }
 

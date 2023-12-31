@@ -8,7 +8,7 @@ output: 'lib/wfl_dart_bindings_generated.dart'
 headers:
   entry-points:
     - 'src/wfl_dart.h'
-    - 'third_party/WFL/include/ControllerDefs.hpp'
+    - 'third_party/WFL/include/gamePadDefs.hpp'
     - 'third_party/WFL/include/libretro.h'
     - 'third_party/WFL/include/WFLdefs.hpp'
     - 'third_party/WFL/include/SDL2/SDL_keyboard.h'
@@ -16,7 +16,7 @@ headers:
     - 'third_party/WFL/include/SDL2/SDL_gamecontroller.h'
   include-directives:
     - 'src/wfl_dart.h'
-    - 'third_party/WFL/include/ControllerDefs.hpp'
+    - 'third_party/WFL/include/gamePadDefs.hpp'
     - 'third_party/WFL/include/libretro.h'
     - 'third_party/WFL/include/WFLdefs.hpp'
     - 'third_party/WFL/include/SDL2/SDL_keyboard.h'

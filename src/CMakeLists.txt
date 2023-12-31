@@ -14,7 +14,7 @@ add_library(wfl_dart SHARED
   ${WFL_ROOT}src/WFL.cpp
   ${WFL_ROOT}src/WFL_GL/wflGl.cpp
   ${WFL_ROOT}src/Audio.cpp
-  ${WFL_ROOT}src/controller.cpp
+  ${WFL_ROOT}src/gamePad.cpp
   ${WFL_ROOT}src/cpuFeatures.cpp
   ${WFL_ROOT}src/debug.cpp
   ${WFL_ROOT}src/glad.c

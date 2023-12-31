@@ -74,7 +74,7 @@ class WflDartBindings {
       _wflDarLoadGamePtr.asFunction<void Function(ffi.Pointer<Utf8>)>();
 
   void wflDartSetController(
-    controller_device device,
+    wfl_game_pad device,
   ) {
     return _wflDartSetController(
       device,
@@ -82,10 +82,10 @@ class WflDartBindings {
   }
 
   late final _wflDartSetControllerPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(controller_device)>>(
+      _lookup<ffi.NativeFunction<ffi.Void Function(wfl_game_pad)>>(
           'wflDartSetController');
   late final _wflDartSetController =
-      _wflDartSetControllerPtr.asFunction<void Function(controller_device)>();
+      _wflDartSetControllerPtr.asFunction<void Function(wfl_game_pad)>();
 
   void wflDartStop() {
     return _wflDartStop();
@@ -111,15 +111,34 @@ class WflDartBindings {
       _lookup<ffi.NativeFunction<ffi.Void Function()>>('wflDartResume');
   late final _wflDartResume = _wflDartResumePtr.asFunction<void Function()>();
 
-  wfl_dart_find_controller wflDartFindControllers() {
-    return _wflDartFindControllers();
+  int wflDartGetKeyDown() {
+    return _wflDartGetKeyDown();
   }
 
-  late final _wflDartFindControllersPtr =
-      _lookup<ffi.NativeFunction<wfl_dart_find_controller Function()>>(
-          'wflDartFindControllers');
-  late final _wflDartFindControllers = _wflDartFindControllersPtr
-      .asFunction<wfl_dart_find_controller Function()>();
+  late final _wflDartGetKeyDownPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function()>>('wflDartGetKeyDown');
+  late final _wflDartGetKeyDown =
+      _wflDartGetKeyDownPtr.asFunction<int Function()>();
+
+  wfl_dart_get_all_gamePads wflDartGetAllGamePads() {
+    return _wflDartGetAllGamePads();
+  }
+
+  late final _wflDartGetAllGamePadsPtr =
+      _lookup<ffi.NativeFunction<wfl_dart_get_all_gamePads Function()>>(
+          'wflDartGetAllGamePads');
+  late final _wflDartGetAllGamePads = _wflDartGetAllGamePadsPtr
+      .asFunction<wfl_dart_get_all_gamePads Function()>();
+
+  wfl_dart_get_connected_gamePads wflDartGetGamePadsConnected() {
+    return _wflDartGetGamePadsConnected();
+  }
+
+  late final _wflDartGetGamePadsConnectedPtr =
+      _lookup<ffi.NativeFunction<wfl_dart_get_connected_gamePads Function()>>(
+          'wflDartGetGamePadsConnected');
+  late final _wflDartGetGamePadsConnected = _wflDartGetGamePadsConnectedPtr
+      .asFunction<wfl_dart_get_connected_gamePads Function()>();
 
   /// Sets callbacks. retro_set_environment() is guaranteed to be called
   /// before retro_init().
@@ -395,7 +414,7 @@ class WflDartBindings {
   void retro_cheat_set(
     int index,
     bool enabled,
-    ffi.Pointer<Utf8> code,
+    ffi.Pointer<ffi.Char> code,
   ) {
     return _retro_cheat_set(
       index,
@@ -407,9 +426,9 @@ class WflDartBindings {
   late final _retro_cheat_setPtr = _lookup<
       ffi.NativeFunction<
           ffi.Void Function(ffi.UnsignedInt, ffi.Bool,
-              ffi.Pointer<Utf8>)>>('retro_cheat_set');
+              ffi.Pointer<ffi.Char>)>>('retro_cheat_set');
   late final _retro_cheat_set = _retro_cheat_setPtr
-      .asFunction<void Function(int, bool, ffi.Pointer<Utf8>)>();
+      .asFunction<void Function(int, bool, ffi.Pointer<ffi.Char>)>();
 
   /// Loads a game.
   /// Return true to indicate successful loading and false to indicate load failure.
@@ -691,7 +710,7 @@ class WflDartBindings {
   ///
   /// \sa SDL_GetScancodeFromKey
   /// \sa SDL_GetScancodeFromName
-  ffi.Pointer<Utf8> SDL_GetScancodeName(
+  ffi.Pointer<ffi.Char> SDL_GetScancodeName(
     int scancode,
   ) {
     return _SDL_GetScancodeName(
@@ -700,10 +719,10 @@ class WflDartBindings {
   }
 
   late final _SDL_GetScancodeNamePtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<Utf8> Function(ffi.Int32)>>(
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(ffi.Int32)>>(
           'SDL_GetScancodeName');
   late final _SDL_GetScancodeName =
-      _SDL_GetScancodeNamePtr.asFunction<ffi.Pointer<Utf8> Function(int)>();
+      _SDL_GetScancodeNamePtr.asFunction<ffi.Pointer<ffi.Char> Function(int)>();
 
   /// Get a scancode from a human-readable name.
   ///
@@ -717,7 +736,7 @@ class WflDartBindings {
   /// \sa SDL_GetScancodeFromKey
   /// \sa SDL_GetScancodeName
   int SDL_GetScancodeFromName(
-    ffi.Pointer<Utf8> name,
+    ffi.Pointer<ffi.Char> name,
   ) {
     return _SDL_GetScancodeFromName(
       name,
@@ -725,10 +744,10 @@ class WflDartBindings {
   }
 
   late final _SDL_GetScancodeFromNamePtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<Utf8>)>>(
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Char>)>>(
           'SDL_GetScancodeFromName');
-  late final _SDL_GetScancodeFromName =
-      _SDL_GetScancodeFromNamePtr.asFunction<int Function(ffi.Pointer<Utf8>)>();
+  late final _SDL_GetScancodeFromName = _SDL_GetScancodeFromNamePtr.asFunction<
+      int Function(ffi.Pointer<ffi.Char>)>();
 
   /// Get a human-readable name for a key.
   ///
@@ -745,7 +764,7 @@ class WflDartBindings {
   /// \sa SDL_GetKeyFromName
   /// \sa SDL_GetKeyFromScancode
   /// \sa SDL_GetScancodeFromKey
-  ffi.Pointer<Utf8> SDL_GetKeyName(
+  ffi.Pointer<ffi.Char> SDL_GetKeyName(
     int key,
   ) {
     return _SDL_GetKeyName(
@@ -754,10 +773,10 @@ class WflDartBindings {
   }
 
   late final _SDL_GetKeyNamePtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<Utf8> Function(SDL_Keycode)>>(
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(SDL_Keycode)>>(
           'SDL_GetKeyName');
   late final _SDL_GetKeyName =
-      _SDL_GetKeyNamePtr.asFunction<ffi.Pointer<Utf8> Function(int)>();
+      _SDL_GetKeyNamePtr.asFunction<ffi.Pointer<ffi.Char> Function(int)>();
 
   /// Get a key code from a human-readable name.
   ///
@@ -771,7 +790,7 @@ class WflDartBindings {
   /// \sa SDL_GetKeyName
   /// \sa SDL_GetScancodeFromName
   int SDL_GetKeyFromName(
-    ffi.Pointer<Utf8> name,
+    ffi.Pointer<ffi.Char> name,
   ) {
     return _SDL_GetKeyFromName(
       name,
@@ -779,10 +798,10 @@ class WflDartBindings {
   }
 
   late final _SDL_GetKeyFromNamePtr =
-      _lookup<ffi.NativeFunction<SDL_Keycode Function(ffi.Pointer<Utf8>)>>(
+      _lookup<ffi.NativeFunction<SDL_Keycode Function(ffi.Pointer<ffi.Char>)>>(
           'SDL_GetKeyFromName');
   late final _SDL_GetKeyFromName =
-      _SDL_GetKeyFromNamePtr.asFunction<int Function(ffi.Pointer<Utf8>)>();
+      _SDL_GetKeyFromNamePtr.asFunction<int Function(ffi.Pointer<ffi.Char>)>();
 
   /// Start accepting Unicode text input events.
   ///
@@ -1010,7 +1029,7 @@ class WflDartBindings {
   ///
   /// \sa SDL_JoystickName
   /// \sa SDL_JoystickOpen
-  ffi.Pointer<Utf8> SDL_JoystickNameForIndex(
+  ffi.Pointer<ffi.Char> SDL_JoystickNameForIndex(
     int device_index,
   ) {
     return _SDL_JoystickNameForIndex(
@@ -1019,10 +1038,10 @@ class WflDartBindings {
   }
 
   late final _SDL_JoystickNameForIndexPtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<Utf8> Function(ffi.Int)>>(
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(ffi.Int)>>(
           'SDL_JoystickNameForIndex');
   late final _SDL_JoystickNameForIndex = _SDL_JoystickNameForIndexPtr
-      .asFunction<ffi.Pointer<Utf8> Function(int)>();
+      .asFunction<ffi.Pointer<ffi.Char> Function(int)>();
 
   /// Get the implementation dependent path of a joystick.
   ///
@@ -1037,7 +1056,7 @@ class WflDartBindings {
   ///
   /// \sa SDL_JoystickPath
   /// \sa SDL_JoystickOpen
-  ffi.Pointer<Utf8> SDL_JoystickPathForIndex(
+  ffi.Pointer<ffi.Char> SDL_JoystickPathForIndex(
     int device_index,
   ) {
     return _SDL_JoystickPathForIndex(
@@ -1046,10 +1065,10 @@ class WflDartBindings {
   }
 
   late final _SDL_JoystickPathForIndexPtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<Utf8> Function(ffi.Int)>>(
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(ffi.Int)>>(
           'SDL_JoystickPathForIndex');
   late final _SDL_JoystickPathForIndex = _SDL_JoystickPathForIndexPtr
-      .asFunction<ffi.Pointer<Utf8> Function(int)>();
+      .asFunction<ffi.Pointer<ffi.Char> Function(int)>();
 
   /// Get the player index of a joystick, or -1 if it's not available This can be
   /// called before any joysticks are opened.
@@ -1495,7 +1514,7 @@ class WflDartBindings {
   ///
   /// \sa SDL_JoystickNameForIndex
   /// \sa SDL_JoystickOpen
-  ffi.Pointer<Utf8> SDL_JoystickName(
+  ffi.Pointer<ffi.Char> SDL_JoystickName(
     ffi.Pointer<SDL_Joystick> joystick,
   ) {
     return _SDL_JoystickName(
@@ -1505,10 +1524,10 @@ class WflDartBindings {
 
   late final _SDL_JoystickNamePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<Utf8> Function(
+          ffi.Pointer<ffi.Char> Function(
               ffi.Pointer<SDL_Joystick>)>>('SDL_JoystickName');
   late final _SDL_JoystickName = _SDL_JoystickNamePtr.asFunction<
-      ffi.Pointer<Utf8> Function(ffi.Pointer<SDL_Joystick>)>();
+      ffi.Pointer<ffi.Char> Function(ffi.Pointer<SDL_Joystick>)>();
 
   /// Get the implementation dependent path of a joystick.
   ///
@@ -1519,7 +1538,7 @@ class WflDartBindings {
   /// \since This function is available since SDL 2.24.0.
   ///
   /// \sa SDL_JoystickPathForIndex
-  ffi.Pointer<Utf8> SDL_JoystickPath(
+  ffi.Pointer<ffi.Char> SDL_JoystickPath(
     ffi.Pointer<SDL_Joystick> joystick,
   ) {
     return _SDL_JoystickPath(
@@ -1529,10 +1548,10 @@ class WflDartBindings {
 
   late final _SDL_JoystickPathPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<Utf8> Function(
+          ffi.Pointer<ffi.Char> Function(
               ffi.Pointer<SDL_Joystick>)>>('SDL_JoystickPath');
   late final _SDL_JoystickPath = _SDL_JoystickPathPtr.asFunction<
-      ffi.Pointer<Utf8> Function(ffi.Pointer<SDL_Joystick>)>();
+      ffi.Pointer<ffi.Char> Function(ffi.Pointer<SDL_Joystick>)>();
 
   /// Get the player index of an opened joystick.
   ///
@@ -1708,7 +1727,7 @@ class WflDartBindings {
   /// unavailable.
   ///
   /// \since This function is available since SDL 2.0.14.
-  ffi.Pointer<Utf8> SDL_JoystickGetSerial(
+  ffi.Pointer<ffi.Char> SDL_JoystickGetSerial(
     ffi.Pointer<SDL_Joystick> joystick,
   ) {
     return _SDL_JoystickGetSerial(
@@ -1718,10 +1737,10 @@ class WflDartBindings {
 
   late final _SDL_JoystickGetSerialPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<Utf8> Function(
+          ffi.Pointer<ffi.Char> Function(
               ffi.Pointer<SDL_Joystick>)>>('SDL_JoystickGetSerial');
   late final _SDL_JoystickGetSerial = _SDL_JoystickGetSerialPtr.asFunction<
-      ffi.Pointer<Utf8> Function(ffi.Pointer<SDL_Joystick>)>();
+      ffi.Pointer<ffi.Char> Function(ffi.Pointer<SDL_Joystick>)>();
 
   /// Get the type of an opened joystick.
   ///
@@ -1758,7 +1777,7 @@ class WflDartBindings {
   /// \sa SDL_JoystickGetGUIDFromString
   void SDL_JoystickGetGUIDString(
     SDL_JoystickGUID guid,
-    ffi.Pointer<Utf8> pszGUID,
+    ffi.Pointer<ffi.Char> pszGUID,
     int cbGUID,
   ) {
     return _SDL_JoystickGetGUIDString(
@@ -1770,10 +1789,11 @@ class WflDartBindings {
 
   late final _SDL_JoystickGetGUIDStringPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Void Function(SDL_JoystickGUID, ffi.Pointer<Utf8>,
+          ffi.Void Function(SDL_JoystickGUID, ffi.Pointer<ffi.Char>,
               ffi.Int)>>('SDL_JoystickGetGUIDString');
-  late final _SDL_JoystickGetGUIDString = _SDL_JoystickGetGUIDStringPtr
-      .asFunction<void Function(SDL_JoystickGUID, ffi.Pointer<Utf8>, int)>();
+  late final _SDL_JoystickGetGUIDString =
+      _SDL_JoystickGetGUIDStringPtr.asFunction<
+          void Function(SDL_JoystickGUID, ffi.Pointer<ffi.Char>, int)>();
 
   /// Convert a GUID string into a SDL_JoystickGUID structure.
   ///
@@ -1788,18 +1808,18 @@ class WflDartBindings {
   ///
   /// \sa SDL_JoystickGetGUIDString
   SDL_JoystickGUID SDL_JoystickGetGUIDFromString(
-    ffi.Pointer<Utf8> pchGUID,
+    ffi.Pointer<ffi.Char> pchGUID,
   ) {
     return _SDL_JoystickGetGUIDFromString(
       pchGUID,
     );
   }
 
-  late final _SDL_JoystickGetGUIDFromStringPtr =
-      _lookup<ffi.NativeFunction<SDL_JoystickGUID Function(ffi.Pointer<Utf8>)>>(
-          'SDL_JoystickGetGUIDFromString');
+  late final _SDL_JoystickGetGUIDFromStringPtr = _lookup<
+          ffi.NativeFunction<SDL_JoystickGUID Function(ffi.Pointer<ffi.Char>)>>(
+      'SDL_JoystickGetGUIDFromString');
   late final _SDL_JoystickGetGUIDFromString = _SDL_JoystickGetGUIDFromStringPtr
-      .asFunction<SDL_JoystickGUID Function(ffi.Pointer<Utf8>)>();
+      .asFunction<SDL_JoystickGUID Function(ffi.Pointer<ffi.Char>)>();
 
   /// Get the device information encoded in a SDL_JoystickGUID structure
   ///
@@ -2543,7 +2563,7 @@ class WflDartBindings {
   /// \sa SDL_GameControllerMapping
   /// \sa SDL_GameControllerMappingForGUID
   int SDL_GameControllerAddMapping(
-    ffi.Pointer<Utf8> mappingString,
+    ffi.Pointer<ffi.Char> mappingString,
   ) {
     return _SDL_GameControllerAddMapping(
       mappingString,
@@ -2551,10 +2571,10 @@ class WflDartBindings {
   }
 
   late final _SDL_GameControllerAddMappingPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(ffi.Pointer<Utf8>)>>(
+      _lookup<ffi.NativeFunction<ffi.Int Function(ffi.Pointer<ffi.Char>)>>(
           'SDL_GameControllerAddMapping');
   late final _SDL_GameControllerAddMapping = _SDL_GameControllerAddMappingPtr
-      .asFunction<int Function(ffi.Pointer<Utf8>)>();
+      .asFunction<int Function(ffi.Pointer<ffi.Char>)>();
 
   /// Get the number of mappings installed.
   ///
@@ -2577,7 +2597,7 @@ class WflDartBindings {
   /// the index is out of range.
   ///
   /// \since This function is available since SDL 2.0.6.
-  ffi.Pointer<Utf8> SDL_GameControllerMappingForIndex(
+  ffi.Pointer<ffi.Char> SDL_GameControllerMappingForIndex(
     int mapping_index,
   ) {
     return _SDL_GameControllerMappingForIndex(
@@ -2586,11 +2606,11 @@ class WflDartBindings {
   }
 
   late final _SDL_GameControllerMappingForIndexPtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<Utf8> Function(ffi.Int)>>(
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(ffi.Int)>>(
           'SDL_GameControllerMappingForIndex');
   late final _SDL_GameControllerMappingForIndex =
       _SDL_GameControllerMappingForIndexPtr.asFunction<
-          ffi.Pointer<Utf8> Function(int)>();
+          ffi.Pointer<ffi.Char> Function(int)>();
 
   /// Get the game controller mapping string for a given GUID.
   ///
@@ -2604,7 +2624,7 @@ class WflDartBindings {
   ///
   /// \sa SDL_JoystickGetDeviceGUID
   /// \sa SDL_JoystickGetGUID
-  ffi.Pointer<Utf8> SDL_GameControllerMappingForGUID(
+  ffi.Pointer<ffi.Char> SDL_GameControllerMappingForGUID(
     SDL_JoystickGUID guid,
   ) {
     return _SDL_GameControllerMappingForGUID(
@@ -2612,12 +2632,12 @@ class WflDartBindings {
     );
   }
 
-  late final _SDL_GameControllerMappingForGUIDPtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<Utf8> Function(SDL_JoystickGUID)>>(
-          'SDL_GameControllerMappingForGUID');
+  late final _SDL_GameControllerMappingForGUIDPtr = _lookup<
+          ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(SDL_JoystickGUID)>>(
+      'SDL_GameControllerMappingForGUID');
   late final _SDL_GameControllerMappingForGUID =
       _SDL_GameControllerMappingForGUIDPtr.asFunction<
-          ffi.Pointer<Utf8> Function(SDL_JoystickGUID)>();
+          ffi.Pointer<ffi.Char> Function(SDL_JoystickGUID)>();
 
   /// Get the current mapping of a Game Controller.
   ///
@@ -2634,7 +2654,7 @@ class WflDartBindings {
   ///
   /// \sa SDL_GameControllerAddMapping
   /// \sa SDL_GameControllerMappingForGUID
-  ffi.Pointer<Utf8> SDL_GameControllerMapping(
+  ffi.Pointer<ffi.Char> SDL_GameControllerMapping(
     ffi.Pointer<SDL_GameController> gamecontroller,
   ) {
     return _SDL_GameControllerMapping(
@@ -2644,11 +2664,11 @@ class WflDartBindings {
 
   late final _SDL_GameControllerMappingPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<Utf8> Function(
+          ffi.Pointer<ffi.Char> Function(
               ffi.Pointer<SDL_GameController>)>>('SDL_GameControllerMapping');
   late final _SDL_GameControllerMapping =
       _SDL_GameControllerMappingPtr.asFunction<
-          ffi.Pointer<Utf8> Function(ffi.Pointer<SDL_GameController>)>();
+          ffi.Pointer<ffi.Char> Function(ffi.Pointer<SDL_GameController>)>();
 
   /// Check if the given joystick is supported by the game controller interface.
   ///
@@ -2695,7 +2715,7 @@ class WflDartBindings {
   /// \sa SDL_GameControllerName
   /// \sa SDL_GameControllerOpen
   /// \sa SDL_IsGameController
-  ffi.Pointer<Utf8> SDL_GameControllerNameForIndex(
+  ffi.Pointer<ffi.Char> SDL_GameControllerNameForIndex(
     int joystick_index,
   ) {
     return _SDL_GameControllerNameForIndex(
@@ -2704,11 +2724,11 @@ class WflDartBindings {
   }
 
   late final _SDL_GameControllerNameForIndexPtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<Utf8> Function(ffi.Int)>>(
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(ffi.Int)>>(
           'SDL_GameControllerNameForIndex');
   late final _SDL_GameControllerNameForIndex =
       _SDL_GameControllerNameForIndexPtr.asFunction<
-          ffi.Pointer<Utf8> Function(int)>();
+          ffi.Pointer<ffi.Char> Function(int)>();
 
   /// Get the implementation dependent path for the game controller.
   ///
@@ -2725,7 +2745,7 @@ class WflDartBindings {
   /// \since This function is available since SDL 2.24.0.
   ///
   /// \sa SDL_GameControllerPath
-  ffi.Pointer<Utf8> SDL_GameControllerPathForIndex(
+  ffi.Pointer<ffi.Char> SDL_GameControllerPathForIndex(
     int joystick_index,
   ) {
     return _SDL_GameControllerPathForIndex(
@@ -2734,11 +2754,11 @@ class WflDartBindings {
   }
 
   late final _SDL_GameControllerPathForIndexPtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<Utf8> Function(ffi.Int)>>(
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(ffi.Int)>>(
           'SDL_GameControllerPathForIndex');
   late final _SDL_GameControllerPathForIndex =
       _SDL_GameControllerPathForIndexPtr.asFunction<
-          ffi.Pointer<Utf8> Function(int)>();
+          ffi.Pointer<ffi.Char> Function(int)>();
 
   /// Get the type of a game controller.
   ///
@@ -2773,7 +2793,7 @@ class WflDartBindings {
   /// no mapping is available.
   ///
   /// \since This function is available since SDL 2.0.9.
-  ffi.Pointer<Utf8> SDL_GameControllerMappingForDeviceIndex(
+  ffi.Pointer<ffi.Char> SDL_GameControllerMappingForDeviceIndex(
     int joystick_index,
   ) {
     return _SDL_GameControllerMappingForDeviceIndex(
@@ -2782,11 +2802,11 @@ class WflDartBindings {
   }
 
   late final _SDL_GameControllerMappingForDeviceIndexPtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<Utf8> Function(ffi.Int)>>(
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(ffi.Int)>>(
           'SDL_GameControllerMappingForDeviceIndex');
   late final _SDL_GameControllerMappingForDeviceIndex =
       _SDL_GameControllerMappingForDeviceIndexPtr.asFunction<
-          ffi.Pointer<Utf8> Function(int)>();
+          ffi.Pointer<ffi.Char> Function(int)>();
 
   /// Open a game controller for use.
   ///
@@ -2889,7 +2909,7 @@ class WflDartBindings {
   ///
   /// \sa SDL_GameControllerNameForIndex
   /// \sa SDL_GameControllerOpen
-  ffi.Pointer<Utf8> SDL_GameControllerName(
+  ffi.Pointer<ffi.Char> SDL_GameControllerName(
     ffi.Pointer<SDL_GameController> gamecontroller,
   ) {
     return _SDL_GameControllerName(
@@ -2899,10 +2919,10 @@ class WflDartBindings {
 
   late final _SDL_GameControllerNamePtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<Utf8> Function(
+          ffi.Pointer<ffi.Char> Function(
               ffi.Pointer<SDL_GameController>)>>('SDL_GameControllerName');
   late final _SDL_GameControllerName = _SDL_GameControllerNamePtr.asFunction<
-      ffi.Pointer<Utf8> Function(ffi.Pointer<SDL_GameController>)>();
+      ffi.Pointer<ffi.Char> Function(ffi.Pointer<SDL_GameController>)>();
 
   /// Get the implementation-dependent path for an opened game controller.
   ///
@@ -2917,7 +2937,7 @@ class WflDartBindings {
   /// \since This function is available since SDL 2.24.0.
   ///
   /// \sa SDL_GameControllerPathForIndex
-  ffi.Pointer<Utf8> SDL_GameControllerPath(
+  ffi.Pointer<ffi.Char> SDL_GameControllerPath(
     ffi.Pointer<SDL_GameController> gamecontroller,
   ) {
     return _SDL_GameControllerPath(
@@ -2927,10 +2947,10 @@ class WflDartBindings {
 
   late final _SDL_GameControllerPathPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<Utf8> Function(
+          ffi.Pointer<ffi.Char> Function(
               ffi.Pointer<SDL_GameController>)>>('SDL_GameControllerPath');
   late final _SDL_GameControllerPath = _SDL_GameControllerPathPtr.asFunction<
-      ffi.Pointer<Utf8> Function(ffi.Pointer<SDL_GameController>)>();
+      ffi.Pointer<ffi.Char> Function(ffi.Pointer<SDL_GameController>)>();
 
   /// Get the type of this currently opened controller
   ///
@@ -3104,7 +3124,7 @@ class WflDartBindings {
   /// \return the serial number, or NULL if unavailable.
   ///
   /// \since This function is available since SDL 2.0.14.
-  ffi.Pointer<Utf8> SDL_GameControllerGetSerial(
+  ffi.Pointer<ffi.Char> SDL_GameControllerGetSerial(
     ffi.Pointer<SDL_GameController> gamecontroller,
   ) {
     return _SDL_GameControllerGetSerial(
@@ -3114,11 +3134,11 @@ class WflDartBindings {
 
   late final _SDL_GameControllerGetSerialPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<Utf8> Function(
+          ffi.Pointer<ffi.Char> Function(
               ffi.Pointer<SDL_GameController>)>>('SDL_GameControllerGetSerial');
   late final _SDL_GameControllerGetSerial =
       _SDL_GameControllerGetSerialPtr.asFunction<
-          ffi.Pointer<Utf8> Function(ffi.Pointer<SDL_GameController>)>();
+          ffi.Pointer<ffi.Char> Function(ffi.Pointer<SDL_GameController>)>();
 
   /// Check if a controller has been opened and is currently connected.
   ///
@@ -3247,7 +3267,7 @@ class WflDartBindings {
   ///
   /// \sa SDL_GameControllerGetStringForAxis
   int SDL_GameControllerGetAxisFromString(
-    ffi.Pointer<Utf8> str,
+    ffi.Pointer<ffi.Char> str,
   ) {
     return _SDL_GameControllerGetAxisFromString(
       str,
@@ -3255,11 +3275,11 @@ class WflDartBindings {
   }
 
   late final _SDL_GameControllerGetAxisFromStringPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<Utf8>)>>(
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Char>)>>(
           'SDL_GameControllerGetAxisFromString');
   late final _SDL_GameControllerGetAxisFromString =
       _SDL_GameControllerGetAxisFromStringPtr.asFunction<
-          int Function(ffi.Pointer<Utf8>)>();
+          int Function(ffi.Pointer<ffi.Char>)>();
 
   /// Convert from an SDL_GameControllerAxis enum to a string.
   ///
@@ -3273,7 +3293,7 @@ class WflDartBindings {
   /// \since This function is available since SDL 2.0.0.
   ///
   /// \sa SDL_GameControllerGetAxisFromString
-  ffi.Pointer<Utf8> SDL_GameControllerGetStringForAxis(
+  ffi.Pointer<ffi.Char> SDL_GameControllerGetStringForAxis(
     int axis,
   ) {
     return _SDL_GameControllerGetStringForAxis(
@@ -3282,11 +3302,11 @@ class WflDartBindings {
   }
 
   late final _SDL_GameControllerGetStringForAxisPtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<Utf8> Function(ffi.Int32)>>(
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(ffi.Int32)>>(
           'SDL_GameControllerGetStringForAxis');
   late final _SDL_GameControllerGetStringForAxis =
       _SDL_GameControllerGetStringForAxisPtr.asFunction<
-          ffi.Pointer<Utf8> Function(int)>();
+          ffi.Pointer<ffi.Char> Function(int)>();
 
   /// Get the SDL joystick layer binding for a controller axis mapping.
   ///
@@ -3390,7 +3410,7 @@ class WflDartBindings {
   ///
   /// \since This function is available since SDL 2.0.0.
   int SDL_GameControllerGetButtonFromString(
-    ffi.Pointer<Utf8> str,
+    ffi.Pointer<ffi.Char> str,
   ) {
     return _SDL_GameControllerGetButtonFromString(
       str,
@@ -3398,11 +3418,11 @@ class WflDartBindings {
   }
 
   late final _SDL_GameControllerGetButtonFromStringPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<Utf8>)>>(
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Char>)>>(
           'SDL_GameControllerGetButtonFromString');
   late final _SDL_GameControllerGetButtonFromString =
       _SDL_GameControllerGetButtonFromStringPtr.asFunction<
-          int Function(ffi.Pointer<Utf8>)>();
+          int Function(ffi.Pointer<ffi.Char>)>();
 
   /// Convert from an SDL_GameControllerButton enum to a string.
   ///
@@ -3416,7 +3436,7 @@ class WflDartBindings {
   /// \since This function is available since SDL 2.0.0.
   ///
   /// \sa SDL_GameControllerGetButtonFromString
-  ffi.Pointer<Utf8> SDL_GameControllerGetStringForButton(
+  ffi.Pointer<ffi.Char> SDL_GameControllerGetStringForButton(
     int button,
   ) {
     return _SDL_GameControllerGetStringForButton(
@@ -3425,11 +3445,11 @@ class WflDartBindings {
   }
 
   late final _SDL_GameControllerGetStringForButtonPtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<Utf8> Function(ffi.Int32)>>(
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(ffi.Int32)>>(
           'SDL_GameControllerGetStringForButton');
   late final _SDL_GameControllerGetStringForButton =
       _SDL_GameControllerGetStringForButtonPtr.asFunction<
-          ffi.Pointer<Utf8> Function(int)>();
+          ffi.Pointer<ffi.Char> Function(int)>();
 
   /// Get the SDL joystick layer binding for a controller button mapping.
   ///
@@ -4031,7 +4051,7 @@ class WflDartBindings {
   /// \since This function is available since SDL 2.0.18.
   ///
   /// \sa SDL_GameControllerGetAppleSFSymbolsNameForAxis
-  ffi.Pointer<Utf8> SDL_GameControllerGetAppleSFSymbolsNameForButton(
+  ffi.Pointer<ffi.Char> SDL_GameControllerGetAppleSFSymbolsNameForButton(
     ffi.Pointer<SDL_GameController> gamecontroller,
     int button,
   ) {
@@ -4043,11 +4063,12 @@ class WflDartBindings {
 
   late final _SDL_GameControllerGetAppleSFSymbolsNameForButtonPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<Utf8> Function(ffi.Pointer<SDL_GameController>,
+          ffi.Pointer<ffi.Char> Function(ffi.Pointer<SDL_GameController>,
               ffi.Int32)>>('SDL_GameControllerGetAppleSFSymbolsNameForButton');
   late final _SDL_GameControllerGetAppleSFSymbolsNameForButton =
       _SDL_GameControllerGetAppleSFSymbolsNameForButtonPtr.asFunction<
-          ffi.Pointer<Utf8> Function(ffi.Pointer<SDL_GameController>, int)>();
+          ffi.Pointer<ffi.Char> Function(
+              ffi.Pointer<SDL_GameController>, int)>();
 
   /// Return the sfSymbolsName for a given axis on a game controller on Apple
   /// platforms.
@@ -4059,7 +4080,7 @@ class WflDartBindings {
   /// \since This function is available since SDL 2.0.18.
   ///
   /// \sa SDL_GameControllerGetAppleSFSymbolsNameForButton
-  ffi.Pointer<Utf8> SDL_GameControllerGetAppleSFSymbolsNameForAxis(
+  ffi.Pointer<ffi.Char> SDL_GameControllerGetAppleSFSymbolsNameForAxis(
     ffi.Pointer<SDL_GameController> gamecontroller,
     int axis,
   ) {
@@ -4071,19 +4092,28 @@ class WflDartBindings {
 
   late final _SDL_GameControllerGetAppleSFSymbolsNameForAxisPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<Utf8> Function(ffi.Pointer<SDL_GameController>,
+          ffi.Pointer<ffi.Char> Function(ffi.Pointer<SDL_GameController>,
               ffi.Int32)>>('SDL_GameControllerGetAppleSFSymbolsNameForAxis');
   late final _SDL_GameControllerGetAppleSFSymbolsNameForAxis =
       _SDL_GameControllerGetAppleSFSymbolsNameForAxisPtr.asFunction<
-          ffi.Pointer<Utf8> Function(ffi.Pointer<SDL_GameController>, int)>();
+          ffi.Pointer<ffi.Char> Function(
+              ffi.Pointer<SDL_GameController>, int)>();
 }
 
-final class wfl_dart_find_controller extends ffi.Struct {
+final class wfl_dart_get_all_gamePads extends ffi.Struct {
   @ffi.Size()
   external int size;
 
   @ffi.Array.multi([30])
-  external ffi.Array<wfl_joystick> joysticks;
+  external ffi.Array<wfl_device> devices;
+}
+
+final class wfl_dart_get_connected_gamePads extends ffi.Struct {
+  @ffi.Size()
+  external int size;
+
+  @ffi.Array.multi([30])
+  external ffi.Array<ffi.Int> devices;
 }
 
 abstract class WFL_DEVICE_TYPES {
@@ -4150,7 +4180,7 @@ abstract class wfl_joystick_retro_buttons {
 }
 
 /// keyboard end other inputs
-final class Keyboard_keymap extends ffi.Struct {
+final class keyboard_keymap extends ffi.Struct {
   @ffi.UnsignedInt()
   external int native;
 
@@ -4158,7 +4188,7 @@ final class Keyboard_keymap extends ffi.Struct {
   external int retro;
 }
 
-final class joystick_keymap extends ffi.Struct {
+final class game_pad_keymap extends ffi.Struct {
   @ffi.Int32()
   external int native;
 
@@ -4166,7 +4196,7 @@ final class joystick_keymap extends ffi.Struct {
   external int retro;
 }
 
-final class wfl_joystick extends ffi.Struct {
+final class wfl_device extends ffi.Struct {
   @SDL_JoystickID()
   external int id;
 
@@ -4174,6 +4204,9 @@ final class wfl_joystick extends ffi.Struct {
   external int index;
 
   external ffi.Pointer<Utf8> name;
+
+  @ffi.Bool()
+  external bool connected;
 }
 
 /// This is a unique ID for a joystick for the time it is connected to the system,
@@ -4183,16 +4216,6 @@ final class wfl_joystick extends ffi.Struct {
 /// The ID value starts at 0 and increments from there. The value -1 is an invalid ID.
 typedef SDL_JoystickID = Sint32;
 typedef Sint32 = ffi.Int32;
-
-final class controller_events extends ffi.Struct {
-  external ffi.Pointer<ffi.NativeFunction<on_device_disconnect_t>> onDisconnect;
-
-  external ffi.Pointer<ffi.NativeFunction<on_device_connect_t>> onConnect;
-}
-
-typedef on_device_disconnect_t = ffi.Void Function(
-    wfl_joystick joystick, ffi.Int port);
-typedef on_device_connect_t = ffi.Void Function(wfl_joystick joystick);
 
 final class controller_native_info extends ffi.Struct {
   @ffi.UnsignedInt()
@@ -4206,7 +4229,7 @@ typedef SDL_GameController = _SDL_GameController;
 /// The gamecontroller structure used to identify an SDL game controller
 final class _SDL_GameController extends ffi.Opaque {}
 
-final class controller_device extends ffi.Struct {
+final class wfl_game_pad extends ffi.Struct {
   @SDL_JoystickID()
   external int id;
 
@@ -4224,10 +4247,10 @@ final class controller_device extends ffi.Struct {
   external controller_native_info nativeInfo;
 
   @ffi.Array.multi([16])
-  external ffi.Array<Keyboard_keymap> keyboardKeyBinds;
+  external ffi.Array<keyboard_keymap> keyboardKeyBinds;
 
   @ffi.Array.multi([16])
-  external ffi.Array<joystick_keymap> joystickKeyBinds;
+  external ffi.Array<game_pad_keymap> gamePadKeyBinds;
 }
 
 /// Id values for LANGUAGE
@@ -4476,14 +4499,15 @@ final class retro_vfs_interface extends ffi.Struct {
 /// Introduced in VFS API v1
 typedef retro_vfs_get_path_t = ffi.Pointer<
     ffi.NativeFunction<
-        ffi.Pointer<Utf8> Function(ffi.Pointer<retro_vfs_file_handle> stream)>>;
+        ffi.Pointer<ffi.Char> Function(
+            ffi.Pointer<retro_vfs_file_handle> stream)>>;
 
 /// Open a file for reading or writing. If path points to a directory, this will
 /// fail. Returns the opaque file handle, or NULL for error.
 /// Introduced in VFS API v1
 typedef retro_vfs_open_t = ffi.Pointer<
     ffi.NativeFunction<
-        ffi.Pointer<retro_vfs_file_handle> Function(ffi.Pointer<Utf8> path,
+        ffi.Pointer<retro_vfs_file_handle> Function(ffi.Pointer<ffi.Char> path,
             ffi.UnsignedInt mode, ffi.UnsignedInt hints)>>;
 
 /// Close the file and release its resources. Must be called if open_file returns non-NULL. Returns 0 on success, -1 on failure.
@@ -4534,15 +4558,15 @@ typedef retro_vfs_flush_t = ffi.Pointer<
 
 /// Delete the specified file. Returns 0 on success, -1 on failure
 /// Introduced in VFS API v1
-typedef retro_vfs_remove_t
-    = ffi.Pointer<ffi.NativeFunction<ffi.Int Function(ffi.Pointer<Utf8> path)>>;
+typedef retro_vfs_remove_t = ffi
+    .Pointer<ffi.NativeFunction<ffi.Int Function(ffi.Pointer<ffi.Char> path)>>;
 
 /// Rename the specified file. Returns 0 on success, -1 on failure
 /// Introduced in VFS API v1
 typedef retro_vfs_rename_t = ffi.Pointer<
     ffi.NativeFunction<
         ffi.Int Function(
-            ffi.Pointer<Utf8> old_path, ffi.Pointer<Utf8> new_path)>>;
+            ffi.Pointer<ffi.Char> old_path, ffi.Pointer<ffi.Char> new_path)>>;
 
 /// Truncate file to specified size. Returns 0 on success or -1 on error
 /// Introduced in VFS API v2
@@ -4556,12 +4580,13 @@ typedef retro_vfs_truncate_t = ffi.Pointer<
 /// Introduced in VFS API v3
 typedef retro_vfs_stat_t = ffi.Pointer<
     ffi.NativeFunction<
-        ffi.Int Function(ffi.Pointer<Utf8> path, ffi.Pointer<ffi.Int32> size)>>;
+        ffi.Int Function(
+            ffi.Pointer<ffi.Char> path, ffi.Pointer<ffi.Int32> size)>>;
 
 /// Create the specified directory. Returns 0 on success, -1 on unknown failure, -2 if already exists.
 /// Introduced in VFS API v3
-typedef retro_vfs_mkdir_t
-    = ffi.Pointer<ffi.NativeFunction<ffi.Int Function(ffi.Pointer<Utf8> dir)>>;
+typedef retro_vfs_mkdir_t = ffi
+    .Pointer<ffi.NativeFunction<ffi.Int Function(ffi.Pointer<ffi.Char> dir)>>;
 
 /// Open the specified directory for listing. Returns the opaque dir handle, or NULL for error.
 /// Support for the include_hidden argument may vary depending on the platform.
@@ -4569,7 +4594,7 @@ typedef retro_vfs_mkdir_t
 typedef retro_vfs_opendir_t = ffi.Pointer<
     ffi.NativeFunction<
         ffi.Pointer<retro_vfs_dir_handle> Function(
-            ffi.Pointer<Utf8> dir, ffi.Bool include_hidden)>>;
+            ffi.Pointer<ffi.Char> dir, ffi.Bool include_hidden)>>;
 
 /// Read the directory entry at the current position, and move the read pointer to the next position.
 /// Returns true on success, false if already on the last entry.
@@ -4583,7 +4608,7 @@ typedef retro_vfs_readdir_t = ffi.Pointer<
 /// Introduced in VFS API v3
 typedef retro_vfs_dirent_get_name_t = ffi.Pointer<
     ffi.NativeFunction<
-        ffi.Pointer<Utf8> Function(
+        ffi.Pointer<ffi.Char> Function(
             ffi.Pointer<retro_vfs_dir_handle> dirstream)>>;
 
 /// Check if the last entry read was a directory. Returns true if it was, false otherwise (or on error).
@@ -4770,7 +4795,7 @@ final class retro_memory_descriptor extends ffi.Struct {
   /// would refer to.
   /// The length can't be used for that purpose; the frontend may want
   /// to append arbitrary data to an address, without a separator.
-  external ffi.Pointer<Utf8> addrspace;
+  external ffi.Pointer<ffi.Char> addrspace;
 }
 
 /// The frontend may use the largest value of 'start'+'select' in a
@@ -4820,7 +4845,7 @@ final class retro_controller_description extends ffi.Struct {
   /// Human-readable description of the controller. Even if using a generic
   /// input device type, this can be set to the particular device type the
   /// core uses.
-  external ffi.Pointer<Utf8> desc;
+  external ffi.Pointer<ffi.Char> desc;
 
   /// Device type passed to retro_set_controller_port_device(). If the device
   /// type is a sub-class of a generic input device type, use the
@@ -4840,7 +4865,7 @@ final class retro_controller_info extends ffi.Struct {
 
 final class retro_subsystem_memory_info extends ffi.Struct {
   /// The extension associated with a memory type, e.g. "psram".
-  external ffi.Pointer<Utf8> extension1;
+  external ffi.Pointer<ffi.Char> extension1;
 
   /// The memory type for retro_get_memory(). This should be at
   /// least 0x100 to avoid conflict with standardized
@@ -4851,10 +4876,10 @@ final class retro_subsystem_memory_info extends ffi.Struct {
 
 final class retro_subsystem_rom_info extends ffi.Struct {
   /// Describes what the content is (SGB BIOS, GB ROM, etc).
-  external ffi.Pointer<Utf8> desc;
+  external ffi.Pointer<ffi.Char> desc;
 
   /// Same definition as retro_get_system_info().
-  external ffi.Pointer<Utf8> valid_extensions;
+  external ffi.Pointer<ffi.Char> valid_extensions;
 
   /// Same definition as retro_get_system_info().
   @ffi.Bool()
@@ -4879,13 +4904,13 @@ final class retro_subsystem_rom_info extends ffi.Struct {
 
 final class retro_subsystem_info extends ffi.Struct {
   /// Human-readable string of the subsystem type, e.g. "Super GameBoy"
-  external ffi.Pointer<Utf8> desc;
+  external ffi.Pointer<ffi.Char> desc;
 
   /// A computer friendly short string identifier for the subsystem type.
   /// This name must be [a-z].
   /// E.g. if desc is "Super GameBoy", this can be "sgb".
   /// This identifier can be used for command-line interfaces, etc.
-  external ffi.Pointer<Utf8> ident;
+  external ffi.Pointer<ffi.Char> ident;
 
   /// Infos for each content file. The first entry is assumed to be the
   /// "most significant" content for frontend purposes.
@@ -4922,7 +4947,8 @@ final class retro_get_proc_address_interface extends ffi.Struct {
 /// e.g. if void retro_foo(void); exists, the symbol must be called "retro_foo".
 /// The returned function pointer must be cast to the corresponding type.
 typedef retro_get_proc_address_t = ffi.Pointer<
-    ffi.NativeFunction<retro_proc_address_t Function(ffi.Pointer<Utf8> sym)>>;
+    ffi
+    .NativeFunction<retro_proc_address_t Function(ffi.Pointer<ffi.Char> sym)>>;
 typedef retro_proc_address_t
     = ffi.Pointer<ffi.NativeFunction<ffi.Void Function()>>;
 
@@ -4940,11 +4966,11 @@ final class retro_log_callback extends ffi.Struct {
 
 /// Logging function. Takes log level argument as well.
 typedef retro_log_printf_t = ffi.Pointer<
-    ffi
-    .NativeFunction<ffi.Void Function(ffi.Int32 level, ffi.Pointer<Utf8> fmt)>>;
+    ffi.NativeFunction<
+        ffi.Void Function(ffi.Int32 level, ffi.Pointer<ffi.Char> fmt)>>;
 
 final class retro_perf_counter extends ffi.Struct {
-  external ffi.Pointer<Utf8> ident;
+  external ffi.Pointer<ffi.Char> ident;
 
   @retro_perf_tick_t()
   external int start;
@@ -5389,7 +5415,8 @@ typedef retro_hw_get_current_framebuffer_t
 
 /// Get a symbol from HW context.
 typedef retro_hw_get_proc_address_t = ffi.Pointer<
-    ffi.NativeFunction<retro_proc_address_t Function(ffi.Pointer<Utf8> sym)>>;
+    ffi
+    .NativeFunction<retro_proc_address_t Function(ffi.Pointer<ffi.Char> sym)>>;
 
 final class retro_keyboard_callback extends ffi.Struct {
   external retro_keyboard_event_t callback;
@@ -5425,7 +5452,7 @@ final class retro_game_info extends ffi.Struct {
   /// of passing NULL, which will help more cores to succeed.
   /// retro_system_info::need_fullpath requires
   /// that this path is valid.
-  external ffi.Pointer<Utf8> path;
+  external ffi.Pointer<ffi.Char> path;
 
   /// Memory buffer of loaded game. Will be NULL
   /// if need_fullpath was set.
@@ -5436,7 +5463,7 @@ final class retro_game_info extends ffi.Struct {
   external int size;
 
   /// String of implementation specific meta-data.
-  external ffi.Pointer<Utf8> meta;
+  external ffi.Pointer<ffi.Char> meta;
 }
 
 final class retro_disk_control_callback extends ffi.Struct {
@@ -5552,7 +5579,7 @@ final class retro_disk_control_ext_callback extends ffi.Struct {
 /// does not support this functionality
 typedef retro_set_initial_image_t = ffi.Pointer<
     ffi.NativeFunction<
-        ffi.Bool Function(ffi.UnsignedInt index, ffi.Pointer<Utf8> path)>>;
+        ffi.Bool Function(ffi.UnsignedInt index, ffi.Pointer<ffi.Char> path)>>;
 
 /// Fetches the path of the specified disk image file.
 /// Returns 'false' if index is invalid (index >= get_num_images())
@@ -5560,7 +5587,7 @@ typedef retro_set_initial_image_t = ffi.Pointer<
 typedef retro_get_image_path_t = ffi.Pointer<
     ffi.NativeFunction<
         ffi.Bool Function(
-            ffi.UnsignedInt index, ffi.Pointer<Utf8> path, ffi.Size len)>>;
+            ffi.UnsignedInt index, ffi.Pointer<ffi.Char> path, ffi.Size len)>>;
 
 /// Fetches a core-provided 'label' for the specified disk
 /// image file. In the simplest case this may be a file name
@@ -5577,7 +5604,7 @@ typedef retro_get_image_path_t = ffi.Pointer<
 typedef retro_get_image_label_t = ffi.Pointer<
     ffi.NativeFunction<
         ffi.Bool Function(
-            ffi.UnsignedInt index, ffi.Pointer<Utf8> label, ffi.Size len)>>;
+            ffi.UnsignedInt index, ffi.Pointer<ffi.Char> label, ffi.Size len)>>;
 
 abstract class retro_pixel_format {
   /// 0RGB1555, native endian.
@@ -5604,7 +5631,7 @@ abstract class retro_pixel_format {
 
 final class retro_message extends ffi.Struct {
   /// Message to be displayed.
-  external ffi.Pointer<Utf8> msg;
+  external ffi.Pointer<ffi.Char> msg;
 
   /// Duration in frames of message.
   @ffi.UnsignedInt()
@@ -5631,16 +5658,16 @@ final class retro_input_descriptor extends ffi.Struct {
   /// Human readable description for parameters.
   /// The pointer must remain valid until
   /// retro_unload_game() is called.
-  external ffi.Pointer<Utf8> description;
+  external ffi.Pointer<ffi.Char> description;
 }
 
 final class retro_system_info extends ffi.Struct {
   /// Descriptive name of library. Should not
   /// contain any version numbers, etc.
-  external ffi.Pointer<Utf8> library_name;
+  external ffi.Pointer<ffi.Char> library_name;
 
   /// Descriptive version of core.
-  external ffi.Pointer<Utf8> library_version;
+  external ffi.Pointer<ffi.Char> library_version;
 
   /// A string listing probably content
   /// extensions the core will be able to
@@ -5648,7 +5675,7 @@ final class retro_system_info extends ffi.Struct {
   /// I.e. "bin|rom|iso".
   /// Typically used for a GUI to filter
   /// out extensions.
-  external ffi.Pointer<Utf8> valid_extensions;
+  external ffi.Pointer<ffi.Char> valid_extensions;
 
   /// Libretro cores that need to have direct access to their content
   /// files, including cores which use the path of the content files to
@@ -5729,15 +5756,15 @@ final class retro_variable extends ffi.Struct {
   /// The environment string is formatted as key-value pairs
   /// delimited by semicolons as so:
   /// "key1=value1;key2=value2;..."
-  external ffi.Pointer<Utf8> key;
+  external ffi.Pointer<ffi.Char> key;
 
   /// Value to be obtained. If key does not exist, it is set to NULL.
-  external ffi.Pointer<Utf8> value;
+  external ffi.Pointer<ffi.Char> value;
 }
 
 final class retro_core_option_display extends ffi.Struct {
   /// Variable to configure in RETRO_ENVIRONMENT_SET_CORE_OPTIONS_DISPLAY
-  external ffi.Pointer<Utf8> key;
+  external ffi.Pointer<ffi.Char> key;
 
   /// Specifies whether variable should be displayed
   /// when presenting core options to the user
@@ -5747,22 +5774,22 @@ final class retro_core_option_display extends ffi.Struct {
 
 final class retro_core_option_value extends ffi.Struct {
   /// Expected option value
-  external ffi.Pointer<Utf8> value;
+  external ffi.Pointer<ffi.Char> value;
 
   /// Human-readable value label. If NULL, value itself
   /// will be displayed by the frontend
-  external ffi.Pointer<Utf8> label;
+  external ffi.Pointer<ffi.Char> label;
 }
 
 final class retro_core_option_definition extends ffi.Struct {
   /// Variable to query in RETRO_ENVIRONMENT_GET_VARIABLE.
-  external ffi.Pointer<Utf8> key;
+  external ffi.Pointer<ffi.Char> key;
 
   /// Human-readable core option description (used as menu label)
-  external ffi.Pointer<Utf8> desc;
+  external ffi.Pointer<ffi.Char> desc;
 
   /// Human-readable core option information (used as menu sublabel)
-  external ffi.Pointer<Utf8> info;
+  external ffi.Pointer<ffi.Char> info;
 
   /// Array of retro_core_option_value structs, terminated by NULL
   @ffi.Array.multi([128])
@@ -5771,7 +5798,7 @@ final class retro_core_option_definition extends ffi.Struct {
   /// Default core option value. Must match one of the values
   /// in the retro_core_option_value array, otherwise will be
   /// ignored
-  external ffi.Pointer<Utf8> default_value;
+  external ffi.Pointer<ffi.Char> default_value;
 }
 
 final class retro_core_options_intl extends ffi.Struct {
@@ -5884,19 +5911,18 @@ final class wfl_events extends ffi.Struct {
 
   external ffi.Pointer<ffi.NativeFunction<on_game_start>> onGameStart;
 
-  external ffi.Pointer<on_device_disconnect_t1> onDisconnect;
+  external ffi.Pointer<ffi.NativeFunction<on_device_disconnect_t>> onDisconnect;
 
-  external ffi.Pointer<on_device_connect_t1> onConnect;
+  external ffi.Pointer<ffi.NativeFunction<on_device_connect_t>> onConnect;
 
   external ffi.Pointer<ffi.NativeFunction<on_status_change_t>> onStatusChange;
 }
 
 typedef on_game_close = ffi.Void Function();
 typedef on_game_start = ffi.Void Function();
-typedef on_device_disconnect_t1 = ffi
-    .NativeFunction<ffi.Void Function(wfl_joystick joystick, ffi.Int port)>;
-typedef on_device_connect_t1
-    = ffi.NativeFunction<ffi.Void Function(wfl_joystick joystick)>;
+typedef on_device_disconnect_t = ffi.Void Function(
+    wfl_device joystick, ffi.Int port);
+typedef on_device_connect_t = ffi.Void Function(wfl_device joystick);
 typedef on_status_change_t = ffi.Void Function(wfl_status status);
 
 final class wfl_status extends ffi.Struct {
@@ -6566,7 +6592,7 @@ final class SDL_VirtualJoystickDesc extends ffi.Struct {
   external int axis_mask;
 
   /// < the name of the joystick
-  external ffi.Pointer<Utf8> name;
+  external ffi.Pointer<ffi.Char> name;
 
   /// < User data pointer passed to callbacks
   external ffi.Pointer<ffi.Void> userdata;

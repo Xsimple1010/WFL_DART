@@ -4,21 +4,22 @@ import 'package:ffi/ffi.dart';
 import 'package:wfl_dart/models/wfl_gamepad.dart';
 import 'package:wfl_dart/wfl_dart_bindings_generated.dart';
 
-class MakeJoystick {
-  List<JoyStick> get(wfl_dart_find_controller finControllerRes) {
-    Array<wfl_joystick> arrJoysticks = finControllerRes.joysticks;
+class MakeDeviceList {
+  List<Device> get(wfl_dart_get_all_gamePads finControllerRes) {
+    Array<wfl_device> arrDevices = finControllerRes.devices;
 
-    List<JoyStick> joysticks = [];
+    List<Device> devices = [];
 
     try {
       for (var i = 0; i < finControllerRes.size; i++) {
-        final joy = arrJoysticks[i];
+        final device = arrDevices[i];
 
-        joysticks.add(
-          JoyStick(
-            id: joy.id,
-            index: joy.index,
-            name: joy.name.toDartString(),
+        devices.add(
+          Device(
+            id: device.id,
+            index: device.index,
+            name: device.name.toDartString(),
+            connected: device.connected,
           ),
         );
       }
@@ -26,6 +27,6 @@ class MakeJoystick {
       print(e);
     }
 
-    return joysticks;
+    return devices;
   }
 }

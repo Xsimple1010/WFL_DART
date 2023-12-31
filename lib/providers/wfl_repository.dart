@@ -1,5 +1,6 @@
 import 'dart:ffi';
 import 'dart:io';
+import 'dart:isolate';
 import 'package:ffi/ffi.dart';
 import 'package:flutter/material.dart';
 import 'package:wfl_dart/models/states.dart';
@@ -9,12 +10,23 @@ import 'package:wfl_dart/tools/make_controller_device.dart';
 import 'package:wfl_dart/tools/make_joystick.dart';
 import 'package:wfl_dart/wfl.dart';
 import 'package:wfl_dart/wfl_dart_bindings_generated.dart';
+import "package:provider/provider.dart";
 
 class WFLDart with ChangeNotifier {
   final _wfl = WFL();
-  JoyStick lastConnectedJoyStick = JoyStick(id: -1, index: -1, name: "");
-  JoyStick lastDisConnectedJoyStick = JoyStick(id: -1, index: -1, name: "");
-  late List<JoyStick> joysticksAvailable = [];
+  Device lastConnectedJoyStick = Device(
+    id: -1,
+    index: -1,
+    connected: false,
+    name: "",
+  );
+  Device lastDisConnectedJoyStick = Device(
+    id: -1,
+    index: -1,
+    connected: false,
+    name: "",
+  );
+  late List<Device> devicesAvailable = [];
   String coreSelected = "";
   String romSelected = "";
   WflStates states = WflStates(
@@ -35,11 +47,12 @@ class WFLDart with ChangeNotifier {
     _wfl.init(events);
   }
 
-  void _onConnect(wfl_joystick joystick) {
-    lastConnectedJoyStick = JoyStick(
-      id: joystick.id,
-      index: joystick.index,
-      name: joystick.name.toDartString(),
+  void _onConnect(wfl_device device) {
+    lastConnectedJoyStick = Device(
+      id: device.id,
+      index: device.index,
+      name: device.name.toDartString(),
+      connected: device.connected,
     );
 
     final gamePad = GamePad(
@@ -58,11 +71,12 @@ class WFLDart with ChangeNotifier {
     notifyListeners();
   }
 
-  void _onDisconnect(wfl_joystick joystick, int port) {
-    lastDisConnectedJoyStick = JoyStick(
-      id: joystick.id,
-      index: joystick.index,
-      name: joystick.name.toDartString(),
+  void _onDisconnect(wfl_device device, int port) {
+    lastDisConnectedJoyStick = Device(
+      id: device.id,
+      index: device.index,
+      name: device.name.toDartString(),
+      connected: device.connected,
     );
     notifyListeners();
   }
@@ -78,11 +92,11 @@ class WFLDart with ChangeNotifier {
   }
 
   void _onGameStart() {
-    notifyListeners();
+    // notifyListeners();
   }
 
   void _onGameClose() {
-    notifyListeners();
+    // notifyListeners();
   }
 
   selectCore(FileSystemEntity core) {
@@ -121,17 +135,42 @@ class WFLDart with ChangeNotifier {
     _wfl.stop();
   }
 
+  Future<int> getKeyPressFuture(Duration timeout) async {
+    ReceivePort keyPress = ReceivePort();
+    Isolate.spawn(getKeyPressIsolate, keyPress.sendPort).timeout(timeout);
+
+    final result = await Future.wait([keyPress.first]).timeout(timeout);
+
+    keyPress.close();
+
+    return result.first;
+  }
+
+  static getKeyPressIsolate(SendPort port) {
+    final wfl = WFL();
+
+    final bt = wfl.getKeyDown();
+
+    port.send(bt);
+
+    Isolate.current.kill();
+  }
+
   findController() {
-    wfl_dart_find_controller res = _wfl.findController();
+    wfl_dart_get_all_gamePads res = _wfl.getAllGamePads();
 
-    final makeJoystick = MakeJoystick();
+    final makeDeviceList = MakeDeviceList();
 
-    joysticksAvailable = makeJoystick.get(res);
+    devicesAvailable = makeDeviceList.get(res);
 
     notifyListeners();
   }
 
   void deInit() {
     _wfl.deInit();
+  }
+
+  static of(BuildContext context) {
+    return Provider.of<WFLDart>(context);
   }
 }

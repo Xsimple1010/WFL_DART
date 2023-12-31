@@ -9,12 +9,12 @@ class WFLOnGamePadFind extends StatelessWidget {
     required this.builder,
   });
 
-  final ValueWidgetBuilder<List<JoyStick>> builder;
+  final ValueWidgetBuilder<List<Device>> builder;
 
   @override
   Widget build(BuildContext context) {
-    return Selector<WFLDart, List<JoyStick>>(
-      selector: (_, wfl) => wfl.joysticksAvailable,
+    return Selector<WFLDart, List<Device>>(
+      selector: (_, wfl) => wfl.devicesAvailable,
       builder: builder,
     );
   }

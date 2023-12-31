@@ -1,17 +1,19 @@
 import 'package:wfl_dart/models/key_maps.dart';
-import 'package:wfl_dart/wfl_dart_bindings_generated.dart';
 
-class JoyStick {
+class Device {
   final int id;
 
   final int index;
 
   final String name;
 
-  JoyStick({
+  bool connected;
+
+  Device({
     required this.id,
     required this.index,
     required this.name,
+    required this.connected,
   });
 }
 

@@ -25,7 +25,7 @@ final DynamicLibrary _dylib = () {
 final WflDartBindings _bindings = WflDartBindings(_dylib);
 
 class WFL {
-  final _wflEvents = calloc.allocate<wfl_events>(sizeOf<controller_events>());
+  final _wflEvents = calloc.allocate<wfl_events>(sizeOf<wfl_events>());
   final _wflPaths = calloc.allocate<wfl_paths>(sizeOf<wfl_paths>());
   late WFLDirectoryManager _dirManage;
   late WFLDartEvents _events;
@@ -63,11 +63,11 @@ class WFL {
     _bindings.wflDartInit(_wflEvents.ref, _wflPaths.ref);
   }
 
-  void _onConnect(wfl_joystick joystick) {
+  void _onConnect(wfl_device joystick) {
     _events.onConnect(joystick);
   }
 
-  void _onDisconnect(wfl_joystick joystick, int port) {
+  void _onDisconnect(wfl_device joystick, int port) {
     _events.onDisconnect(joystick, port);
   }
 
@@ -91,8 +91,12 @@ class WFL {
     _bindings.wflDarLoadGame(path.toNativeUtf8());
   }
 
-  setController(controller_device device) {
+  setController(wfl_game_pad device) {
     _bindings.wflDartSetController(device);
+  }
+
+  int getKeyDown() {
+    return _bindings.wflDartGetKeyDown();
   }
 
   stop() {
@@ -107,8 +111,12 @@ class WFL {
     _bindings.wflDartPause();
   }
 
-  wfl_dart_find_controller findController() {
-    return _bindings.wflDartFindControllers();
+  wfl_dart_get_all_gamePads getAllGamePads() {
+    return _bindings.wflDartGetAllGamePads();
+  }
+
+  wfl_dart_get_connected_gamePads getConnectedGamePad() {
+    return _bindings.wflDartGetGamePadsConnected();
   }
 
   deInit() {

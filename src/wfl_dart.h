@@ -12,14 +12,20 @@
 #endif
 
 //wfl includes
-#include "controllerDefs.hpp"
+#include "gamePadDefs.hpp"
 #include "WFLdefs.hpp"
 #include "WFL.h"
 #include "SDL.h"
 
-struct wfl_dart_find_controller {
+struct wfl_dart_get_all_gamePads {
     size_t size;
-    wfl_joystick joysticks[30];
+    wfl_device devices[30];
+};
+
+
+struct wfl_dart_get_connected_gamePads {
+    size_t size;
+    wfl_game_pad devices[30];
 };
 
 EXTERN_C void FFI_PLUGIN_EXPORT wflDartInit(wfl_events events, wfl_paths paths);
@@ -28,7 +34,7 @@ EXTERN_C void FFI_PLUGIN_EXPORT wflDartLoadCore(const char* path);
 
 EXTERN_C void FFI_PLUGIN_EXPORT wflDarLoadGame(const char* path);
 
-EXTERN_C void FFI_PLUGIN_EXPORT wflDartSetController(controller_device device);
+EXTERN_C void FFI_PLUGIN_EXPORT wflDartSetController(wfl_game_pad device);
 
 EXTERN_C void FFI_PLUGIN_EXPORT wflDartStop();
 
@@ -36,4 +42,10 @@ EXTERN_C void FFI_PLUGIN_EXPORT wflDartPause();
 
 EXTERN_C void FFI_PLUGIN_EXPORT wflDartResume();
 
-EXTERN_C wfl_dart_find_controller FFI_PLUGIN_EXPORT wflDartFindControllers();
+EXTERN_C int FFI_PLUGIN_EXPORT wflDartGetKeyDown();
+
+EXTERN_C wfl_dart_get_all_gamePads FFI_PLUGIN_EXPORT wflDartGetAllGamePads();
+
+EXTERN_C wfl_dart_get_connected_gamePads FFI_PLUGIN_EXPORT wflDartGetGamePadsConnected();
+
+

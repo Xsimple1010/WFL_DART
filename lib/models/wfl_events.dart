@@ -1,8 +1,8 @@
 import 'package:wfl_dart/wfl_dart_bindings_generated.dart';
 
 final class WFLDartEvents {
-  final void Function(wfl_joystick joystick) onConnect;
-  final void Function(wfl_joystick joyStick, int port) onDisconnect;
+  final void Function(wfl_device device) onConnect;
+  final void Function(wfl_device device, int port) onDisconnect;
   final void Function() onGameStart;
   final void Function() onGameClose;
   final void Function(wfl_status status) onStateChange;

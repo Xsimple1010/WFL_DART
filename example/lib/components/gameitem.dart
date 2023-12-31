@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:wfl_dart/wfl_dart.dart';
 import 'package:wfl_dart_example/tools/file.dart';
-import 'package:provider/provider.dart';
 
 class GameItem extends StatelessWidget {
   const GameItem({
@@ -14,7 +13,7 @@ class GameItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final wfl = Provider.of<WFLDart>(context);
+    final wfl = WFLDart.of(context);
 
     return GestureDetector(
       onDoubleTap: () => wfl.loadGame(gameFile),

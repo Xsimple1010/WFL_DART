@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
 import 'package:wfl_dart/wfl_dart.dart';
 import 'package:wfl_dart_example/tools/file.dart';
 
@@ -21,7 +21,7 @@ class _CoreItemState extends State<CoreItem> {
 
   @override
   Widget build(BuildContext context) {
-    final wfl = Provider.of<WFLDart>(context);
+    final wfl = WFLDart.of(context);
 
     return Container(
       margin: const EdgeInsets.all(12.0),

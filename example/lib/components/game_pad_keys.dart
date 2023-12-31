@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wfl_dart/wfl_dart.dart';
 
 class GamePadKeysSelect extends StatefulWidget {
   const GamePadKeysSelect({super.key});
@@ -10,6 +11,8 @@ class GamePadKeysSelect extends StatefulWidget {
 class _GamePadKeysSelectState extends State<GamePadKeysSelect> {
   @override
   Widget build(BuildContext context) {
+    final wfl = WFLDart.of(context);
+
     return Padding(
       padding: const EdgeInsets.all(20),
       child: ListView(
@@ -21,7 +24,10 @@ class _GamePadKeysSelectState extends State<GamePadKeysSelect> {
             ),
           ),
           const Text("aperte o botão desejado para atribuir o novo valor!"),
-          Container()
+          FutureBuilder(
+            future: wfl.getKeyPressFuture(const Duration(seconds: 5)),
+            builder: (context, bt) => Container(child: Text("me  ${bt.data}")),
+          )
         ],
       ),
     );

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
 import 'package:wfl_dart/wfl_dart.dart';
 
 class GamePadCard extends StatelessWidget {
@@ -12,7 +12,7 @@ class GamePadCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final wfl = Provider.of<WFLDart>(context);
+    final wfl = WFLDart.of(context);
 
     return Card(
       child: SizedBox(

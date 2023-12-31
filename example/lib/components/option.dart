@@ -6,12 +6,10 @@ class OptionContainer extends StatelessWidget {
     super.key,
     required this.title,
     required this.label,
-    required this.action,
   });
 
   final String title;
   final String label;
-  final Widget action;
 
   @override
   Widget build(BuildContext context) {
@@ -44,9 +42,6 @@ class OptionContainer extends StatelessWidget {
                 Text(label),
               ],
             ),
-            // Icon(Icons.gamepad),
-            // const Text("Botão selecionado A")
-            // action
           ],
         ),
       ),

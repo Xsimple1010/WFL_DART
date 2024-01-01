@@ -13,20 +13,10 @@ import "package:provider/provider.dart";
 
 class WFLDart with ChangeNotifier {
   final _wfl = WFL();
-  Device lastConnectedDevice = Device(
-    id: -1,
-    index: -1,
-    connected: false,
-    name: "",
-  );
-  Device lastDisConnectedDevice = Device(
-    id: -1,
-    index: -1,
-    connected: false,
-    name: "",
-  );
+  Device lastDisConnectedDevice = Device.getEmpty();
   List<Device> devicesAvailable = [];
   List<GamePad> gamePadsConnected = [];
+  GamePad gamepadSelectedToEdit = GamePad.getEmpty();
   String coreSelected = "";
   String romSelected = "";
   WflStates states = WflStates(
@@ -48,17 +38,7 @@ class WFLDart with ChangeNotifier {
   }
 
   void _onConnect(wfl_device device) {
-    lastConnectedDevice = MakeDevice.toDart(device);
-
-    final gamePad = MakeGamePad().fromDevice(
-      lastConnectedDevice,
-      RETRO_DEVICE_JOYPAD,
-      0,
-      GamePadNativeInfo(type: WFL_DEVICE_TYPES.WFL_DEVICE_JOYSTICK),
-    );
-
-    setGamePad(gamePad);
-
+    getAllDevices();
     notifyListeners();
   }
 
@@ -104,7 +84,14 @@ class WFLDart with ChangeNotifier {
 
     _wfl.setController(mkDevice.toNative(gamePad).ref);
 
+    getAllDevices();
+
     mkDevice.close();
+  }
+
+  setSelectGamepadToEdit(GamePad gamepad) {
+    gamepadSelectedToEdit = gamepad;
+    notifyListeners();
   }
 
   pause() {
@@ -160,6 +147,31 @@ class WFLDart with ChangeNotifier {
     notifyListeners();
 
     return gamePadsConnected;
+  }
+
+  GamePad getGamePadByDeviceId(int id) {
+    getGamePads();
+    getAllDevices();
+
+    late GamePad gamepad;
+
+    try {
+      gamepad = gamePadsConnected.firstWhere((gamepad) => gamepad.id == id);
+    } catch (_) {
+      final deviceIterable =
+          devicesAvailable.where((device) => device.id == id);
+
+      gamepad = MakeGamePad().fromDevice(
+        deviceIterable.first,
+        RETRO_DEVICE_JOYPAD,
+        0,
+        GamePadNativeInfo(
+          type: WFL_DEVICE_TYPES.WFL_DEVICE_JOYSTICK,
+        ),
+      );
+    }
+
+    return gamepad;
   }
 
   void deInit() {

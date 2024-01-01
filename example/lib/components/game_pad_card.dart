@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:wfl_dart/models/wfl_gamepad.dart';
 
 import 'package:wfl_dart/wfl_dart.dart';
+import 'package:wfl_dart_example/components/game_pad_item.dart';
 
 class GamePadCard extends StatelessWidget {
   const GamePadCard({
     super.key,
     required this.width,
-    required this.onClick,
   });
 
   final double width;
-  final Function(GamePad) onClick;
 
   @override
   Widget build(BuildContext context) {
@@ -49,18 +47,9 @@ class GamePadCard extends StatelessWidget {
               builder: (context, devices, child) => ListView.builder(
                 shrinkWrap: true,
                 itemCount: devices.length,
-                itemBuilder: (context, index) => Row(
-                  children: [
-                    const Icon(Icons.gamepad),
-                    const Padding(padding: EdgeInsets.only(right: 12)),
-                    Text(
-                      devices[index].name,
-                      style: const TextStyle(fontWeight: FontWeight.w600),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const Spacer(),
-                  ],
+                itemBuilder: (context, index) => GamePadItem(
+                  selected: devices[index].id == wfl.gamepadSelectedToEdit.id,
+                  device: devices[index],
                 ),
               ),
             )

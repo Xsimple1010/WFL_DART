@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wfl_dart_example/components/coreList.dart';
+import 'package:wfl_dart_example/components/core_list.dart';
 import '../components/gamelist.dart';
 
 class Home extends StatelessWidget {

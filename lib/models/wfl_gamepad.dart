@@ -15,6 +15,15 @@ class Device {
     required this.name,
     required this.connected,
   });
+
+  static Device getEmpty() {
+    return Device(
+      id: -1,
+      index: -1,
+      connected: false,
+      name: "",
+    );
+  }
 }
 
 class GamePadNativeInfo {
@@ -42,8 +51,14 @@ class GamePad {
     keyMaps = getDefaultKeyMaps();
   }
 
-  setKeyMaps(List<GamePadKeyMap> newKeyMaps) {
-    keyMaps = newKeyMaps;
+  setKeyMap(GamePadKeyMap newKeyMap) {
+    keyMaps = keyMaps.map((keyMap) {
+      if (keyMap.retro == newKeyMap.retro) {
+        keyMap = newKeyMap;
+      }
+
+      return keyMap;
+    }).toList();
   }
 
   List<GamePadKeyMap> getDefaultKeyMaps() {
@@ -99,5 +114,16 @@ class GamePad {
     ];
 
     return List.from(keyMaps);
+  }
+
+  static GamePad getEmpty() {
+    return GamePad(
+      id: -1,
+      index: -1,
+      port: -1,
+      type: -1,
+      name: "",
+      nativeInfo: GamePadNativeInfo(type: 0),
+    );
   }
 }

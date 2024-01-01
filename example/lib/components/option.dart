@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wfl_dart_example/components/game_pad_keys.dart';
 
 class OptionContainer extends StatelessWidget {
   const OptionContainer({
@@ -13,18 +12,21 @@ class OptionContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final theme = Theme.of(context);
-
-    return GestureDetector(
-      onDoubleTap: () {
-        showModalBottomSheet(
-          context: context,
-          builder: (context) => const GamePadKeysSelect(),
-        );
-      },
-      child: Container(
-        height: 70,
-        padding: const EdgeInsets.only(left: 20, right: 12),
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+      child: ElevatedButton(
+        onPressed: () {
+          // showModalBottomSheet(
+          //   context: context,
+          //   builder: (context) => const GamePadKeysSelectModal(),
+          // );
+        },
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12), // borda arredondada
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

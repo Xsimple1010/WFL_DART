@@ -3,20 +3,18 @@ import 'package:provider/provider.dart';
 import 'package:wfl_dart/models/wfl_gamepad.dart';
 import 'package:wfl_dart/providers/wfl_repository.dart';
 
-class WFLOnGamePadConnect extends StatelessWidget {
-  const WFLOnGamePadConnect({
+class WFLOnGamePadSelectedToEdit extends StatelessWidget {
+  const WFLOnGamePadSelectedToEdit({
     super.key,
     required this.builder,
   });
 
-  final ValueWidgetBuilder<Device> builder;
+  final ValueWidgetBuilder<GamePad> builder;
 
   @override
   Widget build(BuildContext context) {
-    return Selector<WFLDart, Device>(
-      selector: (_, wfl) => wfl.devicesAvailable.isEmpty
-          ? Device.getEmpty()
-          : wfl.devicesAvailable.first,
+    return Selector<WFLDart, GamePad>(
+      selector: (_, wfl) => wfl.gamepadSelectedToEdit,
       builder: builder,
     );
   }

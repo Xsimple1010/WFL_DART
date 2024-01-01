@@ -73,7 +73,9 @@
     },
     "cSpell.words": [
         "gamepad",
+        "JOYPAD",
         "libretro",
-        "Libretro"
+        "Libretro",
+        "TOUCHPAD"
     ]
 }

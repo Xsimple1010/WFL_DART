@@ -29,7 +29,7 @@ class GamePad {
   int type;
   String name;
   GamePadNativeInfo nativeInfo;
-  late List<GamePadKeyMap> keyMaps;
+  List<GamePadKeyMap> keyMaps = [];
 
   GamePad({
     required this.id,

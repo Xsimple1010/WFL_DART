@@ -4113,7 +4113,7 @@ final class wfl_dart_get_connected_gamePads extends ffi.Struct {
   external int size;
 
   @ffi.Array.multi([30])
-  external ffi.Array<ffi.Int> devices;
+  external ffi.Array<wfl_game_pad> devices;
 }
 
 abstract class WFL_DEVICE_TYPES {

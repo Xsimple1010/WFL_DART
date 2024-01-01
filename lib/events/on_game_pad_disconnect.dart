@@ -14,7 +14,7 @@ class WFLOnGamePadDisconnect extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Selector<WFLDart, Device>(
-      selector: (_, wfl) => wfl.lastDisConnectedJoyStick,
+      selector: (_, wfl) => wfl.lastDisConnectedDevice,
       builder: builder,
     );
   }

@@ -4,8 +4,8 @@ import 'package:ffi/ffi.dart';
 import 'package:wfl_dart/models/wfl_gamepad.dart';
 import 'package:wfl_dart/wfl_dart_bindings_generated.dart';
 
-class MakeDeviceList {
-  List<Device> get(wfl_dart_get_all_gamePads finControllerRes) {
+class MakeDevice {
+  static List<Device> toDartList(wfl_dart_get_all_gamePads finControllerRes) {
     Array<wfl_device> arrDevices = finControllerRes.devices;
 
     List<Device> devices = [];
@@ -28,5 +28,14 @@ class MakeDeviceList {
     }
 
     return devices;
+  }
+
+  static Device toDart(wfl_device device) {
+    return Device(
+      id: device.id,
+      index: device.index,
+      name: device.name.toDartString(),
+      connected: device.connected,
+    );
   }
 }

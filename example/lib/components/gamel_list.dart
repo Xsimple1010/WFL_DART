@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'gameitem.dart';
+import 'game_item.dart';
 import 'package:wfl_dart/wfl_dart.dart';
 
 class GameList extends StatelessWidget {
@@ -17,6 +17,8 @@ class GameList extends StatelessWidget {
       itemCount: dirManger.roms.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 6,
+        crossAxisSpacing: 12,
+        mainAxisSpacing: 12,
       ),
       itemBuilder: (BuildContext context, int index) {
         return GridTile(

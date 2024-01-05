@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wfl_dart_example/components/core_list.dart';
-import '../components/gamelist.dart';
+import '../components/gamel_list.dart';
 
 class Home extends StatelessWidget {
   const Home({

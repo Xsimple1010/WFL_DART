@@ -1,0 +1,4 @@
+nível dos logs
+
+1 -> são apenas mensagens do estado atual do program (esses podem ser ignorados).
+2 -> são problemas que devem ser corrigido para o funcionamento correto do programa.

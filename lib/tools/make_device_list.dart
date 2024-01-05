@@ -1,5 +1,5 @@
 import 'dart:ffi';
-
+import 'dart:developer' as developer;
 import 'package:ffi/ffi.dart';
 import 'package:wfl_dart/models/wfl_gamepad.dart';
 import 'package:wfl_dart/wfl_dart_bindings_generated.dart';
@@ -24,7 +24,11 @@ class MakeDevice {
         );
       }
     } catch (e) {
-      print(e);
+      developer.log(
+        "erro ao criar o device pelo tipo nativo",
+        error: e,
+        level: 2,
+      );
     }
 
     return devices;

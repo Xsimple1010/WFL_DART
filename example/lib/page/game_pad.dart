@@ -1,3 +1,4 @@
+import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
 import 'package:wfl_dart/wfl_dart.dart';
 import 'package:wfl_dart_example/components/game_pad_card.dart';
@@ -70,7 +71,10 @@ class _GamePadModalState extends State<GamePadModal> {
                         itemCount: gamepad.keyMaps.length,
                         itemBuilder: (context, index) => GamePadKeySelect(
                           onTap: (keyMap) {
-                            print(keyMap);
+                            developer.log(
+                              "retro -> ${keyMap.retro} = native -> ${keyMap.native}",
+                              level: 1,
+                            );
                             gamepad.setKeyMap(keyMap);
                             wfl.setGamePad(gamepad);
                           },

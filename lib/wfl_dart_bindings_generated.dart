@@ -87,6 +87,24 @@ class WflDartBindings {
   late final _wflDartSetController =
       _wflDartSetControllerPtr.asFunction<void Function(wfl_game_pad)>();
 
+  bool wflDartSaveState() {
+    return _wflDartSaveState();
+  }
+
+  late final _wflDartSaveStatePtr =
+      _lookup<ffi.NativeFunction<ffi.Bool Function()>>('wflDartSaveState');
+  late final _wflDartSaveState =
+      _wflDartSaveStatePtr.asFunction<bool Function()>();
+
+  bool wflDartLoadSaveState() {
+    return _wflDartLoadSaveState();
+  }
+
+  late final _wflDartLoadSaveStatePtr =
+      _lookup<ffi.NativeFunction<ffi.Bool Function()>>('wflDartLoadSaveState');
+  late final _wflDartLoadSaveState =
+      _wflDartLoadSaveStatePtr.asFunction<bool Function()>();
+
   void wflDartStop() {
     return _wflDartStop();
   }

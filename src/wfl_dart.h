@@ -36,6 +36,10 @@ EXTERN_C void FFI_PLUGIN_EXPORT wflDarLoadGame(const char* path);
 
 EXTERN_C void FFI_PLUGIN_EXPORT wflDartSetController(wfl_game_pad device);
 
+EXTERN_C bool FFI_PLUGIN_EXPORT wflDartSaveState();
+
+EXTERN_C bool FFI_PLUGIN_EXPORT wflDartLoadSaveState();
+
 EXTERN_C void FFI_PLUGIN_EXPORT wflDartStop();
 
 EXTERN_C void FFI_PLUGIN_EXPORT wflDartPause();

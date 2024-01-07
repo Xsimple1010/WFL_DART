@@ -33,6 +33,14 @@ void FFI_PLUGIN_EXPORT wflDartResume() {
 	wflResume();
 }
 
+bool wflDartSaveState() {
+	return wflSave();
+}
+
+bool wflDartLoadSaveState() {
+	return wflLoadSave();
+}
+
 int FFI_PLUGIN_EXPORT wflDartGetKeyDown() {
 	return WFlGetKeyDown();
 }

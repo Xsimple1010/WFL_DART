@@ -3,7 +3,7 @@
 # the plugin to fail to compile for some customers of the plugin.
 cmake_minimum_required(VERSION 3.10)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-project(wfl_dart_library VERSION 0.0.1)
+project(wfl_dart_library VERSION 0.0.1 LANGUAGES CXX)
 
 set(WFL_ROOT "../third_party/WFL/")
 
@@ -18,6 +18,7 @@ add_library(wfl_dart SHARED
   ${WFL_ROOT}src/cpuFeatures.cpp
   ${WFL_ROOT}src/debug.cpp
   ${WFL_ROOT}src/glad.c
+  ${WFL_ROOT}src/wfl_file.cpp
   ${WFL_ROOT}src/stateNotifier.cpp
   ${WFL_ROOT}src/libretroClass.cpp
   ${WFL_ROOT}src/Video.cpp
@@ -38,6 +39,7 @@ set_target_properties(wfl_dart PROPERTIES
 )
 
 find_package(SDL2 REQUIRED)
+set_property(TARGET wfl_dart PROPERTY CXX_STANDARD 17)
 
 target_include_directories(wfl_dart 
   PUBLIC ${SDL2_INCLUDE_DIRS}

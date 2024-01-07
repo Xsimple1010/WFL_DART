@@ -119,6 +119,14 @@ class WFL {
     return _bindings.wflDartGetGamePadsConnected();
   }
 
+  bool saveState() {
+    return _bindings.wflDartSaveState();
+  }
+
+  bool loadSaveState() {
+    return _bindings.wflDartLoadSaveState();
+  }
+
   deInit() {
     _bindings.wflDartStop();
     _onConnectCallback.close();

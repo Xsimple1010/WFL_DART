@@ -108,6 +108,14 @@ class WFLDart with ChangeNotifier {
     _wfl.stop();
   }
 
+  save() {
+    _wfl.saveState();
+  }
+
+  loadSaveState() {
+    _wfl.loadSaveState();
+  }
+
   Future<int> getKeyPressFuture(Duration timeout) async {
     ReceivePort keyPress = ReceivePort();
     Isolate.spawn(getKeyPressIsolate, keyPress.sendPort).timeout(timeout);

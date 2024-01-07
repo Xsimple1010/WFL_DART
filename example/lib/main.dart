@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:wfl_dart/wfl_dart.dart';
 import 'package:wfl_dart_example/components/about_button.dart';
 import 'package:wfl_dart_example/components/game_pad_button.dart';
+import 'package:wfl_dart_example/components/load_save_state_button.dart';
 import 'package:wfl_dart_example/components/reset_button.dart';
+import 'package:wfl_dart_example/components/save_state_button.dart';
 import 'package:wfl_dart_example/components/status_button.dart';
 import 'package:wfl_dart_example/page/home.dart';
 
@@ -42,11 +44,22 @@ class _MyAppState extends State<MyApp> {
         home: Scaffold(
           appBar: AppBar(
             title: const Text('WFL_DART DEMO'),
-            actions: const [
-              GameStatusButtonIcon(),
-              ResetButtonIcon(),
-              GamePadButtonIcon(),
-              AboutButton()
+            actions: [
+              WFLOnGameStatusChange(
+                builder: (context, value, child) => Visibility(
+                  visible: value.playing,
+                  child: const Row(
+                    children: [
+                      GameStatusButtonIcon(),
+                      ResetButtonIcon(),
+                      SaveButtonIcon(),
+                      LoadSaveButtonIcon()
+                    ],
+                  ),
+                ),
+              ),
+              const GamePadButtonIcon(),
+              const AboutButton(),
             ],
           ),
           body: const Home(),

@@ -107,6 +107,10 @@ class WFL {
     _bindings.wflDartResume();
   }
 
+  reset() {
+    _bindings.wflDartReset();
+  }
+
   pause() {
     _bindings.wflDartPause();
   }

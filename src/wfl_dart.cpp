@@ -29,6 +29,10 @@ void FFI_PLUGIN_EXPORT wflDartPause() {
 	wflPause();
 }
 
+void FFI_PLUGIN_EXPORT wflDartReset() {
+	wflReset();
+}
+
 void FFI_PLUGIN_EXPORT wflDartResume() {
 	wflResume();
 }

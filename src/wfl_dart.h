@@ -52,4 +52,4 @@ EXTERN_C wfl_dart_get_all_gamePads FFI_PLUGIN_EXPORT wflDartGetAllGamePads();
 
 EXTERN_C wfl_dart_get_connected_gamePads FFI_PLUGIN_EXPORT wflDartGetGamePadsConnected();
 
-
+EXTERN_C void FFI_PLUGIN_EXPORT wflDartReset();

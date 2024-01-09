@@ -10,7 +10,7 @@ class ResetButtonIcon extends StatelessWidget {
     return WFLOnGameStatusChange(
       builder: (context, status, child) => IconButton(
         onPressed: () {
-          wfl.stop();
+          wfl.reset();
         },
         color: status.playing ? Colors.cyan : Colors.white,
         isSelected: status.running,

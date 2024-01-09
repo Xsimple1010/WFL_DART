@@ -158,6 +158,14 @@ class WflDartBindings {
   late final _wflDartGetGamePadsConnected = _wflDartGetGamePadsConnectedPtr
       .asFunction<wfl_dart_get_connected_gamePads Function()>();
 
+  void wflDartReset() {
+    return _wflDartReset();
+  }
+
+  late final _wflDartResetPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function()>>('wflDartReset');
+  late final _wflDartReset = _wflDartResetPtr.asFunction<void Function()>();
+
   /// Sets callbacks. retro_set_environment() is guaranteed to be called
   /// before retro_init().
   ///

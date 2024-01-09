@@ -104,6 +104,10 @@ class WFLDart with ChangeNotifier {
     notifyListeners();
   }
 
+  reset() {
+    _wfl.reset();
+  }
+
   stop() {
     _wfl.stop();
   }

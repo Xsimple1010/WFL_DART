@@ -12,15 +12,19 @@ class WFLDirectoryManager {
   late Directory systemDir;
 
   WFLDirectoryManager() {
-    if (_rootDir.existsSync()) {
-      _rootDir.create(recursive: true);
-    }
-
     coreDir = Directory("${_rootDir.path}${Platform.pathSeparator}cores");
     romsDir = Directory("${_rootDir.path}${Platform.pathSeparator}roms");
     tempDir = Directory("${_rootDir.path}${Platform.pathSeparator}temp");
     saveDir = Directory("${_rootDir.path}${Platform.pathSeparator}save");
     systemDir = Directory("${_rootDir.path}${Platform.pathSeparator}system");
+
+    if (!_rootDir.existsSync()) {
+      coreDir.create(recursive: true);
+      romsDir.create(recursive: true);
+      tempDir.create(recursive: true);
+      saveDir.create(recursive: true);
+      systemDir.create(recursive: true);
+    }
 
     getCores();
     getGames();
@@ -47,6 +51,6 @@ class WFLDirectoryManager {
   }
 
   clearTempFiles() {
-    if (!tempDir.existsSync()) tempDir.createSync();
+    // if (!tempDir.existsSync()) tempDir.createSync();
   }
 }

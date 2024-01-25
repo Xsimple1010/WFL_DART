@@ -11,36 +11,39 @@
 #define FFI_PLUGIN_EXPORT
 #endif
 
-//wfl includes
+// wfl includes
 #include "gamePadDefs.hpp"
 #include "WFLdefs.hpp"
 #include "WFL.h"
 #include "SDL.h"
 
-struct wfl_dart_get_all_gamePads {
+struct wfl_dart_get_all_gamePads
+{
     size_t size;
     wfl_device devices[30];
 };
 
-
-struct wfl_dart_get_connected_gamePads {
+struct wfl_dart_get_connected_gamePads
+{
     size_t size;
     wfl_game_pad devices[30];
 };
 
 EXTERN_C void FFI_PLUGIN_EXPORT wflDartInit(wfl_events events, wfl_paths paths);
 
-EXTERN_C void FFI_PLUGIN_EXPORT wflDartLoadCore(const char* path);
+EXTERN_C void FFI_PLUGIN_EXPORT wflDartLoadCore(const char *path);
 
-EXTERN_C void FFI_PLUGIN_EXPORT wflDarLoadGame(const char* path);
+EXTERN_C void FFI_PLUGIN_EXPORT wflDarLoadGame(const char *path);
 
-EXTERN_C void FFI_PLUGIN_EXPORT wflDartSetController(wfl_game_pad device);
+EXTERN_C void FFI_PLUGIN_EXPORT wflDartSetController(wfl_game_pad gamepad);
 
 EXTERN_C bool FFI_PLUGIN_EXPORT wflDartSaveState();
 
 EXTERN_C bool FFI_PLUGIN_EXPORT wflDartLoadSaveState();
 
 EXTERN_C void FFI_PLUGIN_EXPORT wflDartStop();
+
+EXTERN_C void FFI_PLUGIN_EXPORT wflDartDeinit();
 
 EXTERN_C void FFI_PLUGIN_EXPORT wflDartPause();
 

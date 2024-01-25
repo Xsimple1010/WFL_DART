@@ -91,8 +91,8 @@ class WFL {
     _bindings.wflDarLoadGame(path.toNativeUtf8());
   }
 
-  setController(wfl_game_pad device) {
-    _bindings.wflDartSetController(device);
+  setController(wfl_game_pad gamepad) {
+    _bindings.wflDartSetController(gamepad);
   }
 
   int getKeyDown() {
@@ -101,6 +101,10 @@ class WFL {
 
   stop() {
     _bindings.wflDartStop();
+  }
+
+  deinit() {
+    _bindings.wflDartDeinit();
   }
 
   resume() {

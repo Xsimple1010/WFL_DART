@@ -6,6 +6,7 @@ import 'package:wfl_dart_example/components/load_save_state_button.dart';
 import 'package:wfl_dart_example/components/reset_button.dart';
 import 'package:wfl_dart_example/components/save_state_button.dart';
 import 'package:wfl_dart_example/components/status_button.dart';
+import 'package:wfl_dart_example/components/stop_button.dart';
 import 'package:wfl_dart_example/page/home.dart';
 
 void main() {
@@ -53,7 +54,8 @@ class _MyAppState extends State<MyApp> {
                       GameStatusButtonIcon(),
                       ResetButtonIcon(),
                       SaveButtonIcon(),
-                      LoadSaveButtonIcon()
+                      LoadSaveButtonIcon(),
+                      StopButtonIcon()
                     ],
                   ),
                 ),
@@ -62,7 +64,7 @@ class _MyAppState extends State<MyApp> {
               const AboutButton(),
             ],
           ),
-          body: const Home(),
+          body: Home(),
         ),
       ),
     );
